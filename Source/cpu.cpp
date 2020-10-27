@@ -6,6 +6,8 @@
 
 #include "cpu.h"
 
+//! \brief Init cpu into void state (OFF)
+//! \param [in] cpu CPU to be inited
 void
 init(struct Cpu *cpu)
 {
@@ -99,7 +101,7 @@ work(char *commands, int commands_size, struct Cpu *cpu)
                 Stack_Pop(cpu->cpu_stack);
                 tmp_double2 = Stack_Top(cpu->cpu_stack);
                 Stack_Pop(cpu->cpu_stack);
-                Stack_Push(cpu->cpu_stack, tmp_double1 - tmp_double2);
+                Stack_Push(cpu->cpu_stack, tmp_double2 - tmp_double1);
                 break;
             case MUL:
                 if (!check_arg_num(cpu, 2)) return false;
@@ -122,7 +124,7 @@ work(char *commands, int commands_size, struct Cpu *cpu)
                     cpu->state = WAIT;
                     return false;
                 }
-                Stack_Push(cpu->cpu_stack, tmp_double1 / tmp_double2);
+                Stack_Push(cpu->cpu_stack, tmp_double2 / tmp_double1);
                 break;
             case SQRT:
                 if (!check_arg_num(cpu, 1)) return false;

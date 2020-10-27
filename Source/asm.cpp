@@ -14,19 +14,22 @@
 #include "cpu.h"
 #include "in_and_out.h"
 
-static bool
-write_header(int fd) {
-// TODO: Write this function
-    assert(fd >= 0);
-    return true;
-}
 
+//! \brief Just a small func to make code more readable when need to write byte into file
+//! \param [in] fd File to write in
+//! \param [in] value Value to write into file
+//! \return Returns true if byte was successfully written
 static bool
 write_to_file(int fd, int value) {
     char val_char = value;
     return write(fd, &val_char, 1) == 1;
 }
 
+//! \brief Main assembler function. Translates assembler commands to 'binary' code
+//! \param [in] commands Assembler commands to translate
+//! \param [in] commands_size Size of commands in bytes
+//! \param [in] fd File descriptor to write result in
+//! \return Returns true if no problems during translation appeared
 static bool
 translate_to_machine_code(char *commands, ssize_t commands_size, int fd) {
     assert(commands);
@@ -202,7 +205,7 @@ translate_to_machine_code(char *commands, ssize_t commands_size, int fd) {
                 }
                 if (!strncmp(commands, RCX_STR, sizeof(RCX_STR) - 1)) {
                     write_to_file(fd, POP_REG);
-                    write_to_file(fd, RBX);
+                    write_to_file(fd, RCX);
                     commands += sizeof(RCX_STR) - 1;
                     continue;
                 }
@@ -231,12 +234,6 @@ in_and_out_from_asm(char *file_in, char *file_out) {
     int fd_out = open(file_out, O_WRONLY | O_CREAT | O_TRUNC, out_mode); 
     if (fd_out < 0) {
         fprintf(stderr, "Error: Can`t open out file %s\n", file_out);
-        munmap(commands, file_in_size);
-        return false;
-    }
-    if (!write_header(fd_out)) {
-        fprintf(stderr, "Error: Can`t write header\n");
-        close(fd_out);
         munmap(commands, file_in_size);
         return false;
     }

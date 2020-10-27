@@ -1,0 +1,34 @@
+in rax
+in rbx
+in rcx
+push rbx
+push rbx
+mul
+
+push rax
+push rcx
+push 4
+mul
+mul
+sub
+sqrt
+pop rcx
+
+push rbx
+push -1
+mul
+
+push rcx
+sub
+push 2
+div
+out
+
+push rbx
+push -1
+mul
+push rcx
+add
+push 2
+div
+out

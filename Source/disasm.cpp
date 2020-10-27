@@ -13,28 +13,22 @@
 #include "disasm.h"
 #include "in_and_out.h"
 
-//! \bried Read beginning of the code file and check header
-//! \in [file] Mmaped file
-static int
-read_header(char *file) 
-{
-    assert(file);
-//TODO: write this function
-    int header_size = 0;
-    return header_size;
-}
 
+//! \brief Small func to make code looks better. Write specified register.
+//! \param [in] command Command which specifies register
+//! \param [in] fd File descriptor to write result (rax, rbx or rcx)
+//! \return Returns true if register command was valid and successfully written
 static bool
 write_register(char command, int fd) {
     switch(command) {
         case RAX:
-            write(fd, RAX_STR, sizeof(RAX_STR));
+            if (write(fd, RAX_STR, sizeof(RAX_STR)) == -1) return false;
             break;
         case RBX:
-            write(fd, RBX_STR, sizeof(RBX_STR));
+            if (write(fd, RBX_STR, sizeof(RBX_STR)) == -1) return false;
             break;
         case RCX:
-            write(fd, RCX_STR, sizeof(RCX_STR));
+            if (write(fd, RCX_STR, sizeof(RCX_STR)) == -1) return false;
             break;
         default:
             return false;
@@ -43,6 +37,11 @@ write_register(char command, int fd) {
     return true;
 }
 
+//! \brief Main disassembler function. Translates command bytes into assembler commands.
+//! \param [in] commands Command bytes
+//! \param [in] commands_size Command bytes len
+//! \param [in] fd File descriptor to write result in
+//! \return Returns true if no problems during execution were.
 static bool
 translate_to_asm(char *commands, int commands_size, int fd)
 {
@@ -195,14 +194,7 @@ in_and_out_from_binary(char *file_in, char *file_out)
         munmap(commands, file_in_size);
         return false;
     }
-    int header_size = read_header(commands);
-    if (header_size < 0) {
-        fprintf(stderr, "Error: Can`t read header\n");
-        close(fd_out);
-        munmap(commands, file_in_size);
-        return false;
-    }
-    if (!translate_to_asm(commands + header_size, file_in_size, fd_out)) {
+    if (!translate_to_asm(commands, file_in_size, fd_out)) {
         fprintf(stderr, "Error: Can`t translate to asm\n");
         close(fd_out);
         munmap(commands, file_in_size);

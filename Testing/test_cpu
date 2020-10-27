@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+test_num=0
+test_fail_num=0
+
+echo ================================================
+echo Testing cpu begins
+
+for test in Tests_Cpu/*.in
+do
+
+    test_num=$(($test_num + 1))
+    echo Test $test_num
+    cat ${test%%.in}.stdin | ./../cpu $test > ${test%%.in}.res 
+
+    diff -a ${test%%.in}.res ${test%%.in}.stdout > diffile
+    
+    if [ -s diffile ]
+    then
+        echo ${test%%.in} "Test failed"
+        mv diffile ${test%%.in}.diff
+        test_fail_num=$(($test_fail_num + 1))
+    else
+        rm diffile
+        echo ${test%%.in} "Test success"
+        rm ${test%%.in}.res
+    fi
+    echo
+done
+
+echo Tested on $test_num tests
+if [[ "$test_fail_num" -eq 0 ]]
+then
+    echo Success, all tests passed!
+else
+    echo Fail, $test_fail_num tests failed
+fi
+echo ================================================

@@ -7,6 +7,7 @@ DEBUG = YES
 CFLAGS = -Wall -Wextra -Wformat -std=c++14 -g -IInclude -ISource 
 TEST_LOG_DISASM = disasm_test_log
 TEST_LOG_ASM = asm_test_log
+TEST_LOG_CPU = cpu_test_log
 
 ifeq ($(DEBUG), YES)
 	CFLAGS += -g
@@ -14,9 +15,12 @@ endif
 
 .PHONY: all clean asm disasm cpu test_all test_disasm test_asm
 
-all: asm disasm cpu test_all
+all: asm disasm cpu
 	
-test_all: test_asm test_disasm
+test_all: test_asm test_disasm test_cpu
+
+test_cpu: cpu $(TESTDIR)test_cpu
+	cd $(TESTDIR); ./test_cpu > ../$(TEST_LOG_CPU); cd ..
 
 test_disasm: disasm $(TESTDIR)test_disasm
 	cd $(TESTDIR); ./test_disasm > ../$(TEST_LOG_DISASM); cd ..
@@ -58,4 +62,4 @@ $(OBJDIR):
 	mkdir $(OBJDIR)
 
 clean:
-	rm -rf *.o ObjectFiles asm disasm cpu
+	rm -rf *.o ObjectFiles asm disasm cpu *_test_log

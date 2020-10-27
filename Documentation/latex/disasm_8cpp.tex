@@ -1,0 +1,50 @@
+\hypertarget{disasm_8cpp}{}\doxysection{Source/disasm.cpp File Reference}
+\label{disasm_8cpp}\index{Source/disasm.cpp@{Source/disasm.cpp}}
+{\ttfamily \#include $<$sys/stat.\+h$>$}\newline
+{\ttfamily \#include $<$sys/types.\+h$>$}\newline
+{\ttfamily \#include $<$fcntl.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$cassert$>$}\newline
+{\ttfamily \#include $<$errno.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$sys/mman.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}asm.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}cpu.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}disasm.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}in\+\_\+and\+\_\+out.\+h\char`\"{}}\newline
+Include dependency graph for disasm.\+cpp\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{disasm_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{disasm_8cpp_a6831c04bad4b44053e5ce1ed05dd29cd}{in\+\_\+and\+\_\+out\+\_\+from\+\_\+binary}} (char $\ast$file\+\_\+in, char $\ast$file\+\_\+out)
+\begin{DoxyCompactList}\small\item\em Read \textquotesingle{}binary\textquotesingle{} code and write result of the translation to files. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{disasm_8cpp_a6831c04bad4b44053e5ce1ed05dd29cd}\label{disasm_8cpp_a6831c04bad4b44053e5ce1ed05dd29cd}} 
+\index{disasm.cpp@{disasm.cpp}!in\_and\_out\_from\_binary@{in\_and\_out\_from\_binary}}
+\index{in\_and\_out\_from\_binary@{in\_and\_out\_from\_binary}!disasm.cpp@{disasm.cpp}}
+\doxysubsubsection{\texorpdfstring{in\_and\_out\_from\_binary()}{in\_and\_out\_from\_binary()}}
+{\footnotesize\ttfamily bool in\+\_\+and\+\_\+out\+\_\+from\+\_\+binary (\begin{DoxyParamCaption}\item[{char $\ast$}]{file\+\_\+in,  }\item[{char $\ast$}]{file\+\_\+out }\end{DoxyParamCaption})}
+
+
+
+Read \textquotesingle{}binary\textquotesingle{} code and write result of the translation to files. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em file\+\_\+in} & File to read \textquotesingle{}binary\textquotesingle{} code \\
+\hline
+\mbox{\texttt{ out}}  & {\em file\+\_\+out} & File to write asm commands \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if success, false else 
+\end{DoxyReturn}

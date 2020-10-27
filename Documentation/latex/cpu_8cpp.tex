@@ -1,0 +1,94 @@
+\hypertarget{cpu_8cpp}{}\doxysection{Source/cpu.cpp File Reference}
+\label{cpu_8cpp}\index{Source/cpu.cpp@{Source/cpu.cpp}}
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$cstdint$>$}\newline
+{\ttfamily \#include \char`\"{}Stack.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}cpu.\+h\char`\"{}}\newline
+Include dependency graph for cpu.\+cpp\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{cpu_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{cpu_8cpp_a5a392548f2df67370cb15d2a5d75cd7b}{T\+Y\+PE}}~double
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{cpu_8cpp_a8058a9b933b8c96884a649380956ea5a}{init}} (struct \mbox{\hyperlink{struct_cpu}{Cpu}} $\ast$cpu)
+\begin{DoxyCompactList}\small\item\em Init cpu into void state (O\+FF) \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{cpu_8cpp_a1645e0495a8c332e9b67e0ef2974efc8}{turn\+\_\+cpu\+\_\+on}} (struct \mbox{\hyperlink{struct_cpu}{Cpu}} $\ast$cpu)
+\begin{DoxyCompactList}\small\item\em Change C\+PU state and initialize stack, if necessary. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{cpu_8cpp_afb872f2d7907f3f8fa40f9f3eaf5ee51}{work}} (char $\ast$commands, int commands\+\_\+size, struct \mbox{\hyperlink{struct_cpu}{Cpu}} $\ast$cpu)
+\begin{DoxyCompactList}\small\item\em Proccess comands from buffer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{cpu_8cpp_a5a392548f2df67370cb15d2a5d75cd7b}\label{cpu_8cpp_a5a392548f2df67370cb15d2a5d75cd7b}} 
+\index{cpu.cpp@{cpu.cpp}!TYPE@{TYPE}}
+\index{TYPE@{TYPE}!cpu.cpp@{cpu.cpp}}
+\doxysubsubsection{\texorpdfstring{TYPE}{TYPE}}
+{\footnotesize\ttfamily \#define T\+Y\+PE~double}
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{cpu_8cpp_a8058a9b933b8c96884a649380956ea5a}\label{cpu_8cpp_a8058a9b933b8c96884a649380956ea5a}} 
+\index{cpu.cpp@{cpu.cpp}!init@{init}}
+\index{init@{init}!cpu.cpp@{cpu.cpp}}
+\doxysubsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily void init (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{struct_cpu}{Cpu}} $\ast$}]{cpu }\end{DoxyParamCaption})}
+
+
+
+Init cpu into void state (O\+FF) 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em cpu} & C\+PU to be inited \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{cpu_8cpp_a1645e0495a8c332e9b67e0ef2974efc8}\label{cpu_8cpp_a1645e0495a8c332e9b67e0ef2974efc8}} 
+\index{cpu.cpp@{cpu.cpp}!turn\_cpu\_on@{turn\_cpu\_on}}
+\index{turn\_cpu\_on@{turn\_cpu\_on}!cpu.cpp@{cpu.cpp}}
+\doxysubsubsection{\texorpdfstring{turn\_cpu\_on()}{turn\_cpu\_on()}}
+{\footnotesize\ttfamily bool turn\+\_\+cpu\+\_\+on (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{struct_cpu}{Cpu}} $\ast$}]{cpu }\end{DoxyParamCaption})}
+
+
+
+Change C\+PU state and initialize stack, if necessary. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em cpu} & Pointer to C\+PU \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if success, False else 
+\end{DoxyReturn}
+\mbox{\Hypertarget{cpu_8cpp_afb872f2d7907f3f8fa40f9f3eaf5ee51}\label{cpu_8cpp_afb872f2d7907f3f8fa40f9f3eaf5ee51}} 
+\index{cpu.cpp@{cpu.cpp}!work@{work}}
+\index{work@{work}!cpu.cpp@{cpu.cpp}}
+\doxysubsubsection{\texorpdfstring{work()}{work()}}
+{\footnotesize\ttfamily bool work (\begin{DoxyParamCaption}\item[{char $\ast$}]{commands,  }\item[{int}]{commands\+\_\+size,  }\item[{struct \mbox{\hyperlink{struct_cpu}{Cpu}} $\ast$}]{cpu }\end{DoxyParamCaption})}
+
+
+
+Proccess comands from buffer. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em commands} & Buffer with commands \\
+\hline
+\mbox{\texttt{ in}}  & {\em commands\+\_\+size} & Commands buffer size \\
+\hline
+\mbox{\texttt{ in}}  & {\em cpu} & Pointer to cpu which will process commands \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Return true, if no errors during execution 
+\end{DoxyReturn}

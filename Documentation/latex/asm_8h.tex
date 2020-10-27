@@ -1,0 +1,216 @@
+\hypertarget{asm_8h}{}\doxysection{Include/asm.h File Reference}
+\label{asm_8h}\index{Include/asm.h@{Include/asm.h}}
+{\ttfamily \#include $<$sys/types.\+h$>$}\newline
+{\ttfamily \#include $<$fcntl.\+h$>$}\newline
+Include dependency graph for asm.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=218pt]{asm_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{asm_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{asm_8h_a243afb4e4637c694c79b127b358b273c}{in\+\_\+and\+\_\+out\+\_\+from\+\_\+asm}} (char $\ast$file\+\_\+in, char $\ast$file\+\_\+out)
+\begin{DoxyCompactList}\small\item\em Read commands and write result of the translation to files. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const char \mbox{\hyperlink{asm_8h_a7966c0584d67a798d19fd928e9cb28f1}{M\+U\+L\+\_\+\+S\+TR}} \mbox{[}$\,$\mbox{]} = \char`\"{}mul\char`\"{}
+\begin{DoxyCompactList}\small\item\em Command string for mul. \end{DoxyCompactList}\item 
+const char \mbox{\hyperlink{asm_8h_aaa90152ab3c20c2b455ea553a578d7f0}{D\+I\+V\+\_\+\+S\+TR}} \mbox{[}$\,$\mbox{]} = \char`\"{}div\char`\"{}
+\begin{DoxyCompactList}\small\item\em Command string for div. \end{DoxyCompactList}\item 
+const char \mbox{\hyperlink{asm_8h_a9a606dfcaad939b2b46a24793ebddcbc}{A\+D\+D\+\_\+\+S\+TR}} \mbox{[}$\,$\mbox{]} = \char`\"{}add\char`\"{}
+\begin{DoxyCompactList}\small\item\em Command string for add. \end{DoxyCompactList}\item 
+const char \mbox{\hyperlink{asm_8h_af88d04f55fb10cc50758d23dd239ff09}{S\+U\+B\+\_\+\+S\+TR}} \mbox{[}$\,$\mbox{]} = \char`\"{}sub\char`\"{}
+\begin{DoxyCompactList}\small\item\em Command string for sub. \end{DoxyCompactList}\item 
+const char \mbox{\hyperlink{asm_8h_ab8127a7cb3995432e1c626c1e3711f74}{S\+Q\+R\+T\+\_\+\+S\+TR}} \mbox{[}$\,$\mbox{]} = \char`\"{}sqrt\char`\"{}
+\begin{DoxyCompactList}\small\item\em Command string for sqrt. \end{DoxyCompactList}\item 
+const char \mbox{\hyperlink{asm_8h_a7d1db9fa7f14bf9a3f6d171484530c5d}{I\+N\+\_\+\+S\+TR}} \mbox{[}$\,$\mbox{]} = \char`\"{}in\char`\"{}
+\begin{DoxyCompactList}\small\item\em Command string for in. \end{DoxyCompactList}\item 
+const char \mbox{\hyperlink{asm_8h_a88c5ad407e3375ba598e3ea4b03d3467}{O\+U\+T\+\_\+\+S\+TR}} \mbox{[}$\,$\mbox{]} = \char`\"{}out\char`\"{}
+\begin{DoxyCompactList}\small\item\em Command string for out. \end{DoxyCompactList}\item 
+const char \mbox{\hyperlink{asm_8h_a5a4089faddd80caca88ed644d7b5e134}{P\+U\+S\+H\+\_\+\+S\+TR}} \mbox{[}$\,$\mbox{]} = \char`\"{}push\char`\"{}
+\begin{DoxyCompactList}\small\item\em Command string for push. \end{DoxyCompactList}\item 
+const char \mbox{\hyperlink{asm_8h_a9b313f4f8eaec3977de2a3d181425c0e}{P\+O\+P\+\_\+\+S\+TR}} \mbox{[}$\,$\mbox{]} = \char`\"{}pop\char`\"{}
+\begin{DoxyCompactList}\small\item\em Command string for pop. \end{DoxyCompactList}\item 
+const char \mbox{\hyperlink{asm_8h_af52c9953c9d4c998b5232a668b3f7ea4}{H\+L\+T\+\_\+\+S\+TR}} \mbox{[}$\,$\mbox{]} = \char`\"{}hlt\char`\"{}
+\begin{DoxyCompactList}\small\item\em Command string for hlt. \end{DoxyCompactList}\item 
+const char \mbox{\hyperlink{asm_8h_ad049b0b91defbc9ec7984e4bfa6b6fe7}{R\+A\+X\+\_\+\+S\+TR}} \mbox{[}$\,$\mbox{]} = \char`\"{}rax\char`\"{}
+\begin{DoxyCompactList}\small\item\em Command string for rax. \end{DoxyCompactList}\item 
+const char \mbox{\hyperlink{asm_8h_a133466f2345b7d1308a98a4b1b5d05f9}{R\+B\+X\+\_\+\+S\+TR}} \mbox{[}$\,$\mbox{]} = \char`\"{}rbx\char`\"{}
+\begin{DoxyCompactList}\small\item\em Command string for rax. \end{DoxyCompactList}\item 
+const char \mbox{\hyperlink{asm_8h_ab174550c79dc3e1bc69db5416439c803}{R\+C\+X\+\_\+\+S\+TR}} \mbox{[}$\,$\mbox{]} = \char`\"{}rcx\char`\"{}
+\begin{DoxyCompactList}\small\item\em Command string for rax. \end{DoxyCompactList}\item 
+constexpr mode\+\_\+t \mbox{\hyperlink{asm_8h_a4d6a759ac4a78520abc9b8ef1e071aa7}{out\+\_\+mode}} = S\+\_\+\+I\+R\+U\+SR $\vert$ S\+\_\+\+I\+W\+U\+SR $\vert$ S\+\_\+\+I\+R\+G\+RP $\vert$ S\+\_\+\+I\+W\+G\+RP $\vert$ S\+\_\+\+I\+R\+O\+TH $\vert$ S\+\_\+\+I\+W\+O\+TH
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{asm_8h_a243afb4e4637c694c79b127b358b273c}\label{asm_8h_a243afb4e4637c694c79b127b358b273c}} 
+\index{asm.h@{asm.h}!in\_and\_out\_from\_asm@{in\_and\_out\_from\_asm}}
+\index{in\_and\_out\_from\_asm@{in\_and\_out\_from\_asm}!asm.h@{asm.h}}
+\doxysubsubsection{\texorpdfstring{in\_and\_out\_from\_asm()}{in\_and\_out\_from\_asm()}}
+{\footnotesize\ttfamily bool in\+\_\+and\+\_\+out\+\_\+from\+\_\+asm (\begin{DoxyParamCaption}\item[{char $\ast$}]{file\+\_\+in,  }\item[{char $\ast$}]{file\+\_\+out }\end{DoxyParamCaption})}
+
+
+
+Read commands and write result of the translation to files. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em file\+\_\+in} & File to read commands \\
+\hline
+\mbox{\texttt{ out}}  & {\em file\+\_\+out} & File to write asm commands \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if success, false else 
+\end{DoxyReturn}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{asm_8h_a9a606dfcaad939b2b46a24793ebddcbc}\label{asm_8h_a9a606dfcaad939b2b46a24793ebddcbc}} 
+\index{asm.h@{asm.h}!ADD\_STR@{ADD\_STR}}
+\index{ADD\_STR@{ADD\_STR}!asm.h@{asm.h}}
+\doxysubsubsection{\texorpdfstring{ADD\_STR}{ADD\_STR}}
+{\footnotesize\ttfamily const char A\+D\+D\+\_\+\+S\+TR\mbox{[}$\,$\mbox{]} = \char`\"{}add\char`\"{}}
+
+
+
+Command string for add. 
+
+\mbox{\Hypertarget{asm_8h_aaa90152ab3c20c2b455ea553a578d7f0}\label{asm_8h_aaa90152ab3c20c2b455ea553a578d7f0}} 
+\index{asm.h@{asm.h}!DIV\_STR@{DIV\_STR}}
+\index{DIV\_STR@{DIV\_STR}!asm.h@{asm.h}}
+\doxysubsubsection{\texorpdfstring{DIV\_STR}{DIV\_STR}}
+{\footnotesize\ttfamily const char D\+I\+V\+\_\+\+S\+TR\mbox{[}$\,$\mbox{]} = \char`\"{}div\char`\"{}}
+
+
+
+Command string for div. 
+
+\mbox{\Hypertarget{asm_8h_af52c9953c9d4c998b5232a668b3f7ea4}\label{asm_8h_af52c9953c9d4c998b5232a668b3f7ea4}} 
+\index{asm.h@{asm.h}!HLT\_STR@{HLT\_STR}}
+\index{HLT\_STR@{HLT\_STR}!asm.h@{asm.h}}
+\doxysubsubsection{\texorpdfstring{HLT\_STR}{HLT\_STR}}
+{\footnotesize\ttfamily const char H\+L\+T\+\_\+\+S\+TR\mbox{[}$\,$\mbox{]} = \char`\"{}hlt\char`\"{}}
+
+
+
+Command string for hlt. 
+
+\mbox{\Hypertarget{asm_8h_a7d1db9fa7f14bf9a3f6d171484530c5d}\label{asm_8h_a7d1db9fa7f14bf9a3f6d171484530c5d}} 
+\index{asm.h@{asm.h}!IN\_STR@{IN\_STR}}
+\index{IN\_STR@{IN\_STR}!asm.h@{asm.h}}
+\doxysubsubsection{\texorpdfstring{IN\_STR}{IN\_STR}}
+{\footnotesize\ttfamily const char I\+N\+\_\+\+S\+TR\mbox{[}$\,$\mbox{]} = \char`\"{}in\char`\"{}}
+
+
+
+Command string for in. 
+
+\mbox{\Hypertarget{asm_8h_a7966c0584d67a798d19fd928e9cb28f1}\label{asm_8h_a7966c0584d67a798d19fd928e9cb28f1}} 
+\index{asm.h@{asm.h}!MUL\_STR@{MUL\_STR}}
+\index{MUL\_STR@{MUL\_STR}!asm.h@{asm.h}}
+\doxysubsubsection{\texorpdfstring{MUL\_STR}{MUL\_STR}}
+{\footnotesize\ttfamily const char M\+U\+L\+\_\+\+S\+TR\mbox{[}$\,$\mbox{]} = \char`\"{}mul\char`\"{}}
+
+
+
+Command string for mul. 
+
+\mbox{\Hypertarget{asm_8h_a4d6a759ac4a78520abc9b8ef1e071aa7}\label{asm_8h_a4d6a759ac4a78520abc9b8ef1e071aa7}} 
+\index{asm.h@{asm.h}!out\_mode@{out\_mode}}
+\index{out\_mode@{out\_mode}!asm.h@{asm.h}}
+\doxysubsubsection{\texorpdfstring{out\_mode}{out\_mode}}
+{\footnotesize\ttfamily constexpr mode\+\_\+t out\+\_\+mode = S\+\_\+\+I\+R\+U\+SR $\vert$ S\+\_\+\+I\+W\+U\+SR $\vert$ S\+\_\+\+I\+R\+G\+RP $\vert$ S\+\_\+\+I\+W\+G\+RP $\vert$ S\+\_\+\+I\+R\+O\+TH $\vert$ S\+\_\+\+I\+W\+O\+TH\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\mbox{\Hypertarget{asm_8h_a88c5ad407e3375ba598e3ea4b03d3467}\label{asm_8h_a88c5ad407e3375ba598e3ea4b03d3467}} 
+\index{asm.h@{asm.h}!OUT\_STR@{OUT\_STR}}
+\index{OUT\_STR@{OUT\_STR}!asm.h@{asm.h}}
+\doxysubsubsection{\texorpdfstring{OUT\_STR}{OUT\_STR}}
+{\footnotesize\ttfamily const char O\+U\+T\+\_\+\+S\+TR\mbox{[}$\,$\mbox{]} = \char`\"{}out\char`\"{}}
+
+
+
+Command string for out. 
+
+\mbox{\Hypertarget{asm_8h_a9b313f4f8eaec3977de2a3d181425c0e}\label{asm_8h_a9b313f4f8eaec3977de2a3d181425c0e}} 
+\index{asm.h@{asm.h}!POP\_STR@{POP\_STR}}
+\index{POP\_STR@{POP\_STR}!asm.h@{asm.h}}
+\doxysubsubsection{\texorpdfstring{POP\_STR}{POP\_STR}}
+{\footnotesize\ttfamily const char P\+O\+P\+\_\+\+S\+TR\mbox{[}$\,$\mbox{]} = \char`\"{}pop\char`\"{}}
+
+
+
+Command string for pop. 
+
+\mbox{\Hypertarget{asm_8h_a5a4089faddd80caca88ed644d7b5e134}\label{asm_8h_a5a4089faddd80caca88ed644d7b5e134}} 
+\index{asm.h@{asm.h}!PUSH\_STR@{PUSH\_STR}}
+\index{PUSH\_STR@{PUSH\_STR}!asm.h@{asm.h}}
+\doxysubsubsection{\texorpdfstring{PUSH\_STR}{PUSH\_STR}}
+{\footnotesize\ttfamily const char P\+U\+S\+H\+\_\+\+S\+TR\mbox{[}$\,$\mbox{]} = \char`\"{}push\char`\"{}}
+
+
+
+Command string for push. 
+
+\mbox{\Hypertarget{asm_8h_ad049b0b91defbc9ec7984e4bfa6b6fe7}\label{asm_8h_ad049b0b91defbc9ec7984e4bfa6b6fe7}} 
+\index{asm.h@{asm.h}!RAX\_STR@{RAX\_STR}}
+\index{RAX\_STR@{RAX\_STR}!asm.h@{asm.h}}
+\doxysubsubsection{\texorpdfstring{RAX\_STR}{RAX\_STR}}
+{\footnotesize\ttfamily const char R\+A\+X\+\_\+\+S\+TR\mbox{[}$\,$\mbox{]} = \char`\"{}rax\char`\"{}}
+
+
+
+Command string for rax. 
+
+\mbox{\Hypertarget{asm_8h_a133466f2345b7d1308a98a4b1b5d05f9}\label{asm_8h_a133466f2345b7d1308a98a4b1b5d05f9}} 
+\index{asm.h@{asm.h}!RBX\_STR@{RBX\_STR}}
+\index{RBX\_STR@{RBX\_STR}!asm.h@{asm.h}}
+\doxysubsubsection{\texorpdfstring{RBX\_STR}{RBX\_STR}}
+{\footnotesize\ttfamily const char R\+B\+X\+\_\+\+S\+TR\mbox{[}$\,$\mbox{]} = \char`\"{}rbx\char`\"{}}
+
+
+
+Command string for rax. 
+
+\mbox{\Hypertarget{asm_8h_ab174550c79dc3e1bc69db5416439c803}\label{asm_8h_ab174550c79dc3e1bc69db5416439c803}} 
+\index{asm.h@{asm.h}!RCX\_STR@{RCX\_STR}}
+\index{RCX\_STR@{RCX\_STR}!asm.h@{asm.h}}
+\doxysubsubsection{\texorpdfstring{RCX\_STR}{RCX\_STR}}
+{\footnotesize\ttfamily const char R\+C\+X\+\_\+\+S\+TR\mbox{[}$\,$\mbox{]} = \char`\"{}rcx\char`\"{}}
+
+
+
+Command string for rax. 
+
+\mbox{\Hypertarget{asm_8h_ab8127a7cb3995432e1c626c1e3711f74}\label{asm_8h_ab8127a7cb3995432e1c626c1e3711f74}} 
+\index{asm.h@{asm.h}!SQRT\_STR@{SQRT\_STR}}
+\index{SQRT\_STR@{SQRT\_STR}!asm.h@{asm.h}}
+\doxysubsubsection{\texorpdfstring{SQRT\_STR}{SQRT\_STR}}
+{\footnotesize\ttfamily const char S\+Q\+R\+T\+\_\+\+S\+TR\mbox{[}$\,$\mbox{]} = \char`\"{}sqrt\char`\"{}}
+
+
+
+Command string for sqrt. 
+
+\mbox{\Hypertarget{asm_8h_af88d04f55fb10cc50758d23dd239ff09}\label{asm_8h_af88d04f55fb10cc50758d23dd239ff09}} 
+\index{asm.h@{asm.h}!SUB\_STR@{SUB\_STR}}
+\index{SUB\_STR@{SUB\_STR}!asm.h@{asm.h}}
+\doxysubsubsection{\texorpdfstring{SUB\_STR}{SUB\_STR}}
+{\footnotesize\ttfamily const char S\+U\+B\+\_\+\+S\+TR\mbox{[}$\,$\mbox{]} = \char`\"{}sub\char`\"{}}
+
+
+
+Command string for sub. 
+

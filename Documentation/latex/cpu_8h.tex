@@ -1,0 +1,234 @@
+\hypertarget{cpu_8h}{}\doxysection{Include/cpu.h File Reference}
+\label{cpu_8h}\index{Include/cpu.h@{Include/cpu.h}}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{cpu_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_cpu}{Cpu}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{cpu_8h_a36394ca3317626f02ccbfd8823dd0321}{C\+P\+U\+\_\+\+S\+T\+A\+T\+ES}} \{ \mbox{\hyperlink{cpu_8h_a36394ca3317626f02ccbfd8823dd0321aac132f2982b98bcaa3445e535a03ff75}{O\+FF}} = 0, 
+\mbox{\hyperlink{cpu_8h_a36394ca3317626f02ccbfd8823dd0321a977d478dacaae531f95695750d1e9d03}{ON}}, 
+\mbox{\hyperlink{cpu_8h_a36394ca3317626f02ccbfd8823dd0321a79a322ccb4b29b85b3cab52dbccefd17}{W\+A\+IT}}
+ \}
+\item 
+enum \mbox{\hyperlink{cpu_8h_ababf9447a528640fecc6fac301892241}{C\+P\+U\+\_\+\+C\+O\+M\+M\+A\+N\+DS}} \{ \newline
+\mbox{\hyperlink{cpu_8h_ababf9447a528640fecc6fac301892241a5fa8c1a2d62dd3da3a5802305fb1f9d4}{H\+LT}} = 0, 
+\mbox{\hyperlink{cpu_8h_ababf9447a528640fecc6fac301892241acfcf145f2788bf340ff3f3098bc54909}{A\+DD}}, 
+\mbox{\hyperlink{cpu_8h_ababf9447a528640fecc6fac301892241a12b733d4941495e86811fe6ceeeff9da}{S\+UB}}, 
+\mbox{\hyperlink{cpu_8h_ababf9447a528640fecc6fac301892241a086ab1f2f4dac104b6826ebe0eaba8fd}{M\+UL}}, 
+\newline
+\mbox{\hyperlink{cpu_8h_ababf9447a528640fecc6fac301892241a8565f0d60c3ba6d468661c49d86e9744}{D\+IV}}, 
+\mbox{\hyperlink{cpu_8h_ababf9447a528640fecc6fac301892241a01b4ef29ecbca1ba7671fa834c9194d7}{S\+Q\+RT}}, 
+\mbox{\hyperlink{cpu_8h_ababf9447a528640fecc6fac301892241a97baf31d26b5b6621d2a5d4b61aa83c9}{P\+U\+S\+H\+\_\+\+R\+EG}} = 30, 
+\mbox{\hyperlink{cpu_8h_ababf9447a528640fecc6fac301892241aa345292de6f40c06b9a4b734d77432b9}{P\+U\+S\+H\+\_\+\+V\+AL}}, 
+\newline
+\mbox{\hyperlink{cpu_8h_ababf9447a528640fecc6fac301892241aacb5eeadbe50f7f2ceb8488ba1ae8357}{P\+O\+P\+\_\+\+R\+EG}}, 
+\mbox{\hyperlink{cpu_8h_ababf9447a528640fecc6fac301892241a92137d11a8a293234e5b28b12bca9286}{P\+O\+P\+\_\+\+V\+AL}}, 
+\mbox{\hyperlink{cpu_8h_ababf9447a528640fecc6fac301892241af3180515f5867a29932df1dc207b31ad}{IN}} = 60, 
+\mbox{\hyperlink{cpu_8h_ababf9447a528640fecc6fac301892241ac50c0230b40e08a2a96f1910dd64f9c3}{I\+N\+\_\+\+R\+EG}}, 
+\newline
+\mbox{\hyperlink{cpu_8h_ababf9447a528640fecc6fac301892241ac72cb4ba9e379a25e80f157177dbe2b8}{O\+UT}}, 
+\mbox{\hyperlink{cpu_8h_ababf9447a528640fecc6fac301892241ae1c1199c541a914842bb707d4edb02b7}{O\+U\+T\+\_\+\+R\+EG}}, 
+\mbox{\hyperlink{cpu_8h_ababf9447a528640fecc6fac301892241ad8a2b3cfd37dc1215cf782d326e5186c}{R\+AX}} = 100, 
+\mbox{\hyperlink{cpu_8h_ababf9447a528640fecc6fac301892241a3fca113e3a8a54281655d842075690be}{R\+BX}}, 
+\newline
+\mbox{\hyperlink{cpu_8h_ababf9447a528640fecc6fac301892241a9319e76c0baaa9e53113184ab7d25944}{R\+CX}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{cpu_8h_a79df6f0e4d097418be548e5719a938bd}{turn\+\_\+cpu\+\_\+on}} (\mbox{\hyperlink{struct_cpu}{Cpu}} $\ast$cpu)
+\begin{DoxyCompactList}\small\item\em Change C\+PU state and initialize stack, if necessary. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{cpu_8h_ad875d98e6dd12679e9d83680646c15fd}{work}} (char $\ast$commands, int commands\+\_\+size, \mbox{\hyperlink{struct_cpu}{Cpu}} $\ast$cpu)
+\begin{DoxyCompactList}\small\item\em Proccess comands from buffer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{cpu_8h_a1f058e4ce2cf0289e631d23d584053fd}{init}} (\mbox{\hyperlink{struct_cpu}{Cpu}} $\ast$cpu)
+\begin{DoxyCompactList}\small\item\em Init cpu into void state (O\+FF) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+constexpr int \mbox{\hyperlink{cpu_8h_a43b7c41c4ff141e720ec62a321f0b090}{R\+E\+G\+\_\+\+N\+U\+M\+B\+ER}} = 3
+\item 
+constexpr double \mbox{\hyperlink{cpu_8h_a0f7d7189097bdb7acb04ee884657532a}{Z\+E\+R\+O\+\_\+\+E\+PS}} = 1e-\/6
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{cpu_8h_ababf9447a528640fecc6fac301892241}\label{cpu_8h_ababf9447a528640fecc6fac301892241}} 
+\index{cpu.h@{cpu.h}!CPU\_COMMANDS@{CPU\_COMMANDS}}
+\index{CPU\_COMMANDS@{CPU\_COMMANDS}!cpu.h@{cpu.h}}
+\doxysubsubsection{\texorpdfstring{CPU\_COMMANDS}{CPU\_COMMANDS}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{cpu_8h_ababf9447a528640fecc6fac301892241}{C\+P\+U\+\_\+\+C\+O\+M\+M\+A\+N\+DS}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{HLT@{HLT}!cpu.h@{cpu.h}}\index{cpu.h@{cpu.h}!HLT@{HLT}}}\mbox{\Hypertarget{cpu_8h_ababf9447a528640fecc6fac301892241a5fa8c1a2d62dd3da3a5802305fb1f9d4}\label{cpu_8h_ababf9447a528640fecc6fac301892241a5fa8c1a2d62dd3da3a5802305fb1f9d4}} 
+H\+LT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ADD@{ADD}!cpu.h@{cpu.h}}\index{cpu.h@{cpu.h}!ADD@{ADD}}}\mbox{\Hypertarget{cpu_8h_ababf9447a528640fecc6fac301892241acfcf145f2788bf340ff3f3098bc54909}\label{cpu_8h_ababf9447a528640fecc6fac301892241acfcf145f2788bf340ff3f3098bc54909}} 
+A\+DD&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SUB@{SUB}!cpu.h@{cpu.h}}\index{cpu.h@{cpu.h}!SUB@{SUB}}}\mbox{\Hypertarget{cpu_8h_ababf9447a528640fecc6fac301892241a12b733d4941495e86811fe6ceeeff9da}\label{cpu_8h_ababf9447a528640fecc6fac301892241a12b733d4941495e86811fe6ceeeff9da}} 
+S\+UB&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MUL@{MUL}!cpu.h@{cpu.h}}\index{cpu.h@{cpu.h}!MUL@{MUL}}}\mbox{\Hypertarget{cpu_8h_ababf9447a528640fecc6fac301892241a086ab1f2f4dac104b6826ebe0eaba8fd}\label{cpu_8h_ababf9447a528640fecc6fac301892241a086ab1f2f4dac104b6826ebe0eaba8fd}} 
+M\+UL&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DIV@{DIV}!cpu.h@{cpu.h}}\index{cpu.h@{cpu.h}!DIV@{DIV}}}\mbox{\Hypertarget{cpu_8h_ababf9447a528640fecc6fac301892241a8565f0d60c3ba6d468661c49d86e9744}\label{cpu_8h_ababf9447a528640fecc6fac301892241a8565f0d60c3ba6d468661c49d86e9744}} 
+D\+IV&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SQRT@{SQRT}!cpu.h@{cpu.h}}\index{cpu.h@{cpu.h}!SQRT@{SQRT}}}\mbox{\Hypertarget{cpu_8h_ababf9447a528640fecc6fac301892241a01b4ef29ecbca1ba7671fa834c9194d7}\label{cpu_8h_ababf9447a528640fecc6fac301892241a01b4ef29ecbca1ba7671fa834c9194d7}} 
+S\+Q\+RT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PUSH\_REG@{PUSH\_REG}!cpu.h@{cpu.h}}\index{cpu.h@{cpu.h}!PUSH\_REG@{PUSH\_REG}}}\mbox{\Hypertarget{cpu_8h_ababf9447a528640fecc6fac301892241a97baf31d26b5b6621d2a5d4b61aa83c9}\label{cpu_8h_ababf9447a528640fecc6fac301892241a97baf31d26b5b6621d2a5d4b61aa83c9}} 
+P\+U\+S\+H\+\_\+\+R\+EG&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PUSH\_VAL@{PUSH\_VAL}!cpu.h@{cpu.h}}\index{cpu.h@{cpu.h}!PUSH\_VAL@{PUSH\_VAL}}}\mbox{\Hypertarget{cpu_8h_ababf9447a528640fecc6fac301892241aa345292de6f40c06b9a4b734d77432b9}\label{cpu_8h_ababf9447a528640fecc6fac301892241aa345292de6f40c06b9a4b734d77432b9}} 
+P\+U\+S\+H\+\_\+\+V\+AL&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{POP\_REG@{POP\_REG}!cpu.h@{cpu.h}}\index{cpu.h@{cpu.h}!POP\_REG@{POP\_REG}}}\mbox{\Hypertarget{cpu_8h_ababf9447a528640fecc6fac301892241aacb5eeadbe50f7f2ceb8488ba1ae8357}\label{cpu_8h_ababf9447a528640fecc6fac301892241aacb5eeadbe50f7f2ceb8488ba1ae8357}} 
+P\+O\+P\+\_\+\+R\+EG&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{POP\_VAL@{POP\_VAL}!cpu.h@{cpu.h}}\index{cpu.h@{cpu.h}!POP\_VAL@{POP\_VAL}}}\mbox{\Hypertarget{cpu_8h_ababf9447a528640fecc6fac301892241a92137d11a8a293234e5b28b12bca9286}\label{cpu_8h_ababf9447a528640fecc6fac301892241a92137d11a8a293234e5b28b12bca9286}} 
+P\+O\+P\+\_\+\+V\+AL&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{IN@{IN}!cpu.h@{cpu.h}}\index{cpu.h@{cpu.h}!IN@{IN}}}\mbox{\Hypertarget{cpu_8h_ababf9447a528640fecc6fac301892241af3180515f5867a29932df1dc207b31ad}\label{cpu_8h_ababf9447a528640fecc6fac301892241af3180515f5867a29932df1dc207b31ad}} 
+IN&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{IN\_REG@{IN\_REG}!cpu.h@{cpu.h}}\index{cpu.h@{cpu.h}!IN\_REG@{IN\_REG}}}\mbox{\Hypertarget{cpu_8h_ababf9447a528640fecc6fac301892241ac50c0230b40e08a2a96f1910dd64f9c3}\label{cpu_8h_ababf9447a528640fecc6fac301892241ac50c0230b40e08a2a96f1910dd64f9c3}} 
+I\+N\+\_\+\+R\+EG&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OUT@{OUT}!cpu.h@{cpu.h}}\index{cpu.h@{cpu.h}!OUT@{OUT}}}\mbox{\Hypertarget{cpu_8h_ababf9447a528640fecc6fac301892241ac72cb4ba9e379a25e80f157177dbe2b8}\label{cpu_8h_ababf9447a528640fecc6fac301892241ac72cb4ba9e379a25e80f157177dbe2b8}} 
+O\+UT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OUT\_REG@{OUT\_REG}!cpu.h@{cpu.h}}\index{cpu.h@{cpu.h}!OUT\_REG@{OUT\_REG}}}\mbox{\Hypertarget{cpu_8h_ababf9447a528640fecc6fac301892241ae1c1199c541a914842bb707d4edb02b7}\label{cpu_8h_ababf9447a528640fecc6fac301892241ae1c1199c541a914842bb707d4edb02b7}} 
+O\+U\+T\+\_\+\+R\+EG&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RAX@{RAX}!cpu.h@{cpu.h}}\index{cpu.h@{cpu.h}!RAX@{RAX}}}\mbox{\Hypertarget{cpu_8h_ababf9447a528640fecc6fac301892241ad8a2b3cfd37dc1215cf782d326e5186c}\label{cpu_8h_ababf9447a528640fecc6fac301892241ad8a2b3cfd37dc1215cf782d326e5186c}} 
+R\+AX&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RBX@{RBX}!cpu.h@{cpu.h}}\index{cpu.h@{cpu.h}!RBX@{RBX}}}\mbox{\Hypertarget{cpu_8h_ababf9447a528640fecc6fac301892241a3fca113e3a8a54281655d842075690be}\label{cpu_8h_ababf9447a528640fecc6fac301892241a3fca113e3a8a54281655d842075690be}} 
+R\+BX&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RCX@{RCX}!cpu.h@{cpu.h}}\index{cpu.h@{cpu.h}!RCX@{RCX}}}\mbox{\Hypertarget{cpu_8h_ababf9447a528640fecc6fac301892241a9319e76c0baaa9e53113184ab7d25944}\label{cpu_8h_ababf9447a528640fecc6fac301892241a9319e76c0baaa9e53113184ab7d25944}} 
+R\+CX&\\
+\hline
+
+\end{DoxyEnumFields}
+\mbox{\Hypertarget{cpu_8h_a36394ca3317626f02ccbfd8823dd0321}\label{cpu_8h_a36394ca3317626f02ccbfd8823dd0321}} 
+\index{cpu.h@{cpu.h}!CPU\_STATES@{CPU\_STATES}}
+\index{CPU\_STATES@{CPU\_STATES}!cpu.h@{cpu.h}}
+\doxysubsubsection{\texorpdfstring{CPU\_STATES}{CPU\_STATES}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{cpu_8h_a36394ca3317626f02ccbfd8823dd0321}{C\+P\+U\+\_\+\+S\+T\+A\+T\+ES}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OFF@{OFF}!cpu.h@{cpu.h}}\index{cpu.h@{cpu.h}!OFF@{OFF}}}\mbox{\Hypertarget{cpu_8h_a36394ca3317626f02ccbfd8823dd0321aac132f2982b98bcaa3445e535a03ff75}\label{cpu_8h_a36394ca3317626f02ccbfd8823dd0321aac132f2982b98bcaa3445e535a03ff75}} 
+O\+FF&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ON@{ON}!cpu.h@{cpu.h}}\index{cpu.h@{cpu.h}!ON@{ON}}}\mbox{\Hypertarget{cpu_8h_a36394ca3317626f02ccbfd8823dd0321a977d478dacaae531f95695750d1e9d03}\label{cpu_8h_a36394ca3317626f02ccbfd8823dd0321a977d478dacaae531f95695750d1e9d03}} 
+ON&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{WAIT@{WAIT}!cpu.h@{cpu.h}}\index{cpu.h@{cpu.h}!WAIT@{WAIT}}}\mbox{\Hypertarget{cpu_8h_a36394ca3317626f02ccbfd8823dd0321a79a322ccb4b29b85b3cab52dbccefd17}\label{cpu_8h_a36394ca3317626f02ccbfd8823dd0321a79a322ccb4b29b85b3cab52dbccefd17}} 
+W\+A\+IT&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{cpu_8h_a1f058e4ce2cf0289e631d23d584053fd}\label{cpu_8h_a1f058e4ce2cf0289e631d23d584053fd}} 
+\index{cpu.h@{cpu.h}!init@{init}}
+\index{init@{init}!cpu.h@{cpu.h}}
+\doxysubsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily void init (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{struct_cpu}{Cpu}} $\ast$}]{cpu }\end{DoxyParamCaption})}
+
+
+
+Init cpu into void state (O\+FF) 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em cpu} & C\+PU to be inited \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{cpu_8h_a79df6f0e4d097418be548e5719a938bd}\label{cpu_8h_a79df6f0e4d097418be548e5719a938bd}} 
+\index{cpu.h@{cpu.h}!turn\_cpu\_on@{turn\_cpu\_on}}
+\index{turn\_cpu\_on@{turn\_cpu\_on}!cpu.h@{cpu.h}}
+\doxysubsubsection{\texorpdfstring{turn\_cpu\_on()}{turn\_cpu\_on()}}
+{\footnotesize\ttfamily bool turn\+\_\+cpu\+\_\+on (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{struct_cpu}{Cpu}} $\ast$}]{cpu }\end{DoxyParamCaption})}
+
+
+
+Change C\+PU state and initialize stack, if necessary. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em cpu} & Pointer to C\+PU \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if success, False else 
+\end{DoxyReturn}
+\mbox{\Hypertarget{cpu_8h_ad875d98e6dd12679e9d83680646c15fd}\label{cpu_8h_ad875d98e6dd12679e9d83680646c15fd}} 
+\index{cpu.h@{cpu.h}!work@{work}}
+\index{work@{work}!cpu.h@{cpu.h}}
+\doxysubsubsection{\texorpdfstring{work()}{work()}}
+{\footnotesize\ttfamily bool work (\begin{DoxyParamCaption}\item[{char $\ast$}]{commands,  }\item[{int}]{commands\+\_\+size,  }\item[{struct \mbox{\hyperlink{struct_cpu}{Cpu}} $\ast$}]{cpu }\end{DoxyParamCaption})}
+
+
+
+Proccess comands from buffer. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em commands} & Buffer with commands \\
+\hline
+\mbox{\texttt{ in}}  & {\em commands\+\_\+size} & Commands buffer size \\
+\hline
+\mbox{\texttt{ in}}  & {\em cpu} & Pointer to cpu which will process commands \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Return true, if no errors during execution 
+\end{DoxyReturn}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{cpu_8h_a43b7c41c4ff141e720ec62a321f0b090}\label{cpu_8h_a43b7c41c4ff141e720ec62a321f0b090}} 
+\index{cpu.h@{cpu.h}!REG\_NUMBER@{REG\_NUMBER}}
+\index{REG\_NUMBER@{REG\_NUMBER}!cpu.h@{cpu.h}}
+\doxysubsubsection{\texorpdfstring{REG\_NUMBER}{REG\_NUMBER}}
+{\footnotesize\ttfamily constexpr int R\+E\+G\+\_\+\+N\+U\+M\+B\+ER = 3\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+\mbox{\Hypertarget{cpu_8h_a0f7d7189097bdb7acb04ee884657532a}\label{cpu_8h_a0f7d7189097bdb7acb04ee884657532a}} 
+\index{cpu.h@{cpu.h}!ZERO\_EPS@{ZERO\_EPS}}
+\index{ZERO\_EPS@{ZERO\_EPS}!cpu.h@{cpu.h}}
+\doxysubsubsection{\texorpdfstring{ZERO\_EPS}{ZERO\_EPS}}
+{\footnotesize\ttfamily constexpr double Z\+E\+R\+O\+\_\+\+E\+PS = 1e-\/6\hspace{0.3cm}{\ttfamily [constexpr]}}
+

@@ -1,0 +1,996 @@
+\hypertarget{_stack_8h}{}\doxysection{Include/\+Stack.h File Reference}
+\label{_stack_8h}\index{Include/Stack.h@{Include/Stack.h}}
+{\ttfamily \#include $<$cstdlib$>$}\newline
+{\ttfamily \#include $<$cassert$>$}\newline
+{\ttfamily \#include $<$cstdio$>$}\newline
+{\ttfamily \#include $<$cmath$>$}\newline
+Include dependency graph for Stack.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=329pt]{_stack_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=171pt]{_stack_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{_stack_8h_a7d461e9fe73a517a0b15526acf3bf722}{C\+A\+T\+\_\+\+I\+M\+PL}}(a)~Stack\+\_\+\#\#a
+\begin{DoxyCompactList}\small\item\em This is magic for right preprocessing. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{_stack_8h_aa274c17f7ba91a5b3e8cc34684fd3b07}{Stack}}(a)~\mbox{\hyperlink{_stack_8h_a7d461e9fe73a517a0b15526acf3bf722}{C\+A\+T\+\_\+\+I\+M\+PL}}(a)
+\begin{DoxyCompactList}\small\item\em This is magic for right preprocessing. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{_stack_8h_adcfe02461ea4ec0d5182cd11d7bb4b6c}{C\+A\+T\+\_\+\+I\+M\+P\+L2}}(a)~P\+O\+I\+S\+O\+N\+\_\+\#\#a
+\begin{DoxyCompactList}\small\item\em This is magic for right preprocessing. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{_stack_8h_a9d3d727a319801d2a2aab8214dd7add7}{P\+O\+I\+S\+ON}}(a)~\mbox{\hyperlink{_stack_8h_adcfe02461ea4ec0d5182cd11d7bb4b6c}{C\+A\+T\+\_\+\+I\+M\+P\+L2}}(a)
+\begin{DoxyCompactList}\small\item\em This is magic for right preprocessing. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{_stack_8h_a5b5975bc5eb71df19df47225ef4b57af}{C\+A\+T\+\_\+\+I\+M\+P\+L3}}(a)~Print\+\_\+\#\#a
+\item 
+\#define \mbox{\hyperlink{_stack_8h_aa5d6e791d48f2ad5338064093822cfaa}{P\+R\+I\+NT}}(a)~\mbox{\hyperlink{_stack_8h_a5b5975bc5eb71df19df47225ef4b57af}{C\+A\+T\+\_\+\+I\+M\+P\+L3}}(a)
+\item 
+\#define \mbox{\hyperlink{_stack_8h_abf45990b8e6b31296850eb9e3694b764}{B\+I\+RD}}~unsigned int
+\begin{DoxyCompactList}\small\item\em Type for guard bird. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{_stack_8h_a6423a880df59733d2d9b509c7718d3a9}{S\+T\+A\+C\+K\+\_\+\+S\+I\+ZE}}~int
+\begin{DoxyCompactList}\small\item\em Type for stack size. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{_stack_8h_aa70530dd0c7c754713b95ce6e87ffb4d}{S\+T\+A\+C\+K\+\_\+\+C\+A\+P\+A\+C\+I\+TY}}~int
+\begin{DoxyCompactList}\small\item\em Type for stack capacity. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{_stack_8h_abc31d73e62d5a07ddad2608f759c288c}{H\+A\+S\+H\+\_\+\+T\+Y\+PE}}~unsigned int
+\begin{DoxyCompactList}\small\item\em Type for hash. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{_stack_8h_a1558385284963c9f01c392abdb610552}{S\+T\+A\+C\+K\+\_\+\+V\+A\+R\+\_\+\+N\+A\+ME}}~const char $\ast$name
+\begin{DoxyCompactList}\small\item\em Stack name. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{_stack_8h_a6423a880df59733d2d9b509c7718d3a9}{S\+T\+A\+C\+K\+\_\+\+S\+I\+ZE}}~int
+\begin{DoxyCompactList}\small\item\em Type for stack size. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{_stack_8h_aa70530dd0c7c754713b95ce6e87ffb4d}{S\+T\+A\+C\+K\+\_\+\+C\+A\+P\+A\+C\+I\+TY}}~int
+\begin{DoxyCompactList}\small\item\em Type for stack capacity. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{_stack_8h_a9d921bb6d43dc31fe949f77a0c309d0a}{C\+A\+T\+\_\+\+I\+M\+P\+L4}}(a,  b)~Stack\+\_\+\+Dump\+\_\+\#\#a (b)
+\item 
+\#define \mbox{\hyperlink{_stack_8h_ab1278e5c78a16d2f56716b9d074ad072}{Stack\+\_\+\+Dump}}(a,  b)~\mbox{\hyperlink{_stack_8h_a9d921bb6d43dc31fe949f77a0c309d0a}{C\+A\+T\+\_\+\+I\+M\+P\+L4}}(a,b)
+\item 
+\#define \mbox{\hyperlink{_stack_8h_a8505da864659802ea6819c1c342e9959}{S\+T\+A\+C\+K\+\_\+\+C\+H\+E\+CK}}(a,  thou)
+\begin{DoxyCompactList}\small\item\em Short record for debug checks. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{_stack_8h_a8cd5c6ed65fb2e800c16a5511c4a8580}{S\+T\+A\+C\+K\+\_\+\+E\+R\+R\+O\+R\+S\+\_\+H}}
+\item 
+\#define \mbox{\hyperlink{_stack_8h_ad22b087a5517d91867724dbaa7634720}{Stack\+\_\+\+Dump\+\_\+\+Part\+\_\+\+One}}(thou)
+\item 
+\#define \mbox{\hyperlink{_stack_8h_aa09a102d1436f0905ac72bc754daa7ff}{Stack\+\_\+\+Dump\+\_\+\+Part\+\_\+\+Two}}(thou)
+\item 
+\#define \mbox{\hyperlink{_stack_8h_a5fa6caea59d0a8efe9488aff826b5f8c}{Stack\+\_\+\+Dump\+\_\+int}}(thou)
+\begin{DoxyCompactList}\small\item\em Dumps Stack for type int and its content into stderr (now) \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{_stack_8h_a78487eb84c07724ecb511e03275d15b6}{Stack\+\_\+\+Dump\+\_\+unsigned}}(thou)
+\begin{DoxyCompactList}\small\item\em Dumps Stack for type unsigned and its content into stderr (now) \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{_stack_8h_a6b8313fbbc631bab417001c4958211e8}{Stack\+\_\+\+Dump\+\_\+double}}(thou)
+\begin{DoxyCompactList}\small\item\em Dumps Stack for type double and its content into stderr (now) \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{_stack_8h_ac3a3fc170f4f60db3493ae74d47c335b}{Stack\+\_\+\+Dump\+\_\+float}}(thou)
+\begin{DoxyCompactList}\small\item\em Dumps Stack for type float and its content into stderr (now) \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{_stack_8h_a888c4fd542112e335fd87beef7d1cf2c}{Stack\+\_\+\+Dump\+\_\+char}}(thou)
+\begin{DoxyCompactList}\small\item\em Dumps Stack for type char and its content into stderr (now) \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{_stack_8h_a0f4eff950424002a91e3162a730facfe}{S\+T\+A\+C\+K\+\_\+\+N\+A\+ME}}(thou)
+\item 
+\#define \mbox{\hyperlink{_stack_8h_a05f6d090c48c77a27bd136cb79579383}{S\+T\+A\+C\+K\+\_\+\+B\+I\+R\+D\+S\+\_\+\+C\+H\+E\+CK}}(thou)
+\item 
+\#define \mbox{\hyperlink{_stack_8h_a745660d87fda78b7cf65962ce3ea2885}{D\+A\+T\+A\+\_\+\+B\+I\+R\+D\+S\+\_\+\+C\+H\+E\+CK}}(thou,  type)
+\item 
+\#define \mbox{\hyperlink{_stack_8h_a8ae07a184a48c5023628d506005fb9a4}{S\+T\+A\+C\+K\+\_\+\+H\+A\+SH}}(thou)
+\item 
+\#define \mbox{\hyperlink{_stack_8h_ac18b8dce18f196aea5b383fead87c75a}{S\+T\+A\+C\+K\+\_\+\+I\+NT}}(a)~Stack\+\_\+int a; \mbox{\hyperlink{_stack_8h_af619ca0717dec543784aff21c0e0e3cc}{S\+T\+A\+C\+K\+\_\+\+I\+N\+IT}}(a)
+\item 
+\#define \mbox{\hyperlink{_stack_8h_a3039470a4e13be4bb2894c80830b3bfd}{S\+T\+A\+C\+K\+\_\+\+U\+N\+S\+I\+G\+N\+ED}}(a)~Stack\+\_\+unsigned a; \mbox{\hyperlink{_stack_8h_af619ca0717dec543784aff21c0e0e3cc}{S\+T\+A\+C\+K\+\_\+\+I\+N\+IT}}(a)
+\item 
+\#define \mbox{\hyperlink{_stack_8h_aeb9244a839d762ce745d587decc63cc9}{S\+T\+A\+C\+K\+\_\+\+D\+O\+U\+B\+LE}}(a)~Stack\+\_\+double a; \mbox{\hyperlink{_stack_8h_af619ca0717dec543784aff21c0e0e3cc}{S\+T\+A\+C\+K\+\_\+\+I\+N\+IT}}(a)
+\item 
+\#define \mbox{\hyperlink{_stack_8h_a7a8b4fa60c73ea68606e2c942817b5cd}{S\+T\+A\+C\+K\+\_\+\+F\+L\+O\+AT}}(a)~Stack\+\_\+float a; \mbox{\hyperlink{_stack_8h_af619ca0717dec543784aff21c0e0e3cc}{S\+T\+A\+C\+K\+\_\+\+I\+N\+IT}}(a)
+\item 
+\#define \mbox{\hyperlink{_stack_8h_a959ec177b16478886185ab6df1d384e0}{S\+T\+A\+C\+K\+\_\+\+C\+H\+AR}}(a)~Stack\+\_\+char a; \mbox{\hyperlink{_stack_8h_af619ca0717dec543784aff21c0e0e3cc}{S\+T\+A\+C\+K\+\_\+\+I\+N\+IT}}(a)
+\item 
+\#define \mbox{\hyperlink{_stack_8h_af619ca0717dec543784aff21c0e0e3cc}{S\+T\+A\+C\+K\+\_\+\+I\+N\+IT}}(a)
+\item 
+\#define \mbox{\hyperlink{_stack_8h_a639cd1bab4630fcfd3f2827e4e02da53}{S\+T\+A\+C\+K\+\_\+\+N\+A\+M\+E\+\_\+\+I\+N\+IT}}(a)
+\item 
+\#define \mbox{\hyperlink{_stack_8h_a6d4740d51a946b7453851d44a7d8d079}{S\+T\+A\+C\+K\+\_\+\+B\+I\+R\+D\+S\+\_\+\+I\+N\+IT}}(a)
+\item 
+\#define \mbox{\hyperlink{_stack_8h_a22ebb7a9aefb60028b1f720c7009ab81}{S\+T\+A\+C\+K\+\_\+\+H\+A\+S\+H\+\_\+\+I\+N\+IT}}(a)
+\item 
+\#define \mbox{\hyperlink{_stack_8h_aec2864553519b450501f110ca0c3e3b7}{S\+T\+A\+C\+K\+\_\+H}}
+\item 
+\#define \mbox{\hyperlink{_stack_8h_abf45990b8e6b31296850eb9e3694b764}{B\+I\+RD}}~unsigned int
+\begin{DoxyCompactList}\small\item\em Type for guard bird. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{_stack_8h_a6423a880df59733d2d9b509c7718d3a9}{S\+T\+A\+C\+K\+\_\+\+S\+I\+ZE}}~int
+\begin{DoxyCompactList}\small\item\em Type for stack size. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{_stack_8h_aa70530dd0c7c754713b95ce6e87ffb4d}{S\+T\+A\+C\+K\+\_\+\+C\+A\+P\+A\+C\+I\+TY}}~int
+\begin{DoxyCompactList}\small\item\em Type for stack capacity. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{_stack_8h_abc31d73e62d5a07ddad2608f759c288c}{H\+A\+S\+H\+\_\+\+T\+Y\+PE}}~unsigned int
+\begin{DoxyCompactList}\small\item\em Type for hash. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{_stack_8h_a420d483c25fa71bb783fba46bfea209b}{Stack\+\_\+\+Errors}} \{ \newline
+\mbox{\hyperlink{_stack_8h_a420d483c25fa71bb783fba46bfea209ba2bc49ec37d6a5715dd23e85f1ff5bb59}{OK}} = 0, 
+\mbox{\hyperlink{_stack_8h_a420d483c25fa71bb783fba46bfea209bae84d9827cef7e5d8b213dc3372358c9b}{N\+E\+G\+A\+T\+I\+V\+E\+\_\+\+S\+I\+ZE}}, 
+\mbox{\hyperlink{_stack_8h_a420d483c25fa71bb783fba46bfea209ba5e6ab94ebb6fd5ab21421491979049fb}{N\+E\+G\+A\+T\+I\+V\+E\+\_\+\+C\+A\+P\+A\+C\+I\+TY}}, 
+\mbox{\hyperlink{_stack_8h_a420d483c25fa71bb783fba46bfea209ba6172ab45641e97c5eb218a7a3536d04b}{S\+I\+Z\+E\+\_\+\+G\+R\+E\+A\+T\+E\+R\+\_\+\+C\+A\+P\+A\+C\+I\+TY}}, 
+\newline
+\mbox{\hyperlink{_stack_8h_a420d483c25fa71bb783fba46bfea209ba8dd2a8460b8cc5cfa92cbd6e9ee2f6be}{N\+U\+L\+L\+\_\+\+D\+A\+TA}}, 
+\mbox{\hyperlink{_stack_8h_a420d483c25fa71bb783fba46bfea209ba5e958a593636fb39df091ad44effe714}{P\+O\+I\+S\+O\+N\+E\+D\+\_\+\+V\+A\+L\+UE}}, 
+\mbox{\hyperlink{_stack_8h_a420d483c25fa71bb783fba46bfea209ba9896c8d39da1248a89071f37ea049506}{W\+R\+O\+N\+G\+\_\+\+S\+T\+A\+C\+K\+\_\+\+P\+O\+I\+N\+T\+ER}}, 
+\mbox{\hyperlink{_stack_8h_a420d483c25fa71bb783fba46bfea209bad40111a56cb9e9a9568fefe9feb84968}{D\+E\+A\+D\+\_\+\+D\+A\+T\+A\+\_\+\+P\+O\+I\+N\+T\+ER}}, 
+\newline
+\mbox{\hyperlink{_stack_8h_a420d483c25fa71bb783fba46bfea209baeff0a29b7e45f4a5912beffd045287b3}{F\+I\+R\+S\+T\+\_\+\+S\+T\+A\+C\+K\+\_\+\+B\+I\+R\+D\+\_\+\+D\+E\+AD}}, 
+\mbox{\hyperlink{_stack_8h_a420d483c25fa71bb783fba46bfea209ba021d1fa1ee4d26f11403106ed29f8109}{S\+E\+C\+O\+N\+D\+\_\+\+S\+T\+A\+C\+K\+\_\+\+B\+I\+R\+D\+\_\+\+D\+E\+AD}}, 
+\mbox{\hyperlink{_stack_8h_a420d483c25fa71bb783fba46bfea209ba797917b3e80fdd213943fe973e0b8480}{F\+I\+R\+S\+T\+\_\+\+D\+A\+T\+A\+\_\+\+B\+I\+R\+D\+\_\+\+D\+E\+AD}}, 
+\mbox{\hyperlink{_stack_8h_a420d483c25fa71bb783fba46bfea209ba1448cccc44dcf59733c81d79948b6440}{S\+E\+C\+O\+N\+D\+\_\+\+D\+A\+T\+A\+\_\+\+B\+I\+R\+D\+\_\+\+D\+E\+AD}}, 
+\newline
+\mbox{\hyperlink{_stack_8h_a420d483c25fa71bb783fba46bfea209babd59ab810f6a9df29d4b33fbc987ae63}{N\+U\+L\+L\+\_\+\+D\+A\+T\+A\+\_\+\+N\+O\+N\+U\+L\+L\+\_\+\+C\+A\+P\+A\+C\+I\+TY}}, 
+\mbox{\hyperlink{_stack_8h_a420d483c25fa71bb783fba46bfea209ba1ff3a9e9625b3af7ac55a8aa7b046544}{W\+R\+O\+N\+G\+\_\+\+S\+T\+A\+C\+K\+\_\+\+H\+A\+SH}}, 
+\mbox{\hyperlink{_stack_8h_a420d483c25fa71bb783fba46bfea209baace2417ec476892872058d9c03d45da7}{W\+R\+O\+N\+G\+\_\+\+D\+A\+T\+A\+\_\+\+H\+A\+SH}}, 
+\mbox{\hyperlink{_stack_8h_a420d483c25fa71bb783fba46bfea209ba2fa3114dc11f3a0dbfc8f2a3d141e2da}{N\+O\+T\+\_\+\+E\+N\+O\+U\+G\+H\+\_\+\+M\+E\+M\+O\+RY}}
+ \}
+\begin{DoxyCompactList}\small\item\em Values for error codes. 0 -\/ success, not 0 -\/ error. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{_stack_8h_ae7890273d85f262176601f9fe233211e}{Stack}} (\mbox{\hyperlink{cpu_8cpp_a5a392548f2df67370cb15d2a5d75cd7b}{T\+Y\+PE}})
+\begin{DoxyCompactList}\small\item\em "Template" for different stacks \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{_stack_8h_a644ffb076fdd47e982c5dfafab0ff8e5}{Stack\+\_\+\+Err}} (\mbox{\hyperlink{_stack_8h_ae7890273d85f262176601f9fe233211e}{Stack}}(\mbox{\hyperlink{cpu_8cpp_a5a392548f2df67370cb15d2a5d75cd7b}{T\+Y\+PE}}) $\ast$thou)
+\begin{DoxyCompactList}\small\item\em Check stack. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_stack_8h_a2d0a5be2e07b812ed273a8f2aca600df}{print\+\_\+err}} (int err, \mbox{\hyperlink{_stack_8h_ae7890273d85f262176601f9fe233211e}{Stack}}(\mbox{\hyperlink{cpu_8cpp_a5a392548f2df67370cb15d2a5d75cd7b}{T\+Y\+PE}}) $\ast$thou=N\+U\+LL)
+\begin{DoxyCompactList}\small\item\em Error decryption. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{_stack_8h_abc31d73e62d5a07ddad2608f759c288c}{H\+A\+S\+H\+\_\+\+T\+Y\+PE}} \mbox{\hyperlink{_stack_8h_a7f18dd7b790dda2f2208f009d6d1096c}{hash\+\_\+counter}} (unsigned char $\ast$s, \mbox{\hyperlink{_stack_8h_a6423a880df59733d2d9b509c7718d3a9}{S\+T\+A\+C\+K\+\_\+\+S\+I\+ZE}} number)
+\item 
+bool \mbox{\hyperlink{_stack_8h_acd3fe6f99bdea616b6e3f7e1a14f49f9}{Stack\+\_\+\+Destruct}} (\mbox{\hyperlink{_stack_8h_ae7890273d85f262176601f9fe233211e}{Stack}}(\mbox{\hyperlink{cpu_8cpp_a5a392548f2df67370cb15d2a5d75cd7b}{T\+Y\+PE}}) $\ast$thou)
+\begin{DoxyCompactList}\small\item\em Destructor for stack. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{_stack_8h_ae5198b21e11f4b2140a07fac19d2af8a}{Stack\+\_\+\+Push}} (\mbox{\hyperlink{_stack_8h_ae7890273d85f262176601f9fe233211e}{Stack}}(\mbox{\hyperlink{cpu_8cpp_a5a392548f2df67370cb15d2a5d75cd7b}{T\+Y\+PE}}) $\ast$thou, \mbox{\hyperlink{cpu_8cpp_a5a392548f2df67370cb15d2a5d75cd7b}{T\+Y\+PE}} elem)
+\begin{DoxyCompactList}\small\item\em Add elem in stack. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{_stack_8h_a4e92fea2bd2da656da9910d9b896d7d3}{Stack\+\_\+\+Pop}} (\mbox{\hyperlink{_stack_8h_ae7890273d85f262176601f9fe233211e}{Stack}}(\mbox{\hyperlink{cpu_8cpp_a5a392548f2df67370cb15d2a5d75cd7b}{T\+Y\+PE}}) $\ast$thou)
+\begin{DoxyCompactList}\small\item\em Pops the stack top elem. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{cpu_8cpp_a5a392548f2df67370cb15d2a5d75cd7b}{T\+Y\+PE}} \mbox{\hyperlink{_stack_8h_a9a9a419d4fd7d16aa2131d765f6f6415}{Stack\+\_\+\+Top}} (\mbox{\hyperlink{_stack_8h_ae7890273d85f262176601f9fe233211e}{Stack}}(\mbox{\hyperlink{cpu_8cpp_a5a392548f2df67370cb15d2a5d75cd7b}{T\+Y\+PE}}) $\ast$thou)
+\begin{DoxyCompactList}\small\item\em Take the stack top without deleting. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{_stack_8h_a6423a880df59733d2d9b509c7718d3a9}{S\+T\+A\+C\+K\+\_\+\+S\+I\+ZE}} \mbox{\hyperlink{_stack_8h_a37faed72eb1e78cd884b6cdab41839da}{Stack\+\_\+\+Size}} (\mbox{\hyperlink{_stack_8h_ae7890273d85f262176601f9fe233211e}{Stack}}(\mbox{\hyperlink{cpu_8cpp_a5a392548f2df67370cb15d2a5d75cd7b}{T\+Y\+PE}}) $\ast$thou)
+\begin{DoxyCompactList}\small\item\em Stack size. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{_stack_8h_a93095f9a2b731d864f9b0cac1f089119}{Stack\+\_\+\+Empty}} (\mbox{\hyperlink{_stack_8h_ae7890273d85f262176601f9fe233211e}{Stack}}(\mbox{\hyperlink{cpu_8cpp_a5a392548f2df67370cb15d2a5d75cd7b}{T\+Y\+PE}}) $\ast$thou)
+\begin{DoxyCompactList}\small\item\em Check on empty stack. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+double \mbox{\hyperlink{_stack_8h_abc605c1487b3e5dcd15b1cbb203ab84a}{P\+O\+I\+S\+O\+N\+\_\+\+E\+PS}} = 1e-\/8
+\begin{DoxyCompactList}\small\item\em Epsilon for non-\/integer comparing. \end{DoxyCompactList}\item 
+void $\ast$ \mbox{\hyperlink{_stack_8h_a44862a4c1a96f246747d4b405b1a6306}{errptr}} = (void $\ast$)13
+\begin{DoxyCompactList}\small\item\em Knowingly wrong pointer, but not N\+U\+LL. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{_stack_8h_a6423a880df59733d2d9b509c7718d3a9}{S\+T\+A\+C\+K\+\_\+\+S\+I\+ZE}} \mbox{\hyperlink{_stack_8h_ad31d7a7b4deae96f3cec0bfb67afe22a}{errsize}} = -\/777
+\begin{DoxyCompactList}\small\item\em Special wrong stack size value (poison) \end{DoxyCompactList}\item 
+\mbox{\hyperlink{_stack_8h_aa70530dd0c7c754713b95ce6e87ffb4d}{S\+T\+A\+C\+K\+\_\+\+C\+A\+P\+A\+C\+I\+TY}} \mbox{\hyperlink{_stack_8h_a427afe7d253dacbccf993c8b74651455}{errcapacity}} = -\/666
+\begin{DoxyCompactList}\small\item\em Special wrong stack capacity value (poison) \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{_stack_8h_aaae64d2016737492eb0044dd6ec27baa}{P\+O\+I\+S\+O\+N\+\_\+int}} = 0x\+D\+E\+A\+D\+B\+E\+EF
+\begin{DoxyCompactList}\small\item\em Poisoned value for type int. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{_stack_8h_a07ba10b79cd7560b92a953a6707d3150}{P\+O\+I\+S\+O\+N\+\_\+double}} = 12345.\+54321
+\begin{DoxyCompactList}\small\item\em Poisoned value for type double. \end{DoxyCompactList}\item 
+unsigned \mbox{\hyperlink{_stack_8h_a91757b52000d3532de24a0085c31df4a}{P\+O\+I\+S\+O\+N\+\_\+unsigned}} = 0x0\+E\+A\+D\+B\+E\+EF
+\begin{DoxyCompactList}\small\item\em Poisoned value for type double. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{_stack_8h_a304c7e3b73656ec1da6a14c62f380892}{P\+O\+I\+S\+O\+N\+\_\+float}} = 12345.\+54321
+\begin{DoxyCompactList}\small\item\em Poisoned value for type double. \end{DoxyCompactList}\item 
+char \mbox{\hyperlink{_stack_8h_a751453e6895ce5accd65854f1965f257}{P\+O\+I\+S\+O\+N\+\_\+char}} = 127
+\begin{DoxyCompactList}\small\item\em Poisoned value for type double. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{_stack_8h_abf45990b8e6b31296850eb9e3694b764}{B\+I\+RD}} \mbox{\hyperlink{_stack_8h_a761462331f60d9945e8afc9792d1fe6b}{bird\+\_\+prototype}} = 0x\+D\+E\+A\+D\+B\+E\+E\+F\+U\+LL
+\begin{DoxyCompactList}\small\item\em Basic value for guard bird. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{_stack_8h_abf45990b8e6b31296850eb9e3694b764}\label{_stack_8h_abf45990b8e6b31296850eb9e3694b764}} 
+\index{Stack.h@{Stack.h}!BIRD@{BIRD}}
+\index{BIRD@{BIRD}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{BIRD}{BIRD}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \#define B\+I\+RD~unsigned int}
+
+
+
+Type for guard bird. 
+
+\mbox{\Hypertarget{_stack_8h_abf45990b8e6b31296850eb9e3694b764}\label{_stack_8h_abf45990b8e6b31296850eb9e3694b764}} 
+\index{Stack.h@{Stack.h}!BIRD@{BIRD}}
+\index{BIRD@{BIRD}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{BIRD}{BIRD}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \#define B\+I\+RD~unsigned int}
+
+
+
+Type for guard bird. 
+
+\mbox{\Hypertarget{_stack_8h_a7d461e9fe73a517a0b15526acf3bf722}\label{_stack_8h_a7d461e9fe73a517a0b15526acf3bf722}} 
+\index{Stack.h@{Stack.h}!CAT\_IMPL@{CAT\_IMPL}}
+\index{CAT\_IMPL@{CAT\_IMPL}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{CAT\_IMPL}{CAT\_IMPL}}
+{\footnotesize\ttfamily \#define C\+A\+T\+\_\+\+I\+M\+PL(\begin{DoxyParamCaption}\item[{}]{a }\end{DoxyParamCaption})~Stack\+\_\+\#\#a}
+
+
+
+This is magic for right preprocessing. 
+
+\mbox{\Hypertarget{_stack_8h_adcfe02461ea4ec0d5182cd11d7bb4b6c}\label{_stack_8h_adcfe02461ea4ec0d5182cd11d7bb4b6c}} 
+\index{Stack.h@{Stack.h}!CAT\_IMPL2@{CAT\_IMPL2}}
+\index{CAT\_IMPL2@{CAT\_IMPL2}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{CAT\_IMPL2}{CAT\_IMPL2}}
+{\footnotesize\ttfamily \#define C\+A\+T\+\_\+\+I\+M\+P\+L2(\begin{DoxyParamCaption}\item[{}]{a }\end{DoxyParamCaption})~P\+O\+I\+S\+O\+N\+\_\+\#\#a}
+
+
+
+This is magic for right preprocessing. 
+
+\mbox{\Hypertarget{_stack_8h_a5b5975bc5eb71df19df47225ef4b57af}\label{_stack_8h_a5b5975bc5eb71df19df47225ef4b57af}} 
+\index{Stack.h@{Stack.h}!CAT\_IMPL3@{CAT\_IMPL3}}
+\index{CAT\_IMPL3@{CAT\_IMPL3}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{CAT\_IMPL3}{CAT\_IMPL3}}
+{\footnotesize\ttfamily \#define C\+A\+T\+\_\+\+I\+M\+P\+L3(\begin{DoxyParamCaption}\item[{}]{a }\end{DoxyParamCaption})~Print\+\_\+\#\#a}
+
+\mbox{\Hypertarget{_stack_8h_a9d921bb6d43dc31fe949f77a0c309d0a}\label{_stack_8h_a9d921bb6d43dc31fe949f77a0c309d0a}} 
+\index{Stack.h@{Stack.h}!CAT\_IMPL4@{CAT\_IMPL4}}
+\index{CAT\_IMPL4@{CAT\_IMPL4}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{CAT\_IMPL4}{CAT\_IMPL4}}
+{\footnotesize\ttfamily \#define C\+A\+T\+\_\+\+I\+M\+P\+L4(\begin{DoxyParamCaption}\item[{}]{a,  }\item[{}]{b }\end{DoxyParamCaption})~Stack\+\_\+\+Dump\+\_\+\#\#a (b)}
+
+\mbox{\Hypertarget{_stack_8h_a745660d87fda78b7cf65962ce3ea2885}\label{_stack_8h_a745660d87fda78b7cf65962ce3ea2885}} 
+\index{Stack.h@{Stack.h}!DATA\_BIRDS\_CHECK@{DATA\_BIRDS\_CHECK}}
+\index{DATA\_BIRDS\_CHECK@{DATA\_BIRDS\_CHECK}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{DATA\_BIRDS\_CHECK}{DATA\_BIRDS\_CHECK}}
+{\footnotesize\ttfamily \#define D\+A\+T\+A\+\_\+\+B\+I\+R\+D\+S\+\_\+\+C\+H\+E\+CK(\begin{DoxyParamCaption}\item[{}]{thou,  }\item[{}]{type }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{_stack_8h_abc31d73e62d5a07ddad2608f759c288c}\label{_stack_8h_abc31d73e62d5a07ddad2608f759c288c}} 
+\index{Stack.h@{Stack.h}!HASH\_TYPE@{HASH\_TYPE}}
+\index{HASH\_TYPE@{HASH\_TYPE}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{HASH\_TYPE}{HASH\_TYPE}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \#define H\+A\+S\+H\+\_\+\+T\+Y\+PE~unsigned int}
+
+
+
+Type for hash. 
+
+\mbox{\Hypertarget{_stack_8h_abc31d73e62d5a07ddad2608f759c288c}\label{_stack_8h_abc31d73e62d5a07ddad2608f759c288c}} 
+\index{Stack.h@{Stack.h}!HASH\_TYPE@{HASH\_TYPE}}
+\index{HASH\_TYPE@{HASH\_TYPE}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{HASH\_TYPE}{HASH\_TYPE}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \#define H\+A\+S\+H\+\_\+\+T\+Y\+PE~unsigned int}
+
+
+
+Type for hash. 
+
+\mbox{\Hypertarget{_stack_8h_a9d3d727a319801d2a2aab8214dd7add7}\label{_stack_8h_a9d3d727a319801d2a2aab8214dd7add7}} 
+\index{Stack.h@{Stack.h}!POISON@{POISON}}
+\index{POISON@{POISON}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{POISON}{POISON}}
+{\footnotesize\ttfamily \#define P\+O\+I\+S\+ON(\begin{DoxyParamCaption}\item[{}]{a }\end{DoxyParamCaption})~\mbox{\hyperlink{_stack_8h_adcfe02461ea4ec0d5182cd11d7bb4b6c}{C\+A\+T\+\_\+\+I\+M\+P\+L2}}(a)}
+
+
+
+This is magic for right preprocessing. 
+
+\mbox{\Hypertarget{_stack_8h_aa5d6e791d48f2ad5338064093822cfaa}\label{_stack_8h_aa5d6e791d48f2ad5338064093822cfaa}} 
+\index{Stack.h@{Stack.h}!PRINT@{PRINT}}
+\index{PRINT@{PRINT}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{PRINT}{PRINT}}
+{\footnotesize\ttfamily \#define P\+R\+I\+NT(\begin{DoxyParamCaption}\item[{}]{a }\end{DoxyParamCaption})~\mbox{\hyperlink{_stack_8h_a5b5975bc5eb71df19df47225ef4b57af}{C\+A\+T\+\_\+\+I\+M\+P\+L3}}(a)}
+
+\mbox{\Hypertarget{_stack_8h_aa274c17f7ba91a5b3e8cc34684fd3b07}\label{_stack_8h_aa274c17f7ba91a5b3e8cc34684fd3b07}} 
+\index{Stack.h@{Stack.h}!Stack@{Stack}}
+\index{Stack@{Stack}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{Stack}{Stack}}
+{\footnotesize\ttfamily \#define Stack(\begin{DoxyParamCaption}\item[{}]{a }\end{DoxyParamCaption})~\mbox{\hyperlink{_stack_8h_a7d461e9fe73a517a0b15526acf3bf722}{C\+A\+T\+\_\+\+I\+M\+PL}}(a)}
+
+
+
+This is magic for right preprocessing. 
+
+\mbox{\Hypertarget{_stack_8h_a05f6d090c48c77a27bd136cb79579383}\label{_stack_8h_a05f6d090c48c77a27bd136cb79579383}} 
+\index{Stack.h@{Stack.h}!STACK\_BIRDS\_CHECK@{STACK\_BIRDS\_CHECK}}
+\index{STACK\_BIRDS\_CHECK@{STACK\_BIRDS\_CHECK}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{STACK\_BIRDS\_CHECK}{STACK\_BIRDS\_CHECK}}
+{\footnotesize\ttfamily \#define S\+T\+A\+C\+K\+\_\+\+B\+I\+R\+D\+S\+\_\+\+C\+H\+E\+CK(\begin{DoxyParamCaption}\item[{}]{thou }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{_stack_8h_a6d4740d51a946b7453851d44a7d8d079}\label{_stack_8h_a6d4740d51a946b7453851d44a7d8d079}} 
+\index{Stack.h@{Stack.h}!STACK\_BIRDS\_INIT@{STACK\_BIRDS\_INIT}}
+\index{STACK\_BIRDS\_INIT@{STACK\_BIRDS\_INIT}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{STACK\_BIRDS\_INIT}{STACK\_BIRDS\_INIT}}
+{\footnotesize\ttfamily \#define S\+T\+A\+C\+K\+\_\+\+B\+I\+R\+D\+S\+\_\+\+I\+N\+IT(\begin{DoxyParamCaption}\item[{}]{a }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{_stack_8h_aa70530dd0c7c754713b95ce6e87ffb4d}\label{_stack_8h_aa70530dd0c7c754713b95ce6e87ffb4d}} 
+\index{Stack.h@{Stack.h}!STACK\_CAPACITY@{STACK\_CAPACITY}}
+\index{STACK\_CAPACITY@{STACK\_CAPACITY}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{STACK\_CAPACITY}{STACK\_CAPACITY}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \#define S\+T\+A\+C\+K\+\_\+\+C\+A\+P\+A\+C\+I\+TY~int}
+
+
+
+Type for stack capacity. 
+
+Type of stack capacity var. May be changed in future. \mbox{\Hypertarget{_stack_8h_aa70530dd0c7c754713b95ce6e87ffb4d}\label{_stack_8h_aa70530dd0c7c754713b95ce6e87ffb4d}} 
+\index{Stack.h@{Stack.h}!STACK\_CAPACITY@{STACK\_CAPACITY}}
+\index{STACK\_CAPACITY@{STACK\_CAPACITY}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{STACK\_CAPACITY}{STACK\_CAPACITY}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \#define S\+T\+A\+C\+K\+\_\+\+C\+A\+P\+A\+C\+I\+TY~int}
+
+
+
+Type for stack capacity. 
+
+Type of stack capacity var. May be changed in future. \mbox{\Hypertarget{_stack_8h_aa70530dd0c7c754713b95ce6e87ffb4d}\label{_stack_8h_aa70530dd0c7c754713b95ce6e87ffb4d}} 
+\index{Stack.h@{Stack.h}!STACK\_CAPACITY@{STACK\_CAPACITY}}
+\index{STACK\_CAPACITY@{STACK\_CAPACITY}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{STACK\_CAPACITY}{STACK\_CAPACITY}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \#define S\+T\+A\+C\+K\+\_\+\+C\+A\+P\+A\+C\+I\+TY~int}
+
+
+
+Type for stack capacity. 
+
+Type of stack capacity var. May be changed in future. \mbox{\Hypertarget{_stack_8h_a959ec177b16478886185ab6df1d384e0}\label{_stack_8h_a959ec177b16478886185ab6df1d384e0}} 
+\index{Stack.h@{Stack.h}!STACK\_CHAR@{STACK\_CHAR}}
+\index{STACK\_CHAR@{STACK\_CHAR}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{STACK\_CHAR}{STACK\_CHAR}}
+{\footnotesize\ttfamily \#define S\+T\+A\+C\+K\+\_\+\+C\+H\+AR(\begin{DoxyParamCaption}\item[{}]{a }\end{DoxyParamCaption})~Stack\+\_\+char a; \mbox{\hyperlink{_stack_8h_af619ca0717dec543784aff21c0e0e3cc}{S\+T\+A\+C\+K\+\_\+\+I\+N\+IT}}(a)}
+
+\mbox{\Hypertarget{_stack_8h_a8505da864659802ea6819c1c342e9959}\label{_stack_8h_a8505da864659802ea6819c1c342e9959}} 
+\index{Stack.h@{Stack.h}!STACK\_CHECK@{STACK\_CHECK}}
+\index{STACK\_CHECK@{STACK\_CHECK}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{STACK\_CHECK}{STACK\_CHECK}}
+{\footnotesize\ttfamily \#define S\+T\+A\+C\+K\+\_\+\+C\+H\+E\+CK(\begin{DoxyParamCaption}\item[{}]{a,  }\item[{}]{thou }\end{DoxyParamCaption})}
+
+
+
+Short record for debug checks. 
+
+\mbox{\Hypertarget{_stack_8h_aeb9244a839d762ce745d587decc63cc9}\label{_stack_8h_aeb9244a839d762ce745d587decc63cc9}} 
+\index{Stack.h@{Stack.h}!STACK\_DOUBLE@{STACK\_DOUBLE}}
+\index{STACK\_DOUBLE@{STACK\_DOUBLE}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{STACK\_DOUBLE}{STACK\_DOUBLE}}
+{\footnotesize\ttfamily \#define S\+T\+A\+C\+K\+\_\+\+D\+O\+U\+B\+LE(\begin{DoxyParamCaption}\item[{}]{a }\end{DoxyParamCaption})~Stack\+\_\+double a; \mbox{\hyperlink{_stack_8h_af619ca0717dec543784aff21c0e0e3cc}{S\+T\+A\+C\+K\+\_\+\+I\+N\+IT}}(a)}
+
+\mbox{\Hypertarget{_stack_8h_ab1278e5c78a16d2f56716b9d074ad072}\label{_stack_8h_ab1278e5c78a16d2f56716b9d074ad072}} 
+\index{Stack.h@{Stack.h}!Stack\_Dump@{Stack\_Dump}}
+\index{Stack\_Dump@{Stack\_Dump}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{Stack\_Dump}{Stack\_Dump}}
+{\footnotesize\ttfamily \#define Stack\+\_\+\+Dump(\begin{DoxyParamCaption}\item[{}]{a,  }\item[{}]{b }\end{DoxyParamCaption})~\mbox{\hyperlink{_stack_8h_a9d921bb6d43dc31fe949f77a0c309d0a}{C\+A\+T\+\_\+\+I\+M\+P\+L4}}(a,b)}
+
+\mbox{\Hypertarget{_stack_8h_a888c4fd542112e335fd87beef7d1cf2c}\label{_stack_8h_a888c4fd542112e335fd87beef7d1cf2c}} 
+\index{Stack.h@{Stack.h}!Stack\_Dump\_char@{Stack\_Dump\_char}}
+\index{Stack\_Dump\_char@{Stack\_Dump\_char}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{Stack\_Dump\_char}{Stack\_Dump\_char}}
+{\footnotesize\ttfamily \#define Stack\+\_\+\+Dump\+\_\+char(\begin{DoxyParamCaption}\item[{}]{thou }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\{ \(\backslash\)}
+\DoxyCodeLine{    fprintf(stderr, \textcolor{stringliteral}{"stack dump [TYPE = char]"}); \(\backslash\)}
+\DoxyCodeLine{    Stack\_Dump\_Part\_One(thou);\(\backslash\)}
+\DoxyCodeLine{    DATA\_BIRDS\_CHECK(thou, \textcolor{keywordtype}{char});\(\backslash\)}
+\DoxyCodeLine{    \}\(\backslash\)}
+\DoxyCodeLine{    for (\textcolor{keywordtype}{int} i = 0; i < (thou)-\/>size; i++) \{\(\backslash\)}
+\DoxyCodeLine{    fprintf(stderr, \textcolor{stringliteral}{"\(\backslash\)n *[\%d] = \%c"}, i, (thou)-\/>data[i]);\(\backslash\)}
+\DoxyCodeLine{            if ((thou)-\/>data[i] == \mbox{\hyperlink{_stack_8h_a751453e6895ce5accd65854f1965f257}{POISON\_char}}) \{\(\backslash\)}
+\DoxyCodeLine{    Stack\_Dump\_Part\_Two(thou);\(\backslash\)}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+Dumps Stack for type char and its content into stderr (now) 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em thou} & -\/ pointer on stack \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_stack_8h_a6b8313fbbc631bab417001c4958211e8}\label{_stack_8h_a6b8313fbbc631bab417001c4958211e8}} 
+\index{Stack.h@{Stack.h}!Stack\_Dump\_double@{Stack\_Dump\_double}}
+\index{Stack\_Dump\_double@{Stack\_Dump\_double}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{Stack\_Dump\_double}{Stack\_Dump\_double}}
+{\footnotesize\ttfamily \#define Stack\+\_\+\+Dump\+\_\+double(\begin{DoxyParamCaption}\item[{}]{thou }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\{ \(\backslash\)}
+\DoxyCodeLine{    fprintf(stderr, \textcolor{stringliteral}{"stack dump [TYPE = double]"}); \(\backslash\)}
+\DoxyCodeLine{    Stack\_Dump\_Part\_One(thou);\(\backslash\)}
+\DoxyCodeLine{    DATA\_BIRDS\_CHECK(thou, \textcolor{keywordtype}{double});\(\backslash\)}
+\DoxyCodeLine{    \}\(\backslash\)}
+\DoxyCodeLine{    for (\textcolor{keywordtype}{int} i = 0; i < (thou)-\/>size; i++) \{\(\backslash\)}
+\DoxyCodeLine{    fprintf(stderr, \textcolor{stringliteral}{"\(\backslash\)n *[\%d] = \%lf"}, i, (thou)-\/>data[i]);\(\backslash\)}
+\DoxyCodeLine{            if (fabs((thou)-\/>data[i] -\/ \mbox{\hyperlink{_stack_8h_a07ba10b79cd7560b92a953a6707d3150}{POISON\_double}}) < EPS) \{\(\backslash\)}
+\DoxyCodeLine{    Stack\_Dump\_Part\_Two(thou);\(\backslash\)}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+Dumps Stack for type double and its content into stderr (now) 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em thou} & -\/ pointer on stack \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_stack_8h_ac3a3fc170f4f60db3493ae74d47c335b}\label{_stack_8h_ac3a3fc170f4f60db3493ae74d47c335b}} 
+\index{Stack.h@{Stack.h}!Stack\_Dump\_float@{Stack\_Dump\_float}}
+\index{Stack\_Dump\_float@{Stack\_Dump\_float}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{Stack\_Dump\_float}{Stack\_Dump\_float}}
+{\footnotesize\ttfamily \#define Stack\+\_\+\+Dump\+\_\+float(\begin{DoxyParamCaption}\item[{}]{thou }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\{ \(\backslash\)}
+\DoxyCodeLine{    fprintf(stderr, \textcolor{stringliteral}{"stack dump [TYPE = float]"}); \(\backslash\)}
+\DoxyCodeLine{    Stack\_Dump\_Part\_One(thou);\(\backslash\)}
+\DoxyCodeLine{    DATA\_BIRDS\_CHECK(thou, \textcolor{keywordtype}{float});\(\backslash\)}
+\DoxyCodeLine{    \}\(\backslash\)}
+\DoxyCodeLine{    for (\textcolor{keywordtype}{int} i = 0; i < (thou)-\/>size; i++) \{\(\backslash\)}
+\DoxyCodeLine{    fprintf(stderr, \textcolor{stringliteral}{"\(\backslash\)n *[\%d] = \%f"}, i, (thou)-\/>data[i]);\(\backslash\)}
+\DoxyCodeLine{            if (fabs((thou)-\/>data[i] -\/ \mbox{\hyperlink{_stack_8h_a304c7e3b73656ec1da6a14c62f380892}{POISON\_float}}) < EPS) \{\(\backslash\)}
+\DoxyCodeLine{    Stack\_Dump\_Part\_Two(thou);\(\backslash\)}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+Dumps Stack for type float and its content into stderr (now) 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em thou} & -\/ pointer on stack \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_stack_8h_a5fa6caea59d0a8efe9488aff826b5f8c}\label{_stack_8h_a5fa6caea59d0a8efe9488aff826b5f8c}} 
+\index{Stack.h@{Stack.h}!Stack\_Dump\_int@{Stack\_Dump\_int}}
+\index{Stack\_Dump\_int@{Stack\_Dump\_int}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{Stack\_Dump\_int}{Stack\_Dump\_int}}
+{\footnotesize\ttfamily \#define Stack\+\_\+\+Dump\+\_\+int(\begin{DoxyParamCaption}\item[{}]{thou }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\{ \(\backslash\)}
+\DoxyCodeLine{    fprintf(stderr, \textcolor{stringliteral}{"stack dump [TYPE = int]"}); \(\backslash\)}
+\DoxyCodeLine{    Stack\_Dump\_Part\_One(thou);\(\backslash\)}
+\DoxyCodeLine{    DATA\_BIRDS\_CHECK(thou, \textcolor{keywordtype}{int});\(\backslash\)}
+\DoxyCodeLine{    \}\(\backslash\)}
+\DoxyCodeLine{    for (\textcolor{keywordtype}{int} i = 0; i < (thou)-\/>size; i++) \{\(\backslash\)}
+\DoxyCodeLine{    fprintf(stderr, \textcolor{stringliteral}{"\(\backslash\)n *[\%d] = \%d"}, i, (thou)-\/>data[i]);\(\backslash\)}
+\DoxyCodeLine{            if ((thou)-\/>data[i] == \mbox{\hyperlink{_stack_8h_aaae64d2016737492eb0044dd6ec27baa}{POISON\_int}}) \{\(\backslash\)}
+\DoxyCodeLine{    Stack\_Dump\_Part\_Two(thou);\(\backslash\)}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+Dumps Stack for type int and its content into stderr (now) 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em thou} & -\/ pointer on stack \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_stack_8h_ad22b087a5517d91867724dbaa7634720}\label{_stack_8h_ad22b087a5517d91867724dbaa7634720}} 
+\index{Stack.h@{Stack.h}!Stack\_Dump\_Part\_One@{Stack\_Dump\_Part\_One}}
+\index{Stack\_Dump\_Part\_One@{Stack\_Dump\_Part\_One}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{Stack\_Dump\_Part\_One}{Stack\_Dump\_Part\_One}}
+{\footnotesize\ttfamily \#define Stack\+\_\+\+Dump\+\_\+\+Part\+\_\+\+One(\begin{DoxyParamCaption}\item[{}]{thou }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{    \textcolor{keywordtype}{int} err = \mbox{\hyperlink{_stack_8h_a644ffb076fdd47e982c5dfafab0ff8e5}{Stack\_Err}}((thou)); \(\backslash\)}
+\DoxyCodeLine{    if (!err) \{ \(\backslash\)}
+\DoxyCodeLine{        fprintf(stderr, \textcolor{stringliteral}{" (ok) "}); \(\backslash\)}
+\DoxyCodeLine{    \} \textcolor{keywordflow}{else} \{ \(\backslash\)}
+\DoxyCodeLine{        print\_err(err, (thou)); \(\backslash\)}
+\DoxyCodeLine{    \} \(\backslash\)}
+\DoxyCodeLine{    if (err != \mbox{\hyperlink{_stack_8h_a420d483c25fa71bb783fba46bfea209ba9896c8d39da1248a89071f37ea049506}{WRONG\_STACK\_POINTER}}) \{ \(\backslash\)}
+\DoxyCodeLine{        STACK\_NAME(thou);\(\backslash\)}
+\DoxyCodeLine{        STACK\_HASH(thou);\(\backslash\)}
+\DoxyCodeLine{        fprintf(stderr, \textcolor{stringliteral}{"\(\backslash\)n [ \%p ] "}, thou); \(\backslash\)}
+\DoxyCodeLine{        fprintf(stderr, \textcolor{stringliteral}{"[ in file: \%s on func: \%s on line: \%d ]"}, \_\_FILE\_\_, \_\_func\_\_, \_\_LINE\_\_);  \(\backslash\)}
+\DoxyCodeLine{        STACK\_BIRDS\_CHECK(thou);\(\backslash\)}
+\DoxyCodeLine{        fprintf(stderr, \textcolor{stringliteral}{"\(\backslash\)n size = \%d, capacity = \%d "}, (thou)-\/>size, (thou)-\/>capacity);\(\backslash\)}
+\DoxyCodeLine{        if ((thou)-\/>capacity > 0) \{\(\backslash\)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{_stack_8h_aa09a102d1436f0905ac72bc754daa7ff}\label{_stack_8h_aa09a102d1436f0905ac72bc754daa7ff}} 
+\index{Stack.h@{Stack.h}!Stack\_Dump\_Part\_Two@{Stack\_Dump\_Part\_Two}}
+\index{Stack\_Dump\_Part\_Two@{Stack\_Dump\_Part\_Two}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{Stack\_Dump\_Part\_Two}{Stack\_Dump\_Part\_Two}}
+{\footnotesize\ttfamily \#define Stack\+\_\+\+Dump\+\_\+\+Part\+\_\+\+Two(\begin{DoxyParamCaption}\item[{}]{thou }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{                fprintf(stderr, \textcolor{stringliteral}{" !Poisoned!"});\(\backslash\)}
+\DoxyCodeLine{            \}\(\backslash\)}
+\DoxyCodeLine{        \}\(\backslash\)}
+\DoxyCodeLine{    \}\(\backslash\)}
+\DoxyCodeLine{    fprintf(stderr, \textcolor{stringliteral}{"\(\backslash\)n================================================================\(\backslash\)n"});}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{_stack_8h_a78487eb84c07724ecb511e03275d15b6}\label{_stack_8h_a78487eb84c07724ecb511e03275d15b6}} 
+\index{Stack.h@{Stack.h}!Stack\_Dump\_unsigned@{Stack\_Dump\_unsigned}}
+\index{Stack\_Dump\_unsigned@{Stack\_Dump\_unsigned}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{Stack\_Dump\_unsigned}{Stack\_Dump\_unsigned}}
+{\footnotesize\ttfamily \#define Stack\+\_\+\+Dump\+\_\+unsigned(\begin{DoxyParamCaption}\item[{}]{thou }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\{ \(\backslash\)}
+\DoxyCodeLine{    fprintf(stderr, \textcolor{stringliteral}{"stack dump [TYPE = unsigned]"}); \(\backslash\)}
+\DoxyCodeLine{    Stack\_Dump\_Part\_One(thou);\(\backslash\)}
+\DoxyCodeLine{    DATA\_BIRDS\_CHECK(thou, \textcolor{keywordtype}{unsigned});\(\backslash\)}
+\DoxyCodeLine{    \}\(\backslash\)}
+\DoxyCodeLine{    for (\textcolor{keywordtype}{int} i = 0; i < (thou)-\/>size; i++) \{\(\backslash\)}
+\DoxyCodeLine{    fprintf(stderr, \textcolor{stringliteral}{"\(\backslash\)n *[\%d] = \%u"}, i, (thou)-\/>data[i]);\(\backslash\)}
+\DoxyCodeLine{            if ((thou)-\/>data[i] == \mbox{\hyperlink{_stack_8h_a91757b52000d3532de24a0085c31df4a}{POISON\_unsigned}}) \{\(\backslash\)}
+\DoxyCodeLine{    Stack\_Dump\_Part\_Two(thou);\(\backslash\)}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+Dumps Stack for type unsigned and its content into stderr (now) 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em thou} & -\/ pointer on stack \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_stack_8h_a8cd5c6ed65fb2e800c16a5511c4a8580}\label{_stack_8h_a8cd5c6ed65fb2e800c16a5511c4a8580}} 
+\index{Stack.h@{Stack.h}!STACK\_ERRORS\_H@{STACK\_ERRORS\_H}}
+\index{STACK\_ERRORS\_H@{STACK\_ERRORS\_H}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{STACK\_ERRORS\_H}{STACK\_ERRORS\_H}}
+{\footnotesize\ttfamily \#define S\+T\+A\+C\+K\+\_\+\+E\+R\+R\+O\+R\+S\+\_\+H}
+
+\mbox{\Hypertarget{_stack_8h_a7a8b4fa60c73ea68606e2c942817b5cd}\label{_stack_8h_a7a8b4fa60c73ea68606e2c942817b5cd}} 
+\index{Stack.h@{Stack.h}!STACK\_FLOAT@{STACK\_FLOAT}}
+\index{STACK\_FLOAT@{STACK\_FLOAT}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{STACK\_FLOAT}{STACK\_FLOAT}}
+{\footnotesize\ttfamily \#define S\+T\+A\+C\+K\+\_\+\+F\+L\+O\+AT(\begin{DoxyParamCaption}\item[{}]{a }\end{DoxyParamCaption})~Stack\+\_\+float a; \mbox{\hyperlink{_stack_8h_af619ca0717dec543784aff21c0e0e3cc}{S\+T\+A\+C\+K\+\_\+\+I\+N\+IT}}(a)}
+
+\mbox{\Hypertarget{_stack_8h_aec2864553519b450501f110ca0c3e3b7}\label{_stack_8h_aec2864553519b450501f110ca0c3e3b7}} 
+\index{Stack.h@{Stack.h}!STACK\_H@{STACK\_H}}
+\index{STACK\_H@{STACK\_H}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{STACK\_H}{STACK\_H}}
+{\footnotesize\ttfamily \#define S\+T\+A\+C\+K\+\_\+H}
+
+\mbox{\Hypertarget{_stack_8h_a8ae07a184a48c5023628d506005fb9a4}\label{_stack_8h_a8ae07a184a48c5023628d506005fb9a4}} 
+\index{Stack.h@{Stack.h}!STACK\_HASH@{STACK\_HASH}}
+\index{STACK\_HASH@{STACK\_HASH}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{STACK\_HASH}{STACK\_HASH}}
+{\footnotesize\ttfamily \#define S\+T\+A\+C\+K\+\_\+\+H\+A\+SH(\begin{DoxyParamCaption}\item[{}]{thou }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{_stack_8h_a22ebb7a9aefb60028b1f720c7009ab81}\label{_stack_8h_a22ebb7a9aefb60028b1f720c7009ab81}} 
+\index{Stack.h@{Stack.h}!STACK\_HASH\_INIT@{STACK\_HASH\_INIT}}
+\index{STACK\_HASH\_INIT@{STACK\_HASH\_INIT}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{STACK\_HASH\_INIT}{STACK\_HASH\_INIT}}
+{\footnotesize\ttfamily \#define S\+T\+A\+C\+K\+\_\+\+H\+A\+S\+H\+\_\+\+I\+N\+IT(\begin{DoxyParamCaption}\item[{}]{a }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{_stack_8h_af619ca0717dec543784aff21c0e0e3cc}\label{_stack_8h_af619ca0717dec543784aff21c0e0e3cc}} 
+\index{Stack.h@{Stack.h}!STACK\_INIT@{STACK\_INIT}}
+\index{STACK\_INIT@{STACK\_INIT}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{STACK\_INIT}{STACK\_INIT}}
+{\footnotesize\ttfamily \#define S\+T\+A\+C\+K\+\_\+\+I\+N\+IT(\begin{DoxyParamCaption}\item[{}]{a }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{   \mbox{\hyperlink{_stack_8h_a639cd1bab4630fcfd3f2827e4e02da53}{STACK\_NAME\_INIT}}(a);\(\backslash\)}
+\DoxyCodeLine{   a.size = 0;\(\backslash\)}
+\DoxyCodeLine{   a.capacity = 0;\(\backslash\)}
+\DoxyCodeLine{   a.data = NULL;\(\backslash\)}
+\DoxyCodeLine{   STACK\_BIRDS\_INIT(a);\(\backslash\)}
+\DoxyCodeLine{   STACK\_HASH\_INIT(a);}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{_stack_8h_ac18b8dce18f196aea5b383fead87c75a}\label{_stack_8h_ac18b8dce18f196aea5b383fead87c75a}} 
+\index{Stack.h@{Stack.h}!STACK\_INT@{STACK\_INT}}
+\index{STACK\_INT@{STACK\_INT}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{STACK\_INT}{STACK\_INT}}
+{\footnotesize\ttfamily \#define S\+T\+A\+C\+K\+\_\+\+I\+NT(\begin{DoxyParamCaption}\item[{}]{a }\end{DoxyParamCaption})~Stack\+\_\+int a; \mbox{\hyperlink{_stack_8h_af619ca0717dec543784aff21c0e0e3cc}{S\+T\+A\+C\+K\+\_\+\+I\+N\+IT}}(a)}
+
+\mbox{\Hypertarget{_stack_8h_a0f4eff950424002a91e3162a730facfe}\label{_stack_8h_a0f4eff950424002a91e3162a730facfe}} 
+\index{Stack.h@{Stack.h}!STACK\_NAME@{STACK\_NAME}}
+\index{STACK\_NAME@{STACK\_NAME}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{STACK\_NAME}{STACK\_NAME}}
+{\footnotesize\ttfamily \#define S\+T\+A\+C\+K\+\_\+\+N\+A\+ME(\begin{DoxyParamCaption}\item[{}]{thou }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{_stack_8h_a639cd1bab4630fcfd3f2827e4e02da53}\label{_stack_8h_a639cd1bab4630fcfd3f2827e4e02da53}} 
+\index{Stack.h@{Stack.h}!STACK\_NAME\_INIT@{STACK\_NAME\_INIT}}
+\index{STACK\_NAME\_INIT@{STACK\_NAME\_INIT}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{STACK\_NAME\_INIT}{STACK\_NAME\_INIT}}
+{\footnotesize\ttfamily \#define S\+T\+A\+C\+K\+\_\+\+N\+A\+M\+E\+\_\+\+I\+N\+IT(\begin{DoxyParamCaption}\item[{}]{a }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{_stack_8h_a6423a880df59733d2d9b509c7718d3a9}\label{_stack_8h_a6423a880df59733d2d9b509c7718d3a9}} 
+\index{Stack.h@{Stack.h}!STACK\_SIZE@{STACK\_SIZE}}
+\index{STACK\_SIZE@{STACK\_SIZE}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{STACK\_SIZE}{STACK\_SIZE}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \#define S\+T\+A\+C\+K\+\_\+\+S\+I\+ZE~int}
+
+
+
+Type for stack size. 
+
+Type of stack size var. May be changed in future. \mbox{\Hypertarget{_stack_8h_a6423a880df59733d2d9b509c7718d3a9}\label{_stack_8h_a6423a880df59733d2d9b509c7718d3a9}} 
+\index{Stack.h@{Stack.h}!STACK\_SIZE@{STACK\_SIZE}}
+\index{STACK\_SIZE@{STACK\_SIZE}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{STACK\_SIZE}{STACK\_SIZE}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \#define S\+T\+A\+C\+K\+\_\+\+S\+I\+ZE~int}
+
+
+
+Type for stack size. 
+
+Type of stack size var. May be changed in future. \mbox{\Hypertarget{_stack_8h_a6423a880df59733d2d9b509c7718d3a9}\label{_stack_8h_a6423a880df59733d2d9b509c7718d3a9}} 
+\index{Stack.h@{Stack.h}!STACK\_SIZE@{STACK\_SIZE}}
+\index{STACK\_SIZE@{STACK\_SIZE}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{STACK\_SIZE}{STACK\_SIZE}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \#define S\+T\+A\+C\+K\+\_\+\+S\+I\+ZE~int}
+
+
+
+Type for stack size. 
+
+Type of stack size var. May be changed in future. \mbox{\Hypertarget{_stack_8h_a3039470a4e13be4bb2894c80830b3bfd}\label{_stack_8h_a3039470a4e13be4bb2894c80830b3bfd}} 
+\index{Stack.h@{Stack.h}!STACK\_UNSIGNED@{STACK\_UNSIGNED}}
+\index{STACK\_UNSIGNED@{STACK\_UNSIGNED}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{STACK\_UNSIGNED}{STACK\_UNSIGNED}}
+{\footnotesize\ttfamily \#define S\+T\+A\+C\+K\+\_\+\+U\+N\+S\+I\+G\+N\+ED(\begin{DoxyParamCaption}\item[{}]{a }\end{DoxyParamCaption})~Stack\+\_\+unsigned a; \mbox{\hyperlink{_stack_8h_af619ca0717dec543784aff21c0e0e3cc}{S\+T\+A\+C\+K\+\_\+\+I\+N\+IT}}(a)}
+
+\mbox{\Hypertarget{_stack_8h_a1558385284963c9f01c392abdb610552}\label{_stack_8h_a1558385284963c9f01c392abdb610552}} 
+\index{Stack.h@{Stack.h}!STACK\_VAR\_NAME@{STACK\_VAR\_NAME}}
+\index{STACK\_VAR\_NAME@{STACK\_VAR\_NAME}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{STACK\_VAR\_NAME}{STACK\_VAR\_NAME}}
+{\footnotesize\ttfamily \#define S\+T\+A\+C\+K\+\_\+\+V\+A\+R\+\_\+\+N\+A\+ME~const char $\ast$name}
+
+
+
+Stack name. 
+
+
+
+\doxysubsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{_stack_8h_a420d483c25fa71bb783fba46bfea209b}\label{_stack_8h_a420d483c25fa71bb783fba46bfea209b}} 
+\index{Stack.h@{Stack.h}!Stack\_Errors@{Stack\_Errors}}
+\index{Stack\_Errors@{Stack\_Errors}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{Stack\_Errors}{Stack\_Errors}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{_stack_8h_a420d483c25fa71bb783fba46bfea209b}{Stack\+\_\+\+Errors}}}
+
+
+
+Values for error codes. 0 -\/ success, not 0 -\/ error. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{OK@{OK}!Stack.h@{Stack.h}}\index{Stack.h@{Stack.h}!OK@{OK}}}\mbox{\Hypertarget{_stack_8h_a420d483c25fa71bb783fba46bfea209ba2bc49ec37d6a5715dd23e85f1ff5bb59}\label{_stack_8h_a420d483c25fa71bb783fba46bfea209ba2bc49ec37d6a5715dd23e85f1ff5bb59}} 
+OK&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{NEGATIVE\_SIZE@{NEGATIVE\_SIZE}!Stack.h@{Stack.h}}\index{Stack.h@{Stack.h}!NEGATIVE\_SIZE@{NEGATIVE\_SIZE}}}\mbox{\Hypertarget{_stack_8h_a420d483c25fa71bb783fba46bfea209bae84d9827cef7e5d8b213dc3372358c9b}\label{_stack_8h_a420d483c25fa71bb783fba46bfea209bae84d9827cef7e5d8b213dc3372358c9b}} 
+N\+E\+G\+A\+T\+I\+V\+E\+\_\+\+S\+I\+ZE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{NEGATIVE\_CAPACITY@{NEGATIVE\_CAPACITY}!Stack.h@{Stack.h}}\index{Stack.h@{Stack.h}!NEGATIVE\_CAPACITY@{NEGATIVE\_CAPACITY}}}\mbox{\Hypertarget{_stack_8h_a420d483c25fa71bb783fba46bfea209ba5e6ab94ebb6fd5ab21421491979049fb}\label{_stack_8h_a420d483c25fa71bb783fba46bfea209ba5e6ab94ebb6fd5ab21421491979049fb}} 
+N\+E\+G\+A\+T\+I\+V\+E\+\_\+\+C\+A\+P\+A\+C\+I\+TY&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SIZE\_GREATER\_CAPACITY@{SIZE\_GREATER\_CAPACITY}!Stack.h@{Stack.h}}\index{Stack.h@{Stack.h}!SIZE\_GREATER\_CAPACITY@{SIZE\_GREATER\_CAPACITY}}}\mbox{\Hypertarget{_stack_8h_a420d483c25fa71bb783fba46bfea209ba6172ab45641e97c5eb218a7a3536d04b}\label{_stack_8h_a420d483c25fa71bb783fba46bfea209ba6172ab45641e97c5eb218a7a3536d04b}} 
+S\+I\+Z\+E\+\_\+\+G\+R\+E\+A\+T\+E\+R\+\_\+\+C\+A\+P\+A\+C\+I\+TY&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{NULL\_DATA@{NULL\_DATA}!Stack.h@{Stack.h}}\index{Stack.h@{Stack.h}!NULL\_DATA@{NULL\_DATA}}}\mbox{\Hypertarget{_stack_8h_a420d483c25fa71bb783fba46bfea209ba8dd2a8460b8cc5cfa92cbd6e9ee2f6be}\label{_stack_8h_a420d483c25fa71bb783fba46bfea209ba8dd2a8460b8cc5cfa92cbd6e9ee2f6be}} 
+N\+U\+L\+L\+\_\+\+D\+A\+TA&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{POISONED\_VALUE@{POISONED\_VALUE}!Stack.h@{Stack.h}}\index{Stack.h@{Stack.h}!POISONED\_VALUE@{POISONED\_VALUE}}}\mbox{\Hypertarget{_stack_8h_a420d483c25fa71bb783fba46bfea209ba5e958a593636fb39df091ad44effe714}\label{_stack_8h_a420d483c25fa71bb783fba46bfea209ba5e958a593636fb39df091ad44effe714}} 
+P\+O\+I\+S\+O\+N\+E\+D\+\_\+\+V\+A\+L\+UE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{WRONG\_STACK\_POINTER@{WRONG\_STACK\_POINTER}!Stack.h@{Stack.h}}\index{Stack.h@{Stack.h}!WRONG\_STACK\_POINTER@{WRONG\_STACK\_POINTER}}}\mbox{\Hypertarget{_stack_8h_a420d483c25fa71bb783fba46bfea209ba9896c8d39da1248a89071f37ea049506}\label{_stack_8h_a420d483c25fa71bb783fba46bfea209ba9896c8d39da1248a89071f37ea049506}} 
+W\+R\+O\+N\+G\+\_\+\+S\+T\+A\+C\+K\+\_\+\+P\+O\+I\+N\+T\+ER&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DEAD\_DATA\_POINTER@{DEAD\_DATA\_POINTER}!Stack.h@{Stack.h}}\index{Stack.h@{Stack.h}!DEAD\_DATA\_POINTER@{DEAD\_DATA\_POINTER}}}\mbox{\Hypertarget{_stack_8h_a420d483c25fa71bb783fba46bfea209bad40111a56cb9e9a9568fefe9feb84968}\label{_stack_8h_a420d483c25fa71bb783fba46bfea209bad40111a56cb9e9a9568fefe9feb84968}} 
+D\+E\+A\+D\+\_\+\+D\+A\+T\+A\+\_\+\+P\+O\+I\+N\+T\+ER&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FIRST\_STACK\_BIRD\_DEAD@{FIRST\_STACK\_BIRD\_DEAD}!Stack.h@{Stack.h}}\index{Stack.h@{Stack.h}!FIRST\_STACK\_BIRD\_DEAD@{FIRST\_STACK\_BIRD\_DEAD}}}\mbox{\Hypertarget{_stack_8h_a420d483c25fa71bb783fba46bfea209baeff0a29b7e45f4a5912beffd045287b3}\label{_stack_8h_a420d483c25fa71bb783fba46bfea209baeff0a29b7e45f4a5912beffd045287b3}} 
+F\+I\+R\+S\+T\+\_\+\+S\+T\+A\+C\+K\+\_\+\+B\+I\+R\+D\+\_\+\+D\+E\+AD&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SECOND\_STACK\_BIRD\_DEAD@{SECOND\_STACK\_BIRD\_DEAD}!Stack.h@{Stack.h}}\index{Stack.h@{Stack.h}!SECOND\_STACK\_BIRD\_DEAD@{SECOND\_STACK\_BIRD\_DEAD}}}\mbox{\Hypertarget{_stack_8h_a420d483c25fa71bb783fba46bfea209ba021d1fa1ee4d26f11403106ed29f8109}\label{_stack_8h_a420d483c25fa71bb783fba46bfea209ba021d1fa1ee4d26f11403106ed29f8109}} 
+S\+E\+C\+O\+N\+D\+\_\+\+S\+T\+A\+C\+K\+\_\+\+B\+I\+R\+D\+\_\+\+D\+E\+AD&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FIRST\_DATA\_BIRD\_DEAD@{FIRST\_DATA\_BIRD\_DEAD}!Stack.h@{Stack.h}}\index{Stack.h@{Stack.h}!FIRST\_DATA\_BIRD\_DEAD@{FIRST\_DATA\_BIRD\_DEAD}}}\mbox{\Hypertarget{_stack_8h_a420d483c25fa71bb783fba46bfea209ba797917b3e80fdd213943fe973e0b8480}\label{_stack_8h_a420d483c25fa71bb783fba46bfea209ba797917b3e80fdd213943fe973e0b8480}} 
+F\+I\+R\+S\+T\+\_\+\+D\+A\+T\+A\+\_\+\+B\+I\+R\+D\+\_\+\+D\+E\+AD&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SECOND\_DATA\_BIRD\_DEAD@{SECOND\_DATA\_BIRD\_DEAD}!Stack.h@{Stack.h}}\index{Stack.h@{Stack.h}!SECOND\_DATA\_BIRD\_DEAD@{SECOND\_DATA\_BIRD\_DEAD}}}\mbox{\Hypertarget{_stack_8h_a420d483c25fa71bb783fba46bfea209ba1448cccc44dcf59733c81d79948b6440}\label{_stack_8h_a420d483c25fa71bb783fba46bfea209ba1448cccc44dcf59733c81d79948b6440}} 
+S\+E\+C\+O\+N\+D\+\_\+\+D\+A\+T\+A\+\_\+\+B\+I\+R\+D\+\_\+\+D\+E\+AD&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{NULL\_DATA\_NONULL\_CAPACITY@{NULL\_DATA\_NONULL\_CAPACITY}!Stack.h@{Stack.h}}\index{Stack.h@{Stack.h}!NULL\_DATA\_NONULL\_CAPACITY@{NULL\_DATA\_NONULL\_CAPACITY}}}\mbox{\Hypertarget{_stack_8h_a420d483c25fa71bb783fba46bfea209babd59ab810f6a9df29d4b33fbc987ae63}\label{_stack_8h_a420d483c25fa71bb783fba46bfea209babd59ab810f6a9df29d4b33fbc987ae63}} 
+N\+U\+L\+L\+\_\+\+D\+A\+T\+A\+\_\+\+N\+O\+N\+U\+L\+L\+\_\+\+C\+A\+P\+A\+C\+I\+TY&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{WRONG\_STACK\_HASH@{WRONG\_STACK\_HASH}!Stack.h@{Stack.h}}\index{Stack.h@{Stack.h}!WRONG\_STACK\_HASH@{WRONG\_STACK\_HASH}}}\mbox{\Hypertarget{_stack_8h_a420d483c25fa71bb783fba46bfea209ba1ff3a9e9625b3af7ac55a8aa7b046544}\label{_stack_8h_a420d483c25fa71bb783fba46bfea209ba1ff3a9e9625b3af7ac55a8aa7b046544}} 
+W\+R\+O\+N\+G\+\_\+\+S\+T\+A\+C\+K\+\_\+\+H\+A\+SH&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{WRONG\_DATA\_HASH@{WRONG\_DATA\_HASH}!Stack.h@{Stack.h}}\index{Stack.h@{Stack.h}!WRONG\_DATA\_HASH@{WRONG\_DATA\_HASH}}}\mbox{\Hypertarget{_stack_8h_a420d483c25fa71bb783fba46bfea209baace2417ec476892872058d9c03d45da7}\label{_stack_8h_a420d483c25fa71bb783fba46bfea209baace2417ec476892872058d9c03d45da7}} 
+W\+R\+O\+N\+G\+\_\+\+D\+A\+T\+A\+\_\+\+H\+A\+SH&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{NOT\_ENOUGH\_MEMORY@{NOT\_ENOUGH\_MEMORY}!Stack.h@{Stack.h}}\index{Stack.h@{Stack.h}!NOT\_ENOUGH\_MEMORY@{NOT\_ENOUGH\_MEMORY}}}\mbox{\Hypertarget{_stack_8h_a420d483c25fa71bb783fba46bfea209ba2fa3114dc11f3a0dbfc8f2a3d141e2da}\label{_stack_8h_a420d483c25fa71bb783fba46bfea209ba2fa3114dc11f3a0dbfc8f2a3d141e2da}} 
+N\+O\+T\+\_\+\+E\+N\+O\+U\+G\+H\+\_\+\+M\+E\+M\+O\+RY&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{_stack_8h_a7f18dd7b790dda2f2208f009d6d1096c}\label{_stack_8h_a7f18dd7b790dda2f2208f009d6d1096c}} 
+\index{Stack.h@{Stack.h}!hash\_counter@{hash\_counter}}
+\index{hash\_counter@{hash\_counter}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{hash\_counter()}{hash\_counter()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{_stack_8h_abc31d73e62d5a07ddad2608f759c288c}{H\+A\+S\+H\+\_\+\+T\+Y\+PE}} hash\+\_\+counter (\begin{DoxyParamCaption}\item[{unsigned char $\ast$}]{s,  }\item[{\mbox{\hyperlink{_stack_8h_a6423a880df59733d2d9b509c7718d3a9}{S\+T\+A\+C\+K\+\_\+\+S\+I\+ZE}}}]{number }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{_stack_8h_a2d0a5be2e07b812ed273a8f2aca600df}\label{_stack_8h_a2d0a5be2e07b812ed273a8f2aca600df}} 
+\index{Stack.h@{Stack.h}!print\_err@{print\_err}}
+\index{print\_err@{print\_err}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{print\_err()}{print\_err()}}
+{\footnotesize\ttfamily void print\+\_\+err (\begin{DoxyParamCaption}\item[{int}]{err,  }\item[{\mbox{\hyperlink{_stack_8h_ae7890273d85f262176601f9fe233211e}{Stack}}(\mbox{\hyperlink{cpu_8cpp_a5a392548f2df67370cb15d2a5d75cd7b}{T\+Y\+PE}}) $\ast$}]{thou = {\ttfamily NULL} }\end{DoxyParamCaption})}
+
+
+
+Error decryption. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em err} & Error code from Stack\+\_\+\+Errors (see global\+\_\+stack.\+h) \\
+\hline
+\mbox{\texttt{ in}}  & {\em thou} & Stack for additional info (if null, just basic decryption) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_stack_8h_ae7890273d85f262176601f9fe233211e}\label{_stack_8h_ae7890273d85f262176601f9fe233211e}} 
+\index{Stack.h@{Stack.h}!Stack@{Stack}}
+\index{Stack@{Stack}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{Stack()}{Stack()}}
+{\footnotesize\ttfamily struct Stack (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{cpu_8cpp_a5a392548f2df67370cb15d2a5d75cd7b}{T\+Y\+PE}}}]{ }\end{DoxyParamCaption})}
+
+
+
+"Template" for different stacks 
+
+\mbox{\Hypertarget{_stack_8h_acd3fe6f99bdea616b6e3f7e1a14f49f9}\label{_stack_8h_acd3fe6f99bdea616b6e3f7e1a14f49f9}} 
+\index{Stack.h@{Stack.h}!Stack\_Destruct@{Stack\_Destruct}}
+\index{Stack\_Destruct@{Stack\_Destruct}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{Stack\_Destruct()}{Stack\_Destruct()}}
+{\footnotesize\ttfamily bool Stack\+\_\+\+Destruct (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{_stack_8h_ae7890273d85f262176601f9fe233211e}{Stack}}(\mbox{\hyperlink{cpu_8cpp_a5a392548f2df67370cb15d2a5d75cd7b}{T\+Y\+PE}}) $\ast$}]{thou }\end{DoxyParamCaption})}
+
+
+
+Destructor for stack. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em thou} & Valid pointer on stack \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true, if after destruction stack is poisoned (destructed correctly), else false ~\newline
+ 
+\end{DoxyReturn}
+\mbox{\Hypertarget{_stack_8h_a93095f9a2b731d864f9b0cac1f089119}\label{_stack_8h_a93095f9a2b731d864f9b0cac1f089119}} 
+\index{Stack.h@{Stack.h}!Stack\_Empty@{Stack\_Empty}}
+\index{Stack\_Empty@{Stack\_Empty}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{Stack\_Empty()}{Stack\_Empty()}}
+{\footnotesize\ttfamily bool Stack\+\_\+\+Empty (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{_stack_8h_ae7890273d85f262176601f9fe233211e}{Stack}}(\mbox{\hyperlink{cpu_8cpp_a5a392548f2df67370cb15d2a5d75cd7b}{T\+Y\+PE}}) $\ast$}]{thou }\end{DoxyParamCaption})}
+
+
+
+Check on empty stack. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em thou} & Stack to be checked \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if stack is empty 
+\end{DoxyReturn}
+\mbox{\Hypertarget{_stack_8h_a644ffb076fdd47e982c5dfafab0ff8e5}\label{_stack_8h_a644ffb076fdd47e982c5dfafab0ff8e5}} 
+\index{Stack.h@{Stack.h}!Stack\_Err@{Stack\_Err}}
+\index{Stack\_Err@{Stack\_Err}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{Stack\_Err()}{Stack\_Err()}}
+{\footnotesize\ttfamily int Stack\+\_\+\+Err (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{_stack_8h_ae7890273d85f262176601f9fe233211e}{Stack}}(\mbox{\hyperlink{cpu_8cpp_a5a392548f2df67370cb15d2a5d75cd7b}{T\+Y\+PE}}) $\ast$}]{thou }\end{DoxyParamCaption})}
+
+
+
+Check stack. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em thou} & Pointer on stack to be checked \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns error code from Stack\+\_\+\+Errors (see global\+\_\+stack.\+h) or 0 (OK) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{_stack_8h_a4e92fea2bd2da656da9910d9b896d7d3}\label{_stack_8h_a4e92fea2bd2da656da9910d9b896d7d3}} 
+\index{Stack.h@{Stack.h}!Stack\_Pop@{Stack\_Pop}}
+\index{Stack\_Pop@{Stack\_Pop}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{Stack\_Pop()}{Stack\_Pop()}}
+{\footnotesize\ttfamily int Stack\+\_\+\+Pop (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{_stack_8h_ae7890273d85f262176601f9fe233211e}{Stack}}(\mbox{\hyperlink{cpu_8cpp_a5a392548f2df67370cb15d2a5d75cd7b}{T\+Y\+PE}}) $\ast$}]{thou }\end{DoxyParamCaption})}
+
+
+
+Pops the stack top elem. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em thou} & Stack to be processed \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Return 0 (OK) if success, error code from Stack\+\_\+\+Errors else (see global\+\_\+stack.\+h) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{_stack_8h_ae5198b21e11f4b2140a07fac19d2af8a}\label{_stack_8h_ae5198b21e11f4b2140a07fac19d2af8a}} 
+\index{Stack.h@{Stack.h}!Stack\_Push@{Stack\_Push}}
+\index{Stack\_Push@{Stack\_Push}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{Stack\_Push()}{Stack\_Push()}}
+{\footnotesize\ttfamily int Stack\+\_\+\+Push (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{_stack_8h_ae7890273d85f262176601f9fe233211e}{Stack}}(\mbox{\hyperlink{cpu_8cpp_a5a392548f2df67370cb15d2a5d75cd7b}{T\+Y\+PE}}) $\ast$}]{thou,  }\item[{\mbox{\hyperlink{cpu_8cpp_a5a392548f2df67370cb15d2a5d75cd7b}{T\+Y\+PE}}}]{elem }\end{DoxyParamCaption})}
+
+
+
+Add elem in stack. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em elem} & Elem to be added \\
+\hline
+\mbox{\texttt{ in}}  & {\em thou} & Valid pointer on stack in which elem must be inserted \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns 0 (OK) if success, else Error\+Code from Stack\+\_\+\+Errors (see global\+\_\+stack.\+h) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{_stack_8h_a37faed72eb1e78cd884b6cdab41839da}\label{_stack_8h_a37faed72eb1e78cd884b6cdab41839da}} 
+\index{Stack.h@{Stack.h}!Stack\_Size@{Stack\_Size}}
+\index{Stack\_Size@{Stack\_Size}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{Stack\_Size()}{Stack\_Size()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{_stack_8h_a6423a880df59733d2d9b509c7718d3a9}{S\+T\+A\+C\+K\+\_\+\+S\+I\+ZE}} Stack\+\_\+\+Size (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{_stack_8h_ae7890273d85f262176601f9fe233211e}{Stack}}(\mbox{\hyperlink{cpu_8cpp_a5a392548f2df67370cb15d2a5d75cd7b}{T\+Y\+PE}}) $\ast$}]{thou }\end{DoxyParamCaption})}
+
+
+
+Stack size. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em thou} & Stack for stack size info \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+returns Stack size 
+\end{DoxyReturn}
+\mbox{\Hypertarget{_stack_8h_a9a9a419d4fd7d16aa2131d765f6f6415}\label{_stack_8h_a9a9a419d4fd7d16aa2131d765f6f6415}} 
+\index{Stack.h@{Stack.h}!Stack\_Top@{Stack\_Top}}
+\index{Stack\_Top@{Stack\_Top}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{Stack\_Top()}{Stack\_Top()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{cpu_8cpp_a5a392548f2df67370cb15d2a5d75cd7b}{T\+Y\+PE}} Stack\+\_\+\+Top (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{_stack_8h_ae7890273d85f262176601f9fe233211e}{Stack}}(\mbox{\hyperlink{cpu_8cpp_a5a392548f2df67370cb15d2a5d75cd7b}{T\+Y\+PE}}) $\ast$}]{thou }\end{DoxyParamCaption})}
+
+
+
+Take the stack top without deleting. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em thou} & Stack to be processed \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Return value from stack top. If trying to see elem from empty stack, returns P\+O\+I\+S\+O\+N\+ED V\+A\+L\+UE (see global\+\_\+stack.\+h) 
+\end{DoxyReturn}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{_stack_8h_a761462331f60d9945e8afc9792d1fe6b}\label{_stack_8h_a761462331f60d9945e8afc9792d1fe6b}} 
+\index{Stack.h@{Stack.h}!bird\_prototype@{bird\_prototype}}
+\index{bird\_prototype@{bird\_prototype}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{bird\_prototype}{bird\_prototype}}
+{\footnotesize\ttfamily \mbox{\hyperlink{_stack_8h_abf45990b8e6b31296850eb9e3694b764}{B\+I\+RD}} bird\+\_\+prototype = 0x\+D\+E\+A\+D\+B\+E\+E\+F\+U\+LL}
+
+
+
+Basic value for guard bird. 
+
+\mbox{\Hypertarget{_stack_8h_a427afe7d253dacbccf993c8b74651455}\label{_stack_8h_a427afe7d253dacbccf993c8b74651455}} 
+\index{Stack.h@{Stack.h}!errcapacity@{errcapacity}}
+\index{errcapacity@{errcapacity}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{errcapacity}{errcapacity}}
+{\footnotesize\ttfamily \mbox{\hyperlink{_stack_8h_aa70530dd0c7c754713b95ce6e87ffb4d}{S\+T\+A\+C\+K\+\_\+\+C\+A\+P\+A\+C\+I\+TY}} errcapacity = -\/666}
+
+
+
+Special wrong stack capacity value (poison) 
+
+\mbox{\Hypertarget{_stack_8h_a44862a4c1a96f246747d4b405b1a6306}\label{_stack_8h_a44862a4c1a96f246747d4b405b1a6306}} 
+\index{Stack.h@{Stack.h}!errptr@{errptr}}
+\index{errptr@{errptr}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{errptr}{errptr}}
+{\footnotesize\ttfamily void $\ast$ errptr = (void $\ast$)13}
+
+
+
+Knowingly wrong pointer, but not N\+U\+LL. 
+
+\mbox{\Hypertarget{_stack_8h_ad31d7a7b4deae96f3cec0bfb67afe22a}\label{_stack_8h_ad31d7a7b4deae96f3cec0bfb67afe22a}} 
+\index{Stack.h@{Stack.h}!errsize@{errsize}}
+\index{errsize@{errsize}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{errsize}{errsize}}
+{\footnotesize\ttfamily \mbox{\hyperlink{_stack_8h_a6423a880df59733d2d9b509c7718d3a9}{S\+T\+A\+C\+K\+\_\+\+S\+I\+ZE}} errsize = -\/777}
+
+
+
+Special wrong stack size value (poison) 
+
+\mbox{\Hypertarget{_stack_8h_a751453e6895ce5accd65854f1965f257}\label{_stack_8h_a751453e6895ce5accd65854f1965f257}} 
+\index{Stack.h@{Stack.h}!POISON\_char@{POISON\_char}}
+\index{POISON\_char@{POISON\_char}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{POISON\_char}{POISON\_char}}
+{\footnotesize\ttfamily char P\+O\+I\+S\+O\+N\+\_\+char = 127}
+
+
+
+Poisoned value for type double. 
+
+\mbox{\Hypertarget{_stack_8h_a07ba10b79cd7560b92a953a6707d3150}\label{_stack_8h_a07ba10b79cd7560b92a953a6707d3150}} 
+\index{Stack.h@{Stack.h}!POISON\_double@{POISON\_double}}
+\index{POISON\_double@{POISON\_double}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{POISON\_double}{POISON\_double}}
+{\footnotesize\ttfamily double P\+O\+I\+S\+O\+N\+\_\+double = 12345.\+54321}
+
+
+
+Poisoned value for type double. 
+
+\mbox{\Hypertarget{_stack_8h_abc605c1487b3e5dcd15b1cbb203ab84a}\label{_stack_8h_abc605c1487b3e5dcd15b1cbb203ab84a}} 
+\index{Stack.h@{Stack.h}!POISON\_EPS@{POISON\_EPS}}
+\index{POISON\_EPS@{POISON\_EPS}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{POISON\_EPS}{POISON\_EPS}}
+{\footnotesize\ttfamily double P\+O\+I\+S\+O\+N\+\_\+\+E\+PS = 1e-\/8}
+
+
+
+Epsilon for non-\/integer comparing. 
+
+\mbox{\Hypertarget{_stack_8h_a304c7e3b73656ec1da6a14c62f380892}\label{_stack_8h_a304c7e3b73656ec1da6a14c62f380892}} 
+\index{Stack.h@{Stack.h}!POISON\_float@{POISON\_float}}
+\index{POISON\_float@{POISON\_float}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{POISON\_float}{POISON\_float}}
+{\footnotesize\ttfamily float P\+O\+I\+S\+O\+N\+\_\+float = 12345.\+54321}
+
+
+
+Poisoned value for type double. 
+
+\mbox{\Hypertarget{_stack_8h_aaae64d2016737492eb0044dd6ec27baa}\label{_stack_8h_aaae64d2016737492eb0044dd6ec27baa}} 
+\index{Stack.h@{Stack.h}!POISON\_int@{POISON\_int}}
+\index{POISON\_int@{POISON\_int}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{POISON\_int}{POISON\_int}}
+{\footnotesize\ttfamily int P\+O\+I\+S\+O\+N\+\_\+int = 0x\+D\+E\+A\+D\+B\+E\+EF}
+
+
+
+Poisoned value for type int. 
+
+\mbox{\Hypertarget{_stack_8h_a91757b52000d3532de24a0085c31df4a}\label{_stack_8h_a91757b52000d3532de24a0085c31df4a}} 
+\index{Stack.h@{Stack.h}!POISON\_unsigned@{POISON\_unsigned}}
+\index{POISON\_unsigned@{POISON\_unsigned}!Stack.h@{Stack.h}}
+\doxysubsubsection{\texorpdfstring{POISON\_unsigned}{POISON\_unsigned}}
+{\footnotesize\ttfamily unsigned P\+O\+I\+S\+O\+N\+\_\+unsigned = 0x0\+E\+A\+D\+B\+E\+EF}
+
+
+
+Poisoned value for type double. 
+

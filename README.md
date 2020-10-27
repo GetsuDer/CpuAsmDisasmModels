@@ -24,11 +24,19 @@ All these commands put their result on the stack again.
 Where REGISTER_NAME is in {rax, rbx, rcx}, and VALUE can be presented as double
 
 ## Starting
+    run 'make all' to get cpu, asm and disasm programs (see description in documentation)
+
+## Testing
+    Directory 'Testing' consists of subdirectories with test in next format
+####
+    test_name.in (may be also test_name.stdin for cpu)  - input for program
+    test_name.out (or test_name.stdout for cpu) - expected output
+##
+    To run tests run 'make test_all' to test all three subprograms (cpu, asm, disasm),
+    or 'make test_asm', 'make test_disasm', 'make test_cpu' to cpecify test target.
 
 ### Dependences
     Linux, g++, make
-
-### Run
 
 ## Documentation
 To see the whole documentation, download source code and run 'doxywizard Documentation/Config'
