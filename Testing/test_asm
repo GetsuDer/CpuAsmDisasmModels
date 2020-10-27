@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+test_num=0
+test_fail_num=0
+
+echo ================================================
+echo Testing begins
+
+for test in *.in
+do
+
+    test_num=$(($test_num + 1))
+    echo Test $test_num
+    ./../asm $test ${test%%.in}.res
+
+    diff -a ${test%%.in}.res ${test%%.in}.out > diffile
+    
+    if [ -s diffile ]
+    then
+        echo $test "Test failed"
+        mv diffile ${test%%.in}.diff
+        test_fail_num=$(($test_fail_num + 1))
+    else
+        echo ${test%%.in} "Test success"
+        rm ${test%%.in}.res
+    fi
+    echo
+done
+
+echo Tested on $test_num tests
+if [[ "$test_fail_num" -eq 0 ]]
+then
+    echo Success, all tests passed!
+else
+    echo Fail, $test_fail_num tests failed
+fi
+echo ================================================
