@@ -4,14 +4,14 @@ test_num=0
 test_fail_num=0
 
 echo ================================================
-echo Testing asm begins
+echo Testing disasm begins
 
-for test in Tests_Asm/*.in
+for test in Tests_Disasm/*.in
 do
 
     test_num=$(($test_num + 1))
     echo Test $test_num
-    ./../asm $test ${test%%.in}.res
+    ./../disasm $test ${test%%.in}.res
 
     diff -a ${test%%.in}.res ${test%%.in}.out > diffile
     

@@ -5,18 +5,24 @@ INCDIR = Include/
 CC = g++
 DEBUG = YES
 CFLAGS = -Wall -Wextra -Wformat -std=c++14 -g -IInclude -ISource 
+TEST_LOG_DISASM = disasm_test_log
+TEST_LOG_ASM = asm_test_log
 
 ifeq ($(DEBUG), YES)
 	CFLAGS += -g
 endif
 
-.PHONY: all clean asm disasm cpu test
-all: asm disasm cpu
+.PHONY: all clean asm disasm cpu test_all test_disasm test_asm
+
+all: asm disasm cpu test_all
 	
-test_all: test_asm
+test_all: test_asm test_disasm
+
+test_disasm: disasm $(TESTDIR)test_disasm
+	cd $(TESTDIR); ./test_disasm > ../$(TEST_LOG_DISASM); cd ..
 
 test_asm: asm $(TESTDIR)test_asm
-	cd $(TESTDIR); ./test_asm; cd ..
+	cd $(TESTDIR); ./test_asm > ../$(TEST_LOG_ASM); cd ..
 
 asm: $(OBJDIR)asm.o $(OBJDIR)asm_main.o
 	$(CC) $(OBJDIR)asm_main.o $(OBJDIR)asm.o -o asm $(CFLAGS)

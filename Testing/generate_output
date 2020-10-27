@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-for test in *.in
-do
-    ./../asm $test ${test%%.in}.out 
-
-done

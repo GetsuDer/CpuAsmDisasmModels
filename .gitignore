@@ -2,3 +2,7 @@
 ObjectDir
 asm 
 disasm
+asm_test_log
+disasm_test_log
+Testing/generate_output_asm
+Testing/generate_output_disasm

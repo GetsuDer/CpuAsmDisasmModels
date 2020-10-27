@@ -95,6 +95,7 @@ translate_to_asm(char *commands, int commands_size, int fd)
                     fprintf(stderr, "Error: push commands without valid register\n");
                     return false;
                 }
+                commands++;
                 break; 
             case PUSH_VAL:
                 write(fd, PUSH_STR, sizeof(PUSH_STR) - 1);
@@ -125,6 +126,7 @@ translate_to_asm(char *commands, int commands_size, int fd)
                     fprintf(stderr, "Error: no valid register in pop command\n");
                     return false;          
                 }
+                commands++;
                 break;
             case IN:
                 write(fd, IN_STR, sizeof(IN_STR) - 1);
@@ -143,6 +145,7 @@ translate_to_asm(char *commands, int commands_size, int fd)
                     fprintf(stderr, "Error: no valid register in in command\n");
                     return false;
                 }
+                commands++;
                 break;
             case OUT:
                 write(fd, OUT_STR, sizeof(OUT_STR) - 1);
@@ -161,6 +164,7 @@ translate_to_asm(char *commands, int commands_size, int fd)
                     fprintf(stderr, "Error: no valid register name in out command\n");
                     return false;
                 }
+                commands++;
                 break;
             default:
                 fprintf(stderr, "Error: can not recognise command\n");
