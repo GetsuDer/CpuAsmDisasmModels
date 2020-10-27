@@ -24,19 +24,31 @@ test_disasm: disasm $(TESTDIR)test_disasm
 test_asm: asm $(TESTDIR)test_asm
 	cd $(TESTDIR); ./test_asm > ../$(TEST_LOG_ASM); cd ..
 
-asm: $(OBJDIR)asm.o $(OBJDIR)asm_main.o
-	$(CC) $(OBJDIR)asm_main.o $(OBJDIR)asm.o -o asm $(CFLAGS)
+cpu: $(OBJDIR)cpu.o $(OBJDIR)cpu_main.o $(OBJDIR)in_and_out.o
+	$(CC) $(OBJDIR)cpu_main.o $(OBJDIR)cpu.o $(OBJDIR)in_and_out.o -o cpu $(CFLAGS)
 
-$(OBJDIR)asm.o: $(SRCDIR)asm.cpp $(INCDIR)asm.h $(INCDIR)cpu.h $(OBJDIR)
+asm: $(OBJDIR)asm.o $(OBJDIR)asm_main.o $(OBJDIR)in_and_out.o
+	$(CC) $(OBJDIR)asm_main.o $(OBJDIR)asm.o $(OBJDIR)in_and_out.o -o asm $(CFLAGS)
+
+disasm: $(OBJDIR)disasm.o $(OBJDIR)disasm_main.o $(OBJDIR)in_and_out.o
+	$(CC) $(OBJDIR)disasm_main.o $(OBJDIR)disasm.o $(OBJDIR)in_and_out.o -o disasm $(CFLAGS)
+
+$(OBJDIR)in_and_out.o: $(SRCDIR)in_and_out.cpp $(INCDIR)in_and_out.h
+	$(CC) -o $(OBJDIR)in_and_out.o -c $(SRCDIR)in_and_out.cpp $(CFLAGS)
+
+$(OBJDIR)cpu.o: $(SRCDIR)cpu.cpp $(INCDIR)cpu.h $(INCDIR)in_and_out.h $(OBJDIR)
+	$(CC) -o $(OBJDIR)cpu.o -c $(SRCDIR)cpu.cpp $(CFLAGS)
+
+$(OBJDIR)cpu_main.o: $(SRCDIR)cpu_main.cpp $(INCDIR)cpu.h $(OBJDIR)
+	$(CC) -o $(OBJDIR)cpu_main.o -c $(SRCDIR)cpu_main.cpp $(CFLAGS)
+
+$(OBJDIR)asm.o: $(SRCDIR)asm.cpp $(INCDIR)in_and_out.h $(INCDIR)asm.h $(INCDIR)cpu.h $(OBJDIR)
 	$(CC) -o $(OBJDIR)asm.o -c $(SRCDIR)asm.cpp $(CFLAGS)
 
 $(OBJDIR)asm_main.o: $(SRCDIR)asm_main.cpp $(INCDIR)asm.h $(OBJDIR)
 	$(CC) -o $(OBJDIR)asm_main.o -c $(SRCDIR)asm_main.cpp $(CFLAGS)
 
-disasm: $(OBJDIR)disasm.o $(OBJDIR)disasm_main.o
-	$(CC) $(OBJDIR)disasm_main.o $(OBJDIR)disasm.o -o disasm $(CFLAGS)
-
-$(OBJDIR)disasm.o: $(SRCDIR)disasm.cpp $(INCDIR)disasm.h $(INCDIR)asm.h $(INCDIR)cpu.h $(OBJDIR)
+$(OBJDIR)disasm.o: $(SRCDIR)disasm.cpp $(INCDIR)in_and_out.h $(INCDIR)disasm.h $(INCDIR)asm.h $(INCDIR)cpu.h $(OBJDIR)
 	$(CC) -o $(OBJDIR)disasm.o -c $(SRCDIR)disasm.cpp $(CFLAGS)
 
 $(OBJDIR)disasm_main.o: $(SRCDIR)disasm_main.cpp $(INCDIR)disasm.h $(OBJDIR)

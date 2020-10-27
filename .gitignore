@@ -2,6 +2,7 @@
 ObjectDir
 asm 
 disasm
+cpu
 asm_test_log
 disasm_test_log
 Testing/generate_output_asm

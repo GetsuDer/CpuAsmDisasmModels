@@ -11,6 +11,7 @@
 #include "asm.h"
 #include "cpu.h"
 #include "disasm.h"
+#include "in_and_out.h"
 
 //! \bried Read beginning of the code file and check header
 //! \in [file] Mmaped file
@@ -185,35 +186,12 @@ in_and_out_from_binary(char *file_in, char *file_out)
     assert(file_in);
     assert(file_out);
 
-    //read the file size
-    struct stat file_stat;
-    errno = 0;
-    if (stat(file_in, &file_stat)) {
-        fprintf(stderr, "Error: %s\n", strerror(errno));
-        return false;
-    }
-    ssize_t file_in_size = file_stat.st_size;
-    if (file_in_size <= 0) {
-        fprintf(stderr, "Error: file %s has no data\n", file_in);
-        return false;
-    }
-    // open file with source commands
-    int fd_in = open(file_in, 0);
-    if (fd_in < 0) {
-        fprintf(stderr, "Error: Can`t open file %s\n", file_in);
-        return false;
-    }
-
-    // mmap file
-    char *commands = (char *)mmap(NULL, file_in_size, PROT_READ, MAP_SHARED, fd_in, 0);
-    if (!commands) {
-        fprintf(stderr, "Error: Can`t mmap file %s\n", file_in);
-        return false;
-    }
+    int file_in_size = 0;
+    char *commands = mmap_file(file_in, &file_in_size);
+    
     int fd_out = open(file_out, O_WRONLY | O_CREAT | O_TRUNC, out_mode);
     if (fd_out < 0) {
         fprintf(stderr, "Error: Can`t open out file %s\n", file_out);
-        close(fd_in);
         munmap(commands, file_in_size);
         return false;
     }
@@ -221,14 +199,12 @@ in_and_out_from_binary(char *file_in, char *file_out)
     if (header_size < 0) {
         fprintf(stderr, "Error: Can`t read header\n");
         close(fd_out);
-        close(fd_in);
         munmap(commands, file_in_size);
         return false;
     }
     if (!translate_to_asm(commands + header_size, file_in_size, fd_out)) {
         fprintf(stderr, "Error: Can`t translate to asm\n");
         close(fd_out);
-        close(fd_in);
         munmap(commands, file_in_size);
         return false;
     }
@@ -238,7 +214,6 @@ in_and_out_from_binary(char *file_in, char *file_out)
     // And close file descriptors (no error checking, because the main result is
     // Already gotten
     close(fd_out);
-    close(fd_in);
     return true;
 }
 
