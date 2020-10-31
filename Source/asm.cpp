@@ -25,6 +25,19 @@ write_to_file(int fd, int value) {
     return write(fd, &val_char, 1) == 1;
 }
 
+static int
+write_register_to_file(char *command) {
+    if (!strncmp(command, RAX_STR, sizeof(RAX_STR) - 1)) {
+        return RAX;
+    }
+    if (!strncmp(command, RBX_STR, sizeof(RBX_STR) - 1)) {
+        return RBX;
+    }
+    if (!strncmp(command, RCX_STR, sizeof(RCX_STR) - 1)) {
+        return RCX;
+    }
+    return 0;
+}
 //! \brief Main assembler function. Translates assembler commands to 'binary' code
 //! \param [in] commands Assembler commands to translate
 //! \param [in] commands_size Size of commands in bytes
@@ -37,6 +50,7 @@ translate_to_machine_code(char *commands, ssize_t commands_size, int fd) {
     assert(commands_size > 0);
 
     char *commands_end = commands + commands_size;
+    int tmp_value = 0;
     while (commands < commands_end) {
         while (commands < commands_end && isspace((int)*commands)) commands++;
         if (commands >= commands_end) {
@@ -87,22 +101,11 @@ translate_to_machine_code(char *commands, ssize_t commands_size, int fd) {
                 return true;
             }
             if (commands + sizeof(RAX_STR) <= commands_end) {
-                if (!strncmp(commands, RAX_STR, sizeof(RAX_STR) - 1)) {
+                tmp_value = write_register_to_file(commands);
+                if (tmp_value) {
                     write_to_file(fd, IN_REG);
-                    write_to_file(fd, RAX);
+                    write_to_file(fd, tmp_value);
                     commands += sizeof(RAX_STR) - 1;
-                    continue;
-                }
-                if (!strncmp(commands, RBX_STR, sizeof(RBX_STR) - 1)) {
-                    write_to_file(fd, IN_REG);
-                    write_to_file(fd, RBX);
-                    commands += sizeof(RBX_STR) - 1;
-                    continue;
-                }
-                if (!strncmp(commands, RCX_STR, sizeof(RCX_STR) - 1)) {
-                    write_to_file(fd, IN_REG);
-                    write_to_file(fd, RCX);
-                    commands += sizeof(RCX_STR) - 1;
                     continue;
                 }                
             }
@@ -118,22 +121,11 @@ translate_to_machine_code(char *commands, ssize_t commands_size, int fd) {
                 return true;
             }
             if (commands + sizeof(RAX_STR) <= commands_end) {
-                if (!strncmp(commands, RAX_STR, sizeof(RAX_STR) - 1)) {
+                tmp_value = write_register_to_file(commands); 
+                if (tmp_value) {
                     write_to_file(fd, OUT_REG);
-                    write_to_file(fd, RAX);
+                    write_to_file(fd, tmp_value);
                     commands += sizeof(RAX_STR) - 1;
-                    continue;
-                }
-                if (!strncmp(commands, RBX_STR, sizeof(RBX_STR) - 1)) {
-                    write_to_file(fd, OUT_REG);
-                    write_to_file(fd, RBX);
-                    commands += sizeof(RBX_STR) - 1;
-                    continue;
-                }
-                if (!strncmp(commands, RCX_STR, sizeof(RCX_STR) - 1)) {
-                    write_to_file(fd, OUT_REG);
-                    write_to_file(fd, RCX);
-                    commands += sizeof(RCX_STR) - 1;
                     continue;
                 }
             }
@@ -148,22 +140,11 @@ translate_to_machine_code(char *commands, ssize_t commands_size, int fd) {
                 return false; // What we should push?
             }
             if (commands + sizeof(RAX_STR) <= commands_end) {
-                if (!strncmp(commands, RAX_STR, sizeof(RAX_STR) - 1)) {
+                tmp_value = write_register_to_file(commands);
+                if (tmp_value) {
                     write_to_file(fd, PUSH_REG);
-                    write_to_file(fd, RAX);
+                    write_to_file(fd, tmp_value);
                     commands += sizeof(RAX_STR) - 1;
-                    continue;
-                }
-                if (!strncmp(commands, RBX_STR, sizeof(RBX_STR) - 1)) {
-                    write_to_file(fd, PUSH_REG);
-                    write_to_file(fd, RBX);
-                    commands += sizeof(RBX_STR) - 1;
-                    continue;
-                }
-                if (!strncmp(commands, RCX_STR, sizeof(RCX_STR) - 1)) {
-                    write_to_file(fd, PUSH_REG);
-                    write_to_file(fd, RCX);
-                    commands += sizeof(RCX_STR) - 1;
                     continue;
                 }
             }
@@ -191,22 +172,11 @@ translate_to_machine_code(char *commands, ssize_t commands_size, int fd) {
                 return true; //EOF
             }
             if (commands + sizeof(RAX_STR) <= commands_end) {
-                if (!strncmp(commands, RAX_STR, sizeof(RAX_STR) - 1)) {
+                tmp_value = write_register_to_file(commands);
+                if (tmp_value) {
                     write_to_file(fd, POP_REG);
-                    write_to_file(fd, RAX);
+                    write_to_file(fd, tmp_value);
                     commands += sizeof(RAX_STR) - 1;
-                    continue;
-                }
-                if (!strncmp(commands, RBX_STR, sizeof(RBX_STR) - 1)) {
-                    write_to_file(fd, POP_REG);
-                    write_to_file(fd, RBX);
-                    commands += sizeof(RBX_STR) - 1;
-                    continue;
-                }
-                if (!strncmp(commands, RCX_STR, sizeof(RCX_STR) - 1)) {
-                    write_to_file(fd, POP_REG);
-                    write_to_file(fd, RCX);
-                    commands += sizeof(RCX_STR) - 1;
                     continue;
                 }
             }

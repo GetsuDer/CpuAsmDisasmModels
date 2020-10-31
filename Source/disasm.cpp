@@ -22,13 +22,13 @@ static bool
 write_register(char command, int fd) {
     switch(command) {
         case RAX:
-            if (write(fd, RAX_STR, sizeof(RAX_STR)) == -1) return false;
+            if (write(fd, RAX_STR, sizeof(RAX_STR) - 1) == -1) return false;
             break;
         case RBX:
-            if (write(fd, RBX_STR, sizeof(RBX_STR)) == -1) return false;
+            if (write(fd, RBX_STR, sizeof(RBX_STR) - 1) == -1) return false;
             break;
         case RCX:
-            if (write(fd, RCX_STR, sizeof(RCX_STR)) == -1) return false;
+            if (write(fd, RCX_STR, sizeof(RCX_STR) - 1) == -1) return false;
             break;
         default:
             return false;

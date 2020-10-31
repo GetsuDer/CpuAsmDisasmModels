@@ -30,5 +30,7 @@ mul
 push rcx
 add
 push 2
+push rax
+mul
 div
 out
