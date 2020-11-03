@@ -52,7 +52,7 @@ translate_to_asm(char *commands, int commands_size, int fd)
 
     char *commands_end = commands + commands_size;
     double tmp_double = 0;
-    u_int8_t addr = 0;
+    int addr = 0;
     while (commands < commands_end) {
         dprintf(fd, "%ld : ", commands - commands_begin);
         switch (*commands) {
@@ -91,11 +91,11 @@ translate_to_asm(char *commands, int commands_size, int fd)
                 write(fd, " ", 1);
                 commands++;
                 if (commands >= commands_end) {
-                    fprintf(stderr, "Error: push command without register argument\n");
+                    fprintf(stderr, "Error: push command without register argument at the end of the file\n");
                     return false;
                 }
                 if (!write_register(*commands, fd)) {
-                    fprintf(stderr, "Error: push commands without valid register\n");
+                    fprintf(stderr, "Error: push commands without valid register in %10s\n", commands);
                     return false;
                 }
                 commands++;
@@ -104,7 +104,7 @@ translate_to_asm(char *commands, int commands_size, int fd)
                 write(fd, PUSH_STR, sizeof(PUSH_STR) - 1);
                 commands++;
                 if (commands + sizeof(double) > commands_end) {
-                    fprintf(stderr, "Error: no value argument\n");
+                    fprintf(stderr, "Error: no value argument for push commands %10s\n", commands);
                     return false;
                 }
                 tmp_double = 0;
@@ -126,7 +126,7 @@ translate_to_asm(char *commands, int commands_size, int fd)
                     return false;
                 }
                 if (!write_register(*commands, fd)) {
-                    fprintf(stderr, "Error: no valid register in pop command\n");
+                    fprintf(stderr, "Error: no valid register in pop command %10s\n", commands);
                     return false;          
                 }
                 commands++;
@@ -145,7 +145,7 @@ translate_to_asm(char *commands, int commands_size, int fd)
                     return false;
                 }
                 if (!write_register(*commands, fd)) {
-                    fprintf(stderr, "Error: no valid register in in command\n");
+                    fprintf(stderr, "Error: no valid register in in command %10s\n", commands);
                     return false;
                 }
                 commands++;
@@ -164,7 +164,7 @@ translate_to_asm(char *commands, int commands_size, int fd)
                     return false;
                 }
                 if (!write_register(*commands, fd)) {
-                    fprintf(stderr, "Error: no valid register name in out command\n");
+                    fprintf(stderr, "Error: no valid register name in out command %10s\n", commands);
                     return false;
                 }
                 commands++;
@@ -172,14 +172,13 @@ translate_to_asm(char *commands, int commands_size, int fd)
             case JMP:
                 write(fd, JMP_STR, sizeof(JMP_STR) - 1);
                 commands++;
-                addr = *commands + '0';
-                commands++;
+                addr = *commands;
+                commands += sizeof(addr);
                 write(fd, " ", 1);
-                write(fd, &addr, 1);
-                write(fd, "\n", 1);
+                dprintf(fd, "%d\n", addr);
                 break; 
             default:
-                fprintf(stderr, "Error: can not recognise command\n");
+                fprintf(stderr, "Error: can not recognise command %10s\n", commands);
                 commands++;
                 break;
         }

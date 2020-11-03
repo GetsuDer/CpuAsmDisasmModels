@@ -59,7 +59,25 @@ check_arg_num(struct Cpu *cpu, int argn)
     return true;
 }
 
-
+//! \brief Function to hide register swicth
+//! \param [in] cpu Cpu to choose register
+//! \param [in] command Command, which specifies register
+//! \return Returns pointer to necessary register or NULL
+static double*
+find_register(struct Cpu *cpu, char *command)
+{
+    switch (*command) {
+        case RAX:
+            return &(cpu->rax);
+        case RBX:
+            return &(cpu->rbx);
+        case RCX:
+            return &(cpu->rcx);
+        default:
+            return NULL;
+    }
+    return NULL;
+}
 //! \brief Proccess comands from buffer
 //! \param[in] commands Buffer with commands
 //! \param[in] commands_size Commands buffer size
@@ -78,6 +96,8 @@ work(char *commands, int commands_size, struct Cpu *cpu)
     char *commands_begin = commands;
     char *commands_end = commands + commands_size;
     double tmp_double1 = 0, tmp_double2 = 0;
+    double *tmp_register = NULL;
+    int address = 0;
     while (commands < commands_end) {
         switch(*commands) {
             case HLT:
@@ -145,21 +165,13 @@ work(char *commands, int commands_size, struct Cpu *cpu)
                     cpu->state = WAIT;
                     return false;
                 }
-                switch(*commands) {
-                    case RAX:
-                        Stack_Push(cpu->cpu_stack, cpu->rax);
-                        break;
-                    case RBX:
-                        Stack_Push(cpu->cpu_stack, cpu->rbx);
-                        break;
-                    case RCX:
-                        Stack_Push(cpu->cpu_stack, cpu->rcx);
-                        break;
-                    default:
-                        cpu->state = WAIT;
-                        fprintf(stderr, "CPU error: no valid register\n");
-                        return false;
+                tmp_register = find_register(cpu, commands);
+                if (!tmp_register) {
+                    cpu->state = WAIT;
+                    fprintf(stderr, "No valid register in push command: %10s\n", commands);
+                    return false;
                 }
+                Stack_Push(cpu->cpu_stack, *tmp_register);
                 commands++;
                 break;
             case PUSH_VAL:
@@ -196,21 +208,13 @@ work(char *commands, int commands_size, struct Cpu *cpu)
                     fprintf(stderr, "CPU error: no register name\n");
                     return false;
                 }
-                switch (*commands) {
-                    case RAX:
-                        cpu->rax = tmp_double1;
-                        break;
-                    case RBX: 
-                        cpu->rbx = tmp_double1;
-                        break;
-                    case RCX:
-                        cpu->rcx = tmp_double1;
-                        break;
-                    default:
-                        cpu->state = WAIT;
-                        fprintf(stderr, "CPU error: unknown register\n");
-                        return false;
+                tmp_register = find_register(cpu, commands);
+                if (!tmp_register) {
+                    cpu->state = WAIT;
+                    fprintf(stderr, "Unknown register: %10s\n", commands);
+                    return false;
                 }
+                *tmp_register = tmp_double1;
                 commands++;
                 break;
             case IN:
@@ -234,21 +238,13 @@ work(char *commands, int commands_size, struct Cpu *cpu)
                     cpu->state = WAIT;
                     return false;
                 }
-                switch (*commands) {
-                    case RAX:
-                        cpu->rax = tmp_double1;
-                        break;
-                    case RBX:
-                        cpu->rbx = tmp_double1;
-                        break;
-                    case RCX:
-                        cpu->rcx = tmp_double1;
-                        break;
-                    default:
-                        fprintf(stderr, "CPU error: invalid register name\n");
-                        cpu->state = WAIT;
-                        return false;
+                tmp_register = find_register(cpu, commands);
+                if (!tmp_register) {
+                    fprintf(stderr, "Invalid register name: %10s\n", commands);
+                    cpu->state = WAIT;
+                    return false;
                 }
+                *tmp_register = tmp_double1;
                 commands++;
                 break;
             case OUT:
@@ -268,21 +264,13 @@ work(char *commands, int commands_size, struct Cpu *cpu)
                     cpu->state = WAIT;
                     return false;
                 }
-                switch (*commands) {
-                    case RAX:
-                        fprintf(stdout, "%lf", cpu->rax);
-                        break;
-                    case RBX:
-                        fprintf(stdout, "%lf", cpu->rbx);
-                        break;
-                    case RCX:
-                        fprintf(stdout, "%lf", cpu->rcx);
-                        break;
-                    default:
-                        fprintf(stderr, "CPU error: invalid register name\n");
-                        cpu->state = WAIT;
-                        return false;
+                tmp_register = find_register(cpu, commands);
+                if (!tmp_register) {
+                    fprintf(stderr, "Invalid register name: %10s\n", commands);
+                    cpu->state = WAIT;
+                    return false;
                 }
+                fprintf(stdout, "%lf\n", *tmp_register);
                 commands++;
                 break;
             case JMP:
@@ -291,7 +279,8 @@ work(char *commands, int commands_size, struct Cpu *cpu)
                     cpu->state = WAIT;
                     return false;
                 }
-                commands = commands_begin + *commands;
+                address = *(int *)commands;
+                commands = commands_begin + address;
                 break;
             default:
                 fprintf(stderr, "CPU error: wrong commands\n");

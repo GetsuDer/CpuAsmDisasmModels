@@ -81,7 +81,7 @@ add_symbol(struct Symtab *sym_tab, char *name, int name_size)
     assert(sym_tab);
     assert(name);
     if (sym_tab->size > 0) {
-        struct Symbol *tmp = (struct Symbol *)realloc(sym_tab->symbols, sizeof(struct Symbol) * sym_tab->size + 1);
+        struct Symbol *tmp = (struct Symbol *)realloc(sym_tab->symbols, sizeof(struct Symbol) * (sym_tab->size + 1));
         if (!tmp) {
             return false;
         }
@@ -231,12 +231,7 @@ translate_to_machine_code(char *commands, ssize_t commands_size, int fd) {
 
     int address = 0;
     
- //   char *commands_begin = commands;
     char *commands_end = commands + commands_size;
- /*   int tmp_value = 0;
-    int shift_commands = 0;
-    int shift_address = 0;
-   */ 
     Stack_int *jmps = (Stack_int *)calloc(1, sizeof(Stack_int));
     STACK_INIT((*jmps));
     while (commands < commands_end) {
@@ -274,22 +269,25 @@ translate_to_machine_code(char *commands, ssize_t commands_size, int fd) {
             write_to_file(fd, JMP);
             while (commands < commands_end && isspace((int)*commands)) commands++;
             if (commands >=commands_end) {
+                fprintf(stderr, "No label after JMP command at the end of the file\n");
                 return false;
             }
             char *label = commands;
             while (label < commands_end && !isspace((int)*label)) label++;
             if (label - commands < 1) {
+                fprintf(stderr, "JMP command without label: %s\n", commands);
                 return false;
             }
             int ind = find_symbol(&sym_tab, commands, label - commands);
             if (ind == -1) {
                 add_symbol(&sym_tab, commands, label - commands);
                 Stack_Push(jmps, address + 1);
-                write(fd, "\0", 1); //here must be jmp address
+                ind = find_symbol(&sym_tab, commands, label - commands);
+                write(fd, &ind, sizeof(ind)); //here must be jmp address
             } else {
-                write_to_file(fd, sym_tab.symbols[ind].address);
+                write(fd, &(sym_tab.symbols[ind].address), sizeof(int));
             }
-            address += 2;
+            address += 1 + sizeof(ind);
             commands = label;
             continue;
         }
@@ -300,6 +298,7 @@ translate_to_machine_code(char *commands, ssize_t commands_size, int fd) {
         while (label < commands_end && *label != ':') label++;
         if (label >= commands_end) {
         // Well, it was not label, it is just a wrong command
+            fprintf(stderr, "Unknown assembler command: %.10s", commands);
             return false;
         } 
         int ind = find_symbol(&sym_tab, commands, label - commands);
@@ -310,15 +309,21 @@ translate_to_machine_code(char *commands, ssize_t commands_size, int fd) {
         commands = label + 1;
     }
     //now all unsolved jmp labels must be solved
-    for (int i = 0; i < Stack_Size(jmps); i++) {
+    int jmps_num = Stack_Size(jmps);
+    for (int i = 0; i < jmps_num; i++) {
         int work_address = Stack_Top(jmps);
         Stack_Pop(jmps);
         lseek(fd, work_address, SEEK_SET);
-        u_int8_t ind = 0;
-        read(fd, &ind, 1);
+        int ind = 0;
+        read(fd, &ind, sizeof(ind));
         lseek(fd, work_address, SEEK_SET);
-        write_to_file(fd, sym_tab.symbols[ind].address);
+        write(fd, &(sym_tab.symbols[ind].address), sizeof(int));
     }
+    Stack_Destruct(jmps);
+    for (int i = 0; i < sym_tab.size; i++) {
+        free(sym_tab.symbols[i].name);
+    }
+    free(sym_tab.symbols);
     return true;
 }
 
@@ -334,6 +339,7 @@ in_and_out_from_asm(char *file_in, char *file_out) {
     int file_in_size = 0;
     char *commands = mmap_file(file_in, &file_in_size);
     if (!commands) {
+        fprintf(stderr, "Can not mmap file %s\n", file_in);
         return false;
     }
     int fd_out = open(file_out, O_RDWR | O_CREAT | O_TRUNC, out_mode); 
@@ -343,7 +349,7 @@ in_and_out_from_asm(char *file_in, char *file_out) {
         return false;
     }
     if (!translate_to_machine_code(commands, file_in_size, fd_out)) {
-        fprintf(stderr, "Error: Can`t translate to asm\n");
+        fprintf(stderr, "Error: Can`t translate to asm from file %s\n", file_out);
         close(fd_out);
         munmap(commands, file_in_size);
         return false;

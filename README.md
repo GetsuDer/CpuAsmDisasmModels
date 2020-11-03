@@ -21,11 +21,17 @@ All these commands put their result on the stack again.
     pop - pop value from stack
 #### CPU operations
     hlt - stop working
+    jmp LABEL - jmp to label LABEL (it can be defined later)
+    LABEL: - set a label with name LABEL
+LABEL is an arbirtrary consecuence of non-space symbols
+
 Where REGISTER_NAME is in {rax, rbx, rcx}, and VALUE can be presented as double
 
 ## Starting
     run 'make all' to get cpu, asm and disasm programs (see description in documentation)
-
+    'make cpu' to get cpu
+    'make asm' to get asm
+    'make disasm' to get disasm
 ## Testing
     Directory 'Testing' consists of subdirectories with test in next format
 ####

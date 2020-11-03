@@ -1,0 +1,9 @@
+in rax
+in rbx
+push rax
+push rbx
+jmp label1
+out
+label1:
+pop
+out
