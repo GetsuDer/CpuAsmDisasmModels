@@ -1,4 +1,4 @@
-in
-in
-mul
-out
+0 : in
+1 : in
+2 : mul
+3 : out

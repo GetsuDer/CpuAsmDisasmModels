@@ -75,7 +75,7 @@ work(char *commands, int commands_size, struct Cpu *cpu)
     if (cpu->state != ON) {
         turn_cpu_on(cpu);
     }
-
+    char *commands_begin = commands;
     char *commands_end = commands + commands_size;
     double tmp_double1 = 0, tmp_double2 = 0;
     while (commands < commands_end) {
@@ -284,6 +284,14 @@ work(char *commands, int commands_size, struct Cpu *cpu)
                         return false;
                 }
                 commands++;
+                break;
+            case JMP:
+                commands++;
+                if (commands == commands_end) {
+                    cpu->state = WAIT;
+                    return false;
+                }
+                commands = commands_begin + *commands;
                 break;
             default:
                 fprintf(stderr, "CPU error: wrong commands\n");

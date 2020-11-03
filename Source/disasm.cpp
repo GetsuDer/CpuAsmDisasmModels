@@ -48,10 +48,13 @@ translate_to_asm(char *commands, int commands_size, int fd)
     assert(commands);
     assert(fd > 0);
     assert(commands_size > 0);
-    
+    char *commands_begin = commands;
+
     char *commands_end = commands + commands_size;
     double tmp_double = 0;
+    u_int8_t addr = 0;
     while (commands < commands_end) {
+        dprintf(fd, "%ld : ", commands - commands_begin);
         switch (*commands) {
             case HLT:
                 write(fd, HLT_STR, sizeof(HLT_STR) - 1);
@@ -166,6 +169,15 @@ translate_to_asm(char *commands, int commands_size, int fd)
                 }
                 commands++;
                 break;
+            case JMP:
+                write(fd, JMP_STR, sizeof(JMP_STR) - 1);
+                commands++;
+                addr = *commands + '0';
+                commands++;
+                write(fd, " ", 1);
+                write(fd, &addr, 1);
+                write(fd, "\n", 1);
+                break; 
             default:
                 fprintf(stderr, "Error: can not recognise command\n");
                 commands++;

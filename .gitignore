@@ -5,5 +5,7 @@ disasm
 cpu
 asm_test_log
 disasm_test_log
+cpu_test_log
 Testing/generate_output_asm
 Testing/generate_output_disasm
+Testing/generate_tests

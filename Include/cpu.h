@@ -34,7 +34,8 @@ enum CPU_COMMANDS {
     OUT_REG,
     RAX = 100,
     RBX,
-    RCX
+    RCX,
+    JMP
 };
 
 bool turn_cpu_on(Cpu *cpu);

@@ -1,4 +1,4 @@
-in
-in
-div
-out
+0 : in
+1 : in
+2 : div
+3 : out
