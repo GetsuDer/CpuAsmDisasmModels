@@ -10,7 +10,7 @@ TEST_LOG_ASM = asm_test_log
 TEST_LOG_CPU = cpu_test_log
 
 ifeq ($(DEBUG), YES)
-	CFLAGS += -g
+	CFLAGS += -g -DDEBUG_NUMERATION
 endif
 
 .PHONY: all clean asm disasm cpu test_all test_disasm test_asm

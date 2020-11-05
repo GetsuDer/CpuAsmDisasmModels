@@ -48,13 +48,16 @@ translate_to_asm(char *commands, int commands_size, int fd)
     assert(commands);
     assert(fd > 0);
     assert(commands_size > 0);
+#ifdef DEBUG_NUMERATION    
     char *commands_begin = commands;
-
+#endif
     char *commands_end = commands + commands_size;
     double tmp_double = 0;
     int addr = 0;
     while (commands < commands_end) {
+#ifdef DEBUG_NUMERATION
         dprintf(fd, "%ld : ", commands - commands_begin);
+#endif
         switch (*commands) {
             case HLT:
                 write(fd, HLT_STR, sizeof(HLT_STR) - 1);
