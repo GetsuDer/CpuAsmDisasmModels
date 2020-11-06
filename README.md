@@ -22,8 +22,9 @@ All these commands put their result on the stack again.
 #### CPU operations
     hlt - stop working
     jmp LABEL - jmp to label LABEL (it can be defined later)
+    jmp $address - jmp to absolute address
     LABEL: - set a label with name LABEL
-LABEL is an arbirtrary consecuence of non-space symbols
+LABEL is an arbirtrary consecuence of non-space symbols, but it should not begins from '$' symbol
 
 Where REGISTER_NAME is in {rax, rbx, rcx}, and VALUE can be presented as double
 
