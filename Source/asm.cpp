@@ -273,9 +273,21 @@ translate_to_machine_code(char *commands, ssize_t commands_size, int fd) {
                 return false;
             }
             char *label = commands;
+            if (*label == '$') {
+                char *endptr = NULL;
+                errno = 0;
+                int jmp_address = strtol(label + 1, &endptr, 10);
+                if (errno || endptr == commands) {
+                    fprintf(stderr, "Wrong jmp value: %10s\n", commands);
+                    return false;
+                }
+                write(fd, &jmp_address, sizeof(int));
+                commands = endptr;
+                continue;
+            }
             while (label < commands_end && !isspace((int)*label)) label++;
             if (label - commands < 1) {
-                fprintf(stderr, "JMP command without label: %s\n", commands);
+            fprintf(stderr, "JMP command without label: %s\n", commands);
                 return false;
             }
             int ind = find_symbol(&sym_tab, commands, label - commands);

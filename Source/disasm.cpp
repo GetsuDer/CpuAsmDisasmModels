@@ -178,7 +178,7 @@ translate_to_asm(char *commands, int commands_size, int fd)
                 addr = *commands;
                 commands += sizeof(addr);
                 write(fd, " ", 1);
-                dprintf(fd, "%d\n", addr);
+                dprintf(fd, "$%d\n", addr);
                 break; 
             default:
                 fprintf(stderr, "Error: can not recognise command %10s\n", commands);

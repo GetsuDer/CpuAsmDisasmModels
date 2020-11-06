@@ -3,7 +3,7 @@ SRCDIR = Source/
 OBJDIR = ObjectFiles/
 INCDIR = Include/
 CC = g++
-DEBUG = YES
+DEBUG = NO
 CFLAGS = -Wall -Wextra -Wformat -std=c++14 -g -IInclude -ISource 
 TEST_LOG_DISASM = disasm_test_log
 TEST_LOG_ASM = asm_test_log

@@ -1,4 +1,4 @@
-0 : jmp 5
-5 : jmp 10
-10 : jmp 15
-15 : hlt
+jmp $5
+jmp $10
+jmp $15
+hlt

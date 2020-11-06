@@ -1,2 +1,2 @@
-0 : jmp 5
-5 : jmp 5
+jmp $5
+jmp $5

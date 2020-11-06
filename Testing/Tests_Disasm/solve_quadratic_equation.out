@@ -1,32 +1,32 @@
-0 : in rax
-2 : in rbx
-4 : in rcx
-6 : push rbx
-8 : push rbx
-10 : mul
-11 : push rax
-13 : push rcx
-15 : push 4.000000
-24 : mul
-25 : mul
-26 : sub
-27 : sqrt
-28 : pop rcx
-30 : push rbx
-32 : push -1.000000
-41 : mul
-42 : push rcx
-44 : sub
-45 : push 2.000000
-54 : div
-55 : out
-56 : push rbx
-58 : push -1.000000
-67 : mul
-68 : push rcx
-70 : add
-71 : push 2.000000
-80 : push rax
-82 : mul
-83 : div
-84 : out
+in rax
+in rbx
+in rcx
+push rbx
+push rbx
+mul
+push rax
+push rcx
+push 4.000000
+mul
+mul
+sub
+sqrt
+pop rcx
+push rbx
+push -1.000000
+mul
+push rcx
+sub
+push 2.000000
+div
+out
+push rbx
+push -1.000000
+mul
+push rcx
+add
+push 2.000000
+push rax
+mul
+div
+out

@@ -33,8 +33,9 @@ Where REGISTER_NAME is in {rax, rbx, rcx}, and VALUE can be presented as double
     'make asm' to get asm
     'make disasm' to get disasm
 ## Debug
-    To turn debug off run make command with 'DEBUG=NO' (or whatever instead DEBUG=YES)
-    It turns off -g option and numeration of disassemled code
+    To turn debug on run make command with 'DEBUG=YES'
+    It turns on -g option and numeration of disassemled code (Be careful, with this option 
+            you can not send disassembler output back to assembler)
 ## Testing
     Directory 'Testing' consists of subdirectories with test in next format
 ####

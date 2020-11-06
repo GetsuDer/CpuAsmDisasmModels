@@ -1,8 +1,8 @@
-0 : in rax
-2 : in rbx
-4 : push rax
-6 : push rbx
-8 : jmp 14
-13 : out
-14 : pop
-15 : out
+in rax
+in rbx
+push rax
+push rbx
+jmp $14
+out
+pop
+out
