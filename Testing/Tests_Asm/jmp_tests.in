@@ -1,0 +1,23 @@
+#print max from two input values#
+    in rax
+    in rbx
+    push rax
+    push rbx
+    jmpg second1
+    out rbx
+    jmp end1
+second1:
+    out rax
+    jmp end1
+end1:
+#now print min from two input values#
+    push rax
+    push rbx
+    jmpl second2
+    out rbx
+    jmp end2
+second2:
+    out rax
+    jmp end2
+end2:
+    hlt

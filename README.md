@@ -30,8 +30,7 @@ All these commands put their result on the stack again.
     jmp $address - jmp to absolute address
     jmpl {LABEL, $address} - jmp if for last two values in stack a, b (push a, push b) a < b
     jmpg {LABEL, $address} - - - - - - jmp if a > b
-    jmpz {LABEL, $address} - - - - - - jmp if last value in stack is zero
-    jmpnz {LABEL, $address} - - - - - jmp if last value in stack is zero
+    jmp{l, g} POP LAST TWO VALUES FROM STACK, be careful
     LABEL: - set a label with name LABEL
 #### Functions
     call func_name - jmp to func_name with saving return point

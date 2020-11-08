@@ -78,6 +78,23 @@ find_register(struct Cpu *cpu, char *command)
     }
     return NULL;
 }
+
+//! \brief Take one or two top values from cpu stack
+//! \param [in] cpu Cpu to work with
+//! \param [out] tmp1 First value
+//! \param [out] tmp2 Second value
+static void
+take_from_cpu_stack(struct Cpu *cpu, double *tmp1, double *tmp2)
+{
+    *tmp1 = Stack_Top(cpu->cpu_stack);
+    Stack_Pop(cpu->cpu_stack);
+    if (tmp2) {
+        *tmp2 = Stack_Top(cpu->cpu_stack);
+        Stack_Pop(cpu->cpu_stack);
+    }
+    return;
+}
+
 //! \brief Proccess comands from buffer
 //! \param[in] commands Buffer with commands
 //! \param[in] commands_size Commands buffer size
@@ -108,37 +125,25 @@ work(char *commands, int commands_size, struct Cpu *cpu)
             case ADD:
                 if (!check_arg_num(cpu, 2)) return false;
                 commands++;
-                tmp_double1 = Stack_Top(cpu->cpu_stack);
-                Stack_Pop(cpu->cpu_stack);
-                tmp_double2 = Stack_Top(cpu->cpu_stack);
-                Stack_Pop(cpu->cpu_stack);
+                take_from_cpu_stack(cpu, &tmp_double1, &tmp_double2);
                 Stack_Push(cpu->cpu_stack, tmp_double1 + tmp_double2);
                 break;
             case SUB: 
                 if (!check_arg_num(cpu, 2)) return false;
                 commands++;
-                tmp_double1 = Stack_Top(cpu->cpu_stack);
-                Stack_Pop(cpu->cpu_stack);
-                tmp_double2 = Stack_Top(cpu->cpu_stack);
-                Stack_Pop(cpu->cpu_stack);
+                take_from_cpu_stack(cpu, &tmp_double1, &tmp_double2);
                 Stack_Push(cpu->cpu_stack, tmp_double2 - tmp_double1);
                 break;
             case MUL:
                 if (!check_arg_num(cpu, 2)) return false;
                 commands++;
-                tmp_double1 = Stack_Top(cpu->cpu_stack);
-                Stack_Pop(cpu->cpu_stack);
-                tmp_double2 = Stack_Top(cpu->cpu_stack);
-                Stack_Pop(cpu->cpu_stack);
+                take_from_cpu_stack(cpu, &tmp_double1, &tmp_double2);
                 Stack_Push(cpu->cpu_stack, tmp_double1 * tmp_double2);
                 break;
             case DIV:
                 if (!check_arg_num(cpu, 2)) return false;
                 commands++;
-                tmp_double1 = Stack_Top(cpu->cpu_stack);
-                Stack_Pop(cpu->cpu_stack);
-                tmp_double2 = Stack_Top(cpu->cpu_stack);
-                Stack_Pop(cpu->cpu_stack);
+                take_from_cpu_stack(cpu, &tmp_double1, &tmp_double2);
                 if (fabs(tmp_double2) < ZERO_EPS) {
                     fprintf(stderr, "CPU error: zero division\n");
                     cpu->state = WAIT;
@@ -149,8 +154,7 @@ work(char *commands, int commands_size, struct Cpu *cpu)
             case SQRT:
                 if (!check_arg_num(cpu, 1)) return false;
                 commands++;
-                tmp_double1 = Stack_Top(cpu->cpu_stack);
-                Stack_Pop(cpu->cpu_stack);
+                take_from_cpu_stack(cpu, &tmp_double1, NULL);
                 if (tmp_double1 < 0) {
                     fprintf(stderr, "CPU error: sqrt from negative value\n");
                     cpu->state = WAIT;
@@ -168,7 +172,7 @@ work(char *commands, int commands_size, struct Cpu *cpu)
                 tmp_register = find_register(cpu, commands);
                 if (!tmp_register) {
                     cpu->state = WAIT;
-                    fprintf(stderr, "No valid register in push command: %10s\n", commands);
+                    fprintf(stderr, "No valid register in push command\n");
                     return false;
                 }
                 Stack_Push(cpu->cpu_stack, *tmp_register);
@@ -201,8 +205,7 @@ work(char *commands, int commands_size, struct Cpu *cpu)
                     fprintf(stderr, "CPU error: pop from empty stack\n");
                     return false;
                 }
-                tmp_double1 = Stack_Top(cpu->cpu_stack);
-                Stack_Pop(cpu->cpu_stack);
+                take_from_cpu_stack(cpu, &tmp_double1, NULL);
                 if (commands >= commands_end) {
                     cpu->state = WAIT;
                     fprintf(stderr, "CPU error: no register name\n");
@@ -211,7 +214,7 @@ work(char *commands, int commands_size, struct Cpu *cpu)
                 tmp_register = find_register(cpu, commands);
                 if (!tmp_register) {
                     cpu->state = WAIT;
-                    fprintf(stderr, "Unknown register: %10s\n", commands);
+                    fprintf(stderr, "Unknown register\n");
                     return false;
                 }
                 *tmp_register = tmp_double1;
@@ -240,7 +243,7 @@ work(char *commands, int commands_size, struct Cpu *cpu)
                 }
                 tmp_register = find_register(cpu, commands);
                 if (!tmp_register) {
-                    fprintf(stderr, "Invalid register name: %10s\n", commands);
+                    fprintf(stderr, "Invalid register name\n");
                     cpu->state = WAIT;
                     return false;
                 }
@@ -266,7 +269,7 @@ work(char *commands, int commands_size, struct Cpu *cpu)
                 }
                 tmp_register = find_register(cpu, commands);
                 if (!tmp_register) {
-                    fprintf(stderr, "Invalid register name: %10s\n", commands);
+                    fprintf(stderr, "Invalid register name\n");
                     cpu->state = WAIT;
                     return false;
                 }
@@ -281,6 +284,37 @@ work(char *commands, int commands_size, struct Cpu *cpu)
                 }
                 address = *(int *)commands;
                 commands = commands_begin + address;
+                break;
+            case JMPL:
+                commands++;
+                if (!check_arg_num(cpu, 2)) {
+                    fprintf(stderr, "jmpl command when less then 2 elements in stack!");
+                    cpu->state = WAIT;
+                    return false;
+                }
+                take_from_cpu_stack(cpu, &tmp_double1, &tmp_double2);
+                if (tmp_double2 < tmp_double1) { //jmp
+                    address = *(int *)commands;
+                    commands = commands_begin + address;
+                } else {
+                    commands += sizeof(address);
+                }
+                break;
+
+            case JMPG:
+                commands++;
+                if (!check_arg_num(cpu, 2)) {
+                    fprintf(stderr, "jmpg command when less then 2 elements in stack!\n");
+                    cpu->state = WAIT;
+                    return false;
+                }
+                take_from_cpu_stack(cpu, &tmp_double1, &tmp_double2);
+                if (tmp_double2 > tmp_double1) { //jmp
+                    address = *(int *)commands;
+                    commands = commands_begin + address;
+                } else {
+                    commands += sizeof(address);
+                }
                 break;
             default:
                 fprintf(stderr, "CPU error: wrong commands\n");

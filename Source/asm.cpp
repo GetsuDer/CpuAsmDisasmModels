@@ -247,6 +247,35 @@ skip_nonimportant_symbols(char **commands, char *commands_end)
     return;
 }
 
+//! \brief Find jmp command variant, if exists
+//! \param [in,out] commands - Place to find commands. If command founded, shifts to next free position
+//! \param [in] commands_end End of commands
+//! \return Returns jmp command if jmp command founded, zero else
+static int
+choose_jmp(char **commands, char *commands_end)
+{
+    char *tmp_commands = *commands;
+    int command = 0;
+    int command_size = 0;
+    if (tmp_commands + sizeof(JMP_STR) - 1 < commands_end &&
+            !strncmp(tmp_commands, JMP_STR, sizeof(JMP_STR) - 1)) {
+        command = JMP;
+        command_size = sizeof(JMP_STR);
+    } 
+
+    if (tmp_commands + sizeof(JMPL_STR) - 1 < commands_end &&
+            !strncmp(tmp_commands, JMPL_STR, sizeof(JMPL_STR) - 1)) {
+        command = JMPL;
+        command_size = sizeof(JMPL_STR);
+    }
+    if (tmp_commands + sizeof(JMPG_STR) - 1 < commands_end &&
+            !strncmp(tmp_commands, JMPG_STR, sizeof(JMPG_STR) - 1)) {
+        command = JMPG;
+        command_size = sizeof(JMPG_STR);
+    }
+    *commands = tmp_commands + command_size;
+    return command;
+}
 
 //! \brief Main assembler function. Translates assembler commands to 'binary' code
 //! \param [in] commands Assembler commands to translate
@@ -295,12 +324,9 @@ translate_to_machine_code(char *commands, ssize_t commands_size, int fd) {
         if (process_value_command(commands, commands_end, fd, PUSH_STR, sizeof(PUSH_STR) - 1, PUSH_VAL, &commands, &address)) continue;
         
         //process jmp command 
-        
-        if (commands + sizeof(JMP_STR) < commands_end &&
-            !strncmp(commands, JMP_STR, sizeof(JMP_STR) - 1)) {
-            commands += sizeof(JMP_STR) - 1;
-            write_to_file(fd, JMP);
-
+        int jmp_type = choose_jmp(&commands, commands_end);
+        if (jmp_type) {
+            write_to_file(fd, jmp_type);
             skip_nonimportant_symbols(&commands, commands_end);
             
             if (commands >=commands_end) {
@@ -332,7 +358,12 @@ translate_to_machine_code(char *commands, ssize_t commands_size, int fd) {
                 ind = find_symbol(&sym_tab, commands, label - commands);
                 write(fd, &ind, sizeof(ind)); //here must be jmp address
             } else {
-                write(fd, &(sym_tab.symbols[ind].address), sizeof(int));
+                if (sym_tab.symbols[ind].address == -1) {
+                    write(fd, &ind, sizeof(ind)); //here must be jmp address
+                    Stack_Push(jmps, address + 1);
+                } else {
+                    write(fd, &(sym_tab.symbols[ind].address), sizeof(ind));
+                }
             }
             address += 1 + sizeof(ind);
             commands = label;

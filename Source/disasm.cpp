@@ -37,6 +37,15 @@ write_register(char command, int fd) {
     return true;
 }
 
+void
+write_address(int fd, char**commands)
+{
+    int address = 0;
+    address = *((int*)*commands);
+    dprintf(fd, " $%d\n", address);
+    *commands += sizeof(address);
+    return;
+}
 //! \brief Main disassembler function. Translates command bytes into assembler commands.
 //! \param [in] commands Command bytes
 //! \param [in] commands_size Command bytes len
@@ -53,7 +62,6 @@ translate_to_asm(char *commands, int commands_size, int fd)
 #endif
     char *commands_end = commands + commands_size;
     double tmp_double = 0;
-    int addr = 0;
     while (commands < commands_end) {
 #ifdef DEBUG_NUMERATION
         dprintf(fd, "%ld : ", commands - commands_begin);
@@ -175,11 +183,18 @@ translate_to_asm(char *commands, int commands_size, int fd)
             case JMP:
                 write(fd, JMP_STR, sizeof(JMP_STR) - 1);
                 commands++;
-                addr = *commands;
-                commands += sizeof(addr);
-                write(fd, " ", 1);
-                dprintf(fd, "$%d\n", addr);
+                write_address(fd, &commands);
                 break; 
+            case JMPL:
+                write(fd, JMPL_STR, sizeof(JMPL_STR) - 1);
+                commands++;
+                write_address(fd, &commands);
+                break;
+            case JMPG:
+                write(fd, JMPG_STR, sizeof(JMPG_STR) - 1);
+                commands++;
+                write_address(fd, &commands);
+                break;
             default:
                 fprintf(stderr, "Error: can not recognise command %10s\n", commands);
                 commands++;

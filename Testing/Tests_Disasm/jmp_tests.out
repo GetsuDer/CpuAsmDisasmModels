@@ -1,0 +1,17 @@
+in rax
+in rbx
+push rax
+push rbx
+jmpg $20
+out rbx
+jmp $27
+out rax
+jmp $27
+push rax
+push rbx
+jmpl $43
+out rbx
+jmp $50
+out rax
+jmp $50
+hlt

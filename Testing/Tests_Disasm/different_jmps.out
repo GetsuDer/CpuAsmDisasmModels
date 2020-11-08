@@ -1,0 +1,7 @@
+in
+in
+in
+in
+jmp $1
+jmpl $2
+jmpg $3

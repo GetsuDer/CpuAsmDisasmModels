@@ -46,6 +46,13 @@ const char RCX_STR[] = "rcx";
 //! Commands string for jmp
 const char JMP_STR[] = "jmp";
 
+//! Command string for jmpl
+const char JMPL_STR[] = "jmpl";
+
+//! Command string for jmpg
+const char JMPG_STR[] = "jmpg";
+
+
 constexpr mode_t out_mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH;
 bool in_and_out_from_asm(char *file_in, char *file_out);
 void skip_nonimportant_symbols(char **commands, char *command);

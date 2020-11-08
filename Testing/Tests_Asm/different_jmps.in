@@ -1,0 +1,10 @@
+in
+label1:
+in
+label2:
+in
+label3:
+in
+jmp label1
+jmpl label2
+jmpg label3

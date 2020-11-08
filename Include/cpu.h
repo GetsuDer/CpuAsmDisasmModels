@@ -35,7 +35,9 @@ enum CPU_COMMANDS {
     RAX = 100,
     RBX,
     RCX,
-    JMP
+    JMP,
+    JMPL,
+    JMPG,
 };
 
 bool turn_cpu_on(Cpu *cpu);
