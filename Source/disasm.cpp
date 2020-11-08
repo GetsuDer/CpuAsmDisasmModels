@@ -97,6 +97,11 @@ translate_to_asm(char *commands, int commands_size, int fd)
                 write(fd, "\n", 1);
                 commands++;
                 break;
+            case RET:
+                write(fd, RET_STR, sizeof(RET_STR) - 1);
+                write(fd, "\n", 1);
+                commands++;
+                break;
             case PUSH_REG:
                 write(fd, PUSH_STR, sizeof(PUSH_STR) - 1);
                 write(fd, " ", 1);
@@ -192,6 +197,11 @@ translate_to_asm(char *commands, int commands_size, int fd)
                 break;
             case JMPG:
                 write(fd, JMPG_STR, sizeof(JMPG_STR) - 1);
+                commands++;
+                write_address(fd, &commands);
+                break;
+            case CALL:
+                write(fd, CALL_STR, sizeof(CALL_STR) - 1);
                 commands++;
                 write_address(fd, &commands);
                 break;

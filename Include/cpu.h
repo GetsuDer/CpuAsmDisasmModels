@@ -4,6 +4,7 @@ struct Cpu
 {
     int state;
     struct Stack_double *cpu_stack;
+    struct Stack_int *ret_addr;
     double rax;
     double rbx;
     double rcx;
@@ -38,6 +39,8 @@ enum CPU_COMMANDS {
     JMP,
     JMPL,
     JMPG,
+    CALL,
+    RET
 };
 
 bool turn_cpu_on(Cpu *cpu);

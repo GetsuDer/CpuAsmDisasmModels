@@ -262,7 +262,6 @@ choose_jmp(char **commands, char *commands_end)
         command = JMP;
         command_size = sizeof(JMP_STR);
     } 
-
     if (tmp_commands + sizeof(JMPL_STR) - 1 < commands_end &&
             !strncmp(tmp_commands, JMPL_STR, sizeof(JMPL_STR) - 1)) {
         command = JMPL;
@@ -272,6 +271,11 @@ choose_jmp(char **commands, char *commands_end)
             !strncmp(tmp_commands, JMPG_STR, sizeof(JMPG_STR) - 1)) {
         command = JMPG;
         command_size = sizeof(JMPG_STR);
+    }
+    if (tmp_commands + sizeof(CALL_STR) - 1 < commands_end &&
+            !strncmp(tmp_commands, CALL_STR, sizeof(CALL_STR) - 1)) {
+        command = CALL;
+        command_size = sizeof(CALL_STR);
     }
     *commands = tmp_commands + command_size;
     return command;
@@ -301,13 +305,14 @@ translate_to_machine_code(char *commands, ssize_t commands_size, int fd) {
         if (commands >= commands_end) {
             break; // EOF
         }
-       //arithmetic commads 
+       //arithmetic commads  + ret
         if (process_alone_command(commands, commands_end, fd, MUL_STR, sizeof(MUL_STR) - 1, MUL, &commands, &address)) continue;
         if (process_alone_command(commands, commands_end, fd, DIV_STR, sizeof(DIV_STR) - 1, DIV, &commands, &address)) continue;
         if (process_alone_command(commands, commands_end, fd, ADD_STR, sizeof(ADD_STR) - 1, ADD, &commands, &address)) continue;
         if (process_alone_command(commands, commands_end, fd, SUB_STR, sizeof(SUB_STR) - 1,  SUB, &commands, &address)) continue;
         if (process_alone_command(commands, commands_end, fd, SQRT_STR, sizeof(SQRT_STR) - 1, SQRT, &commands, &address)) continue;
         if (process_alone_command(commands, commands_end, fd, HLT_STR, sizeof(HLT_STR) - 1, HLT, &commands, &address)) continue;
+        if (process_alone_command(commands, commands_end, fd, RET_STR, sizeof(RET_STR) - 1, RET, &commands, &address)) continue;
         //it is not.
         //register commands
         

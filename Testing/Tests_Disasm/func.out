@@ -1,0 +1,9 @@
+in
+in
+call $14
+jmp $13
+in
+hlt
+out
+out
+ret

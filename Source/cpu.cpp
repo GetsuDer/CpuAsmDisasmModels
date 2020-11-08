@@ -4,6 +4,10 @@
 #define TYPE double
 #include "Stack.h"
 
+#undef TYPE
+#define TYPE int
+#include "Stack.h"
+
 #include "cpu.h"
 
 //! \brief Init cpu into void state (OFF)
@@ -14,6 +18,7 @@ init(struct Cpu *cpu)
     assert(cpu);
     cpu->state = OFF;
     cpu->cpu_stack = (Stack_double *)calloc(1, sizeof(*cpu->cpu_stack));
+    cpu->ret_addr = (Stack_int *)calloc(1, sizeof(*cpu->ret_addr));
     cpu->rax = 0;
     cpu->rbx = 0;
     cpu->rcx = 0;
@@ -161,6 +166,17 @@ work(char *commands, int commands_size, struct Cpu *cpu)
                     return false;
                 }
                 Stack_Push(cpu->cpu_stack, sqrt(tmp_double1));
+                break;
+            case RET:
+                commands++;
+                if (Stack_Empty(cpu->ret_addr)) {
+                    fprintf(stderr, "Ret from no function! \n");
+                    cpu->state = WAIT;
+                    return false;
+                }
+                address = Stack_Top(cpu->ret_addr);
+                Stack_Pop(cpu->ret_addr);
+                commands = commands_begin + address + 1; //to begin from the NEXT command afrer CALL command
                 break;
             case PUSH_REG:
                 commands++;
@@ -315,6 +331,12 @@ work(char *commands, int commands_size, struct Cpu *cpu)
                 } else {
                     commands += sizeof(address);
                 }
+                break;
+            case CALL:
+                commands++;
+                address = *(int *)commands;
+                Stack_Push(cpu->ret_addr, commands - commands_begin); // remember ret address
+                commands = commands_begin + address;
                 break;
             default:
                 fprintf(stderr, "CPU error: wrong commands\n");

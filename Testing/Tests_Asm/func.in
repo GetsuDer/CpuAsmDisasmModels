@@ -1,0 +1,14 @@
+    in
+    in
+    call func
+    jmp end
+    in
+
+end:
+    hlt
+
+
+func:
+    out 
+    out
+    ret

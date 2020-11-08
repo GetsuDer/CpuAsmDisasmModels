@@ -52,6 +52,11 @@ const char JMPL_STR[] = "jmpl";
 //! Command string for jmpg
 const char JMPG_STR[] = "jmpg";
 
+//! Command string for call
+const char CALL_STR[] = "call";
+
+//! Command string for ret
+const char RET_STR[] = "ret";
 
 constexpr mode_t out_mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH;
 bool in_and_out_from_asm(char *file_in, char *file_out);
