@@ -128,25 +128,41 @@ work(char *commands, int commands_size, struct Cpu *cpu)
                 //CPU was stopped. Just stop working on commands
                 return true;
             case ADD:
-                if (!check_arg_num(cpu, 2)) return false;
+                if (!check_arg_num(cpu, 2)) {
+                    fprintf(stderr, "Not enough stack arguments in add commands\n");
+                    cpu->state = WAIT;
+                    return false;
+                }
                 commands++;
                 take_from_cpu_stack(cpu, &tmp_double1, &tmp_double2);
                 Stack_Push(cpu->cpu_stack, tmp_double1 + tmp_double2);
                 break;
             case SUB: 
-                if (!check_arg_num(cpu, 2)) return false;
+                if (!check_arg_num(cpu, 2)) {
+                    fprintf(stderr, "Not enough stack arguments in sub commands\n");
+                    cpu->state = WAIT;
+                    return false;
+                }
                 commands++;
                 take_from_cpu_stack(cpu, &tmp_double1, &tmp_double2);
                 Stack_Push(cpu->cpu_stack, tmp_double2 - tmp_double1);
                 break;
             case MUL:
-                if (!check_arg_num(cpu, 2)) return false;
+                if (!check_arg_num(cpu, 2)) {
+                    fprintf(stderr, "Not enough stack arguments in mul commands\n");
+                    cpu->state = WAIT;    
+                    return false;
+                }
                 commands++;
                 take_from_cpu_stack(cpu, &tmp_double1, &tmp_double2);
                 Stack_Push(cpu->cpu_stack, tmp_double1 * tmp_double2);
                 break;
             case DIV:
-                if (!check_arg_num(cpu, 2)) return false;
+                if (!check_arg_num(cpu, 2)) {
+                    fprintf(stderr, "Not enough stack arguments in div commands\n");
+                    cpu->state = WAIT;
+                    return false;
+                }
                 commands++;
                 take_from_cpu_stack(cpu, &tmp_double1, &tmp_double2);
                 if (fabs(tmp_double2) < ZERO_EPS) {
@@ -157,7 +173,11 @@ work(char *commands, int commands_size, struct Cpu *cpu)
                 Stack_Push(cpu->cpu_stack, tmp_double2 / tmp_double1);
                 break;
             case SQRT:
-                if (!check_arg_num(cpu, 1)) return false;
+                if (!check_arg_num(cpu, 1)) {
+                    fprintf(stderr, "Not enough stack arguments in sqrt command\n");
+                    cpu->state = WAIT;
+                    return false;
+                }
                 commands++;
                 take_from_cpu_stack(cpu, &tmp_double1, NULL);
                 if (tmp_double1 < 0) {
