@@ -48,7 +48,7 @@ const char JMP_STR[] = "jmp";
 
 constexpr mode_t out_mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH;
 bool in_and_out_from_asm(char *file_in, char *file_out);
-
+void skip_nonimportant_symbols(char **commands, char *command);
 //! \brief Symbol. At the moment only for labels. Name is saved with \0 symbol.
 struct Symbol {
     char *name;

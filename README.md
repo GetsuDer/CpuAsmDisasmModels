@@ -2,6 +2,10 @@
 
 ## Description
 ### Assembler commands and syntax
+    '# this is comment. #'
+    Comment can include '\n' symbol, but comment can not be inside of the commands (m#comment#mul is incorrect, for example)
+    push #comment# rax is correct, at the same time.
+
 #### Arithmetic operations
     mul - top value from cpu stack is multiplicated on second top
     div - second top value from cpu stack is divided on top.
@@ -21,9 +25,19 @@ All these commands put their result on the stack again.
     pop - pop value from stack
 #### CPU operations
     hlt - stop working
+#### JMP operations
     jmp LABEL - jmp to label LABEL (it can be defined later)
     jmp $address - jmp to absolute address
+    jmpl {LABEL, $address} - jmp if for last two values in stack a, b (push a, push b) a < b
+    jmpg {LABEL, $address} - - - - - - jmp if a > b
+    jmpz {LABEL, $address} - - - - - - jmp if last value in stack is zero
+    jmpnz {LABEL, $address} - - - - - jmp if last value in stack is zero
     LABEL: - set a label with name LABEL
+#### Functions
+    call func_name - jmp to func_name with saving return point
+    ret - try to return from function (if no function is runned, error is raised)
+    func_name must be correct label. So, if you want, you can jump to func_name as on label.
+
 LABEL is an arbirtrary consecuence of non-space symbols, but it should not begins from '$' symbol
 
 Where REGISTER_NAME is in {rax, rbx, rcx}, and VALUE can be presented as double

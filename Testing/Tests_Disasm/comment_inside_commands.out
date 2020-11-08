@@ -1,0 +1,9 @@
+in rax
+push rax
+pop rax
+push 3.123120
+out rax
+jmp $22
+in
+in
+jmp $0

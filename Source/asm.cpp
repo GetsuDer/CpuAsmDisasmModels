@@ -165,7 +165,7 @@ process_register_command(char *coms, char *coms_end, int fd, const char *com_str
     }
     char *old_coms = coms;
     coms += com_size + 1; //command + space after command
-    while (coms < coms_end && isspace(*coms)) coms++;
+    skip_nonimportant_symbols(&coms, coms_end);
     if (coms >= coms_end) {
         //there is no register here
         return false;
@@ -198,9 +198,11 @@ process_value_command(char *coms, char *coms_end, int fd, const char *com_str, i
             strncmp(coms, com_str, com_size - 1) || !isspace(*(coms + com_size))) {
         return false;
     }
+    coms += com_size;
+    skip_nonimportant_symbols(&coms, coms_end);
     char *endptr = NULL;
     errno = 0;
-    double tmp_double = strtod(coms + com_size, &endptr);
+    double tmp_double = strtod(coms, &endptr);
     if (errno || endptr == coms) {
         return false;
     }
@@ -213,6 +215,37 @@ process_value_command(char *coms, char *coms_end, int fd, const char *com_str, i
 }
 
 
+//! \brief Skip comment and space symbols
+//! \param [in,out] Assembler commands
+//! \param [in] End of assembler commands
+//! \return Moves commands to right position
+void
+skip_nonimportant_symbols(char **commands, char *commands_end)
+{
+    char *tmp_commands = *commands;
+    while (true) {
+        while (tmp_commands < commands_end && isspace(*tmp_commands)) tmp_commands++;
+        if (tmp_commands >= commands_end) {
+            *commands = commands_end;
+            return;
+        }
+        if (*tmp_commands == '#') { //comment
+            tmp_commands++;
+            while (tmp_commands < commands_end && !(*tmp_commands == '#')) tmp_commands++;
+            if (tmp_commands >= commands_end) {
+                fprintf(stderr, "Not ended comment: %20s\n", *commands);
+                *commands = tmp_commands;
+                return;
+            }
+            tmp_commands++;
+            continue;
+        } else {
+            *commands = tmp_commands;
+            return; //all comment skipped
+        }
+    }
+    return;
+}
 
 
 //! \brief Main assembler function. Translates assembler commands to 'binary' code
@@ -235,7 +268,7 @@ translate_to_machine_code(char *commands, ssize_t commands_size, int fd) {
     Stack_int *jmps = (Stack_int *)calloc(1, sizeof(Stack_int));
     STACK_INIT((*jmps));
     while (commands < commands_end) {
-        while (commands < commands_end && isspace((int)*commands)) commands++;
+        skip_nonimportant_symbols(&commands, commands_end);
         if (commands >= commands_end) {
             break; // EOF
         }
@@ -267,7 +300,9 @@ translate_to_machine_code(char *commands, ssize_t commands_size, int fd) {
             !strncmp(commands, JMP_STR, sizeof(JMP_STR) - 1)) {
             commands += sizeof(JMP_STR) - 1;
             write_to_file(fd, JMP);
-            while (commands < commands_end && isspace((int)*commands)) commands++;
+
+            skip_nonimportant_symbols(&commands, commands_end);
+            
             if (commands >=commands_end) {
                 fprintf(stderr, "No label after JMP command at the end of the file\n");
                 return false;

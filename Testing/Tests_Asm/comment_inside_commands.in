@@ -1,0 +1,10 @@
+in #comment# rax
+push #comment# rax
+pop #comment # rax
+push #comment# 3.12312
+out # comment # rax
+jmp #comment# label1
+label1:
+in
+in
+jmp #comment# $0
