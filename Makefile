@@ -4,7 +4,7 @@ OBJDIR = ObjectFiles/
 INCDIR = Include/
 CC = g++
 DEBUG = NO
-CFLAGS = -Wall -Wextra -Wformat -std=c++14 -g -IInclude -ISource 
+CFLAGS = -Wall -Wextra -Wformat -std=c++14 -IInclude -ISource 
 TEST_LOG_DISASM = disasm_test_log
 TEST_LOG_ASM = asm_test_log
 TEST_LOG_CPU = cpu_test_log
