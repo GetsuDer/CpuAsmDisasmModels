@@ -36,6 +36,8 @@ All these commands put their result on the stack again.
     call func_name - jmp to func_name with saving return point
     ret - try to return from function (if no function is runned, error is raised)
     func_name must be correct label. So, if you want, you can jump to func_name as on label.
+    Parameters for functions are passed through stack and are NOT removed by function. And stack after returning
+    from function must be at the same state, as before. Return value is in rax register.
 
 LABEL is an arbirtrary consecuence of non-space symbols, but it should not begins from '$' symbol
 

@@ -176,7 +176,7 @@ work(char *commands, int commands_size, struct Cpu *cpu)
                 }
                 address = Stack_Top(cpu->ret_addr);
                 Stack_Pop(cpu->ret_addr);
-                commands = commands_begin + address + 1; //to begin from the NEXT command afrer CALL command
+                commands = commands_begin + address; //to begin from the NEXT command afrer CALL command
                 break;
             case PUSH_REG:
                 commands++;
@@ -273,7 +273,6 @@ work(char *commands, int commands_size, struct Cpu *cpu)
                     return false;
                 }
                 fprintf(stdout, "%lf\n", Stack_Top(cpu->cpu_stack));
-                Stack_Pop(cpu->cpu_stack);
                 commands++;
                 break;
             case OUT_REG:
@@ -335,7 +334,7 @@ work(char *commands, int commands_size, struct Cpu *cpu)
             case CALL:
                 commands++;
                 address = *(int *)commands;
-                Stack_Push(cpu->ret_addr, commands - commands_begin); // remember ret address
+                Stack_Push(cpu->ret_addr, commands - commands_begin + sizeof(address)); // remember ret address
                 commands = commands_begin + address;
                 break;
             default:

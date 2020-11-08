@@ -1,0 +1,17 @@
+in rax
+loop:
+push rax
+push rax
+push 0.000000
+jmpl end
+call print
+push rax
+push 1.000000
+sub
+pop rax
+jmp loop
+end:
+hlt
+print:
+out
+ret
