@@ -1,0 +1,16 @@
+in
+call $7
+hlt
+pop rax
+push rax
+push 0.000000
+jmpl $50
+out rax
+push rax
+push rax
+push 1.000000
+sub
+call $7
+pop rax
+out rax
+ret

@@ -1,0 +1,21 @@
+in 
+call fun1
+hlt
+
+fun1:
+    pop rax
+    push rax
+    push 0
+    jmpl end1
+    out rax
+    push rax
+    push rax
+    push 1
+    sub
+    call fun1
+    pop rax
+    out rax
+
+end1:
+    ret
+
