@@ -17,6 +17,15 @@
 #define TYPE int
 #include "Stack.h"
 
+//! structure for context translation in supporting functions
+struct Env
+{
+    char *commands;
+    char *commands_end;
+    int fd;
+    int address;
+};
+
 //! \brief Just a small func to make code more readable when need to write byte into file
 //! \param [in] fd File to write in
 //! \param [in] value Value to write into file
@@ -132,16 +141,16 @@ add_symbol_address(struct Symtab *sym_tab, char *name, int name_size, int addres
 //! \param [in] com Command to be written
 //! \return Returns true if the command was recognised 
 bool
-process_alone_command(char *coms, char *coms_end, int fd, const char *com_str, int com_size, int com, char **sh_coms, int *sh_add) {
-    if (coms + com_size > coms_end || 
-            strncmp(coms, com_str, com_size - 1)) {
+process_alone_command(struct Env *env, const char *com_str, int com_size, int com) {
+    if (env->commands + com_size > env->commands_end || 
+            strncmp(env->commands, com_str, com_size)) {
         return false;
     }
-    if (coms + com_size == coms_end || 
-        isspace(*(coms + com_size))) {
-        *sh_coms += com_size;
-        *sh_add += 1;
-        write_to_file(fd, com);
+    if (env->commands + com_size == env->commands_end || 
+        isspace(*(env->commands + com_size))) {
+        env->commands += com_size;
+        env->address += 1;
+        write_to_file(env->fd, com);
         return true;
     }
     return false;
@@ -158,28 +167,30 @@ process_alone_command(char *coms, char *coms_end, int fd, const char *com_str, i
 //! \param [in] com Command to be written
 //! \return Returns true if the command was recognised 
 bool
-process_register_command(char *coms, char *coms_end, int fd, const char *com_str, int com_size, int com, char **sh_coms, int *sh_add) {
-    if (coms + com_size >= coms_end || 
-            strncmp(coms, com_str, com_size - 1) || !isspace(*(coms + com_size))) {
+process_register_command(struct Env *env, const char *com_str, int com_size, int com) {
+    if (env->commands + com_size >= env->commands_end || 
+            strncmp(env->commands, com_str, com_size) || !isspace(*(env->commands + com_size))) {
         return false;
     }
-    char *old_coms = coms;
-    coms += com_size + 1; //command + space after command
-    skip_nonimportant_symbols(&coms, coms_end);
-    if (coms >= coms_end) {
+    char *old_coms = env->commands;
+    env->commands += com_size + 1; //command + space after command
+    skip_nonimportant_symbols(&(env->commands), env->commands_end);
+    if (env->commands >= env->commands_end) {
         //there is no register here
+        env->commands = old_coms;
         return false;
     }
 
-    int reg = write_register_to_file(coms);
+    int reg = write_register_to_file(env->commands);
     if (!reg) {
         //there is no register here
+        env->commands = old_coms;
         return false;
     }
-    write_to_file(fd, com);
-    write_to_file(fd, reg);
-    *sh_coms += (coms + sizeof(RAX_STR) - old_coms);
-    *sh_add += 2; //command and register;
+    write_to_file(env->fd, com);
+    write_to_file(env->fd, reg);
+    env->commands += sizeof(RAX_STR);
+    env->address += 2; //command and register;
     return true;
 }
 
@@ -193,24 +204,26 @@ process_register_command(char *coms, char *coms_end, int fd, const char *com_str
 //! \param [in] com Command to be written
 //! \return Returns true if the command was recognised 
 bool
-process_value_command(char *coms, char *coms_end, int fd, const char *com_str, int com_size, int com, char **sh_coms, int *sh_add) {
-    if (coms + com_size >= coms_end || 
-            strncmp(coms, com_str, com_size - 1) || !isspace(*(coms + com_size))) {
+process_value_command(struct Env *env, const char *com_str, int com_size, int com) {
+    if (env->commands + com_size >= env->commands_end || 
+            strncmp(env->commands, com_str, com_size) || !isspace(*(env->commands + com_size))) {
         return false;
     }
-    coms += com_size;
-    skip_nonimportant_symbols(&coms, coms_end);
+    char *old_coms = env->commands;
+    env->commands += com_size;
+    skip_nonimportant_symbols(&(env->commands), env->commands_end);
     char *endptr = NULL;
     errno = 0;
-    double tmp_double = strtod(coms, &endptr);
-    if (errno || endptr == coms) {
+    double tmp_double = strtod(env->commands, &endptr);
+    if (errno || endptr == env->commands) {
+        env->commands = old_coms;
         return false;
     }
      
-    write_to_file(fd, com);
-    write(fd, &tmp_double, sizeof(double));
-    *sh_add += 1 + sizeof(double);
-    *sh_coms = endptr; //this is not an error!!! (i hope) 
+    write_to_file(env->fd, com);
+    write(env->fd, &tmp_double, sizeof(double));
+    env->address += 1 + sizeof(double);
+    env->commands = endptr; //this is not an error!!! (i hope) 
     return true;
 }
 
@@ -294,113 +307,122 @@ translate_to_machine_code(char *commands, ssize_t commands_size, int fd) {
     
     struct Symtab sym_tab;
     init_sym_tab(&sym_tab);
-
-    int address = 0;
     
-    char *commands_end = commands + commands_size;
     Stack_int *jmps = (Stack_int *)calloc(1, sizeof(Stack_int));
     STACK_INIT((*jmps));
-    while (commands < commands_end) {
-        skip_nonimportant_symbols(&commands, commands_end);
-        if (commands >= commands_end) {
+    
+    struct Env *env = (struct Env *)calloc(1, sizeof(*env));
+    if (!env) {
+        fprintf(stderr, "Memory error\n");
+        Stack_Destruct(jmps);
+        return false;
+    }
+    env->commands = commands;
+    env->commands_end = commands + commands_size;
+    env->fd = fd;
+    env->address = 0;
+
+    while (env->commands < env->commands_end) {
+        skip_nonimportant_symbols(&(env->commands), env->commands_end);
+        if (env->commands >= env->commands_end) {
             break; // EOF
         }
        //arithmetic commads  + ret
-        if (process_alone_command(commands, commands_end, fd, MUL_STR, sizeof(MUL_STR) - 1, MUL, &commands, &address)) continue;
-        if (process_alone_command(commands, commands_end, fd, DIV_STR, sizeof(DIV_STR) - 1, DIV, &commands, &address)) continue;
-        if (process_alone_command(commands, commands_end, fd, ADD_STR, sizeof(ADD_STR) - 1, ADD, &commands, &address)) continue;
-        if (process_alone_command(commands, commands_end, fd, SUB_STR, sizeof(SUB_STR) - 1,  SUB, &commands, &address)) continue;
-        if (process_alone_command(commands, commands_end, fd, SQRT_STR, sizeof(SQRT_STR) - 1, SQRT, &commands, &address)) continue;
-        if (process_alone_command(commands, commands_end, fd, HLT_STR, sizeof(HLT_STR) - 1, HLT, &commands, &address)) continue;
-        if (process_alone_command(commands, commands_end, fd, RET_STR, sizeof(RET_STR) - 1, RET, &commands, &address)) continue;
+        if (process_alone_command(env, MUL_STR, sizeof(MUL_STR) - 1, MUL)) continue;
+        if (process_alone_command(env, DIV_STR, sizeof(DIV_STR) - 1, DIV)) continue;
+        if (process_alone_command(env, ADD_STR, sizeof(ADD_STR) - 1, ADD)) continue;
+        if (process_alone_command(env, SUB_STR, sizeof(SUB_STR) - 1, SUB)) continue;
+        if (process_alone_command(env, SQRT_STR, sizeof(SQRT_STR) - 1, SQRT)) continue;
+        if (process_alone_command(env, HLT_STR, sizeof(HLT_STR) - 1, HLT)) continue;
+        if (process_alone_command(env, RET_STR, sizeof(RET_STR) - 1, RET)) continue;
         //it is not.
         //register commands
         
-        if (process_register_command(commands, commands_end, fd, IN_STR, sizeof(IN_STR) - 1, IN_REG, &commands, &address)) continue;
-        if (process_register_command(commands, commands_end, fd, OUT_STR, sizeof(OUT_STR) - 1, OUT_REG, &commands, &address)) continue;
-        if (process_register_command(commands, commands_end, fd, PUSH_STR, sizeof(PUSH_STR) - 1, PUSH_REG, &commands, &address)) continue;
-        if (process_register_command(commands, commands_end, fd, POP_STR, sizeof(POP_STR) - 1, POP_REG, &commands, &address)) continue;
+        if (process_register_command(env, IN_STR, sizeof(IN_STR) - 1, IN_REG)) continue;
+        if (process_register_command(env, OUT_STR, sizeof(OUT_STR) - 1, OUT_REG)) continue;
+        if (process_register_command(env, PUSH_STR, sizeof(PUSH_STR) - 1, PUSH_REG)) continue;
+        if (process_register_command(env, POP_STR, sizeof(POP_STR) - 1, POP_REG)) continue;
         
         // alone commands with possible register version (processed above) 
-        if (process_alone_command(commands, commands_end, fd, IN_STR, sizeof(IN_STR) - 1, IN, &commands, &address)) continue;
-        if (process_alone_command(commands, commands_end, fd, OUT_STR, sizeof(OUT_STR) - 1, OUT, &commands, &address)) continue; 
-        if (process_alone_command(commands, commands_end, fd, POP_STR, sizeof(POP_STR) - 1, POP_VAL, &commands, &address)) continue;
+        if (process_alone_command(env, IN_STR, sizeof(IN_STR) - 1, IN)) continue;
+        if (process_alone_command(env, OUT_STR, sizeof(OUT_STR) - 1, OUT)) continue; 
+        if (process_alone_command(env, POP_STR, sizeof(POP_STR) - 1, POP_VAL)) continue;
         
-        if (process_value_command(commands, commands_end, fd, PUSH_STR, sizeof(PUSH_STR) - 1, PUSH_VAL, &commands, &address)) continue;
+        if (process_value_command(env, PUSH_STR, sizeof(PUSH_STR) - 1, PUSH_VAL)) continue;
         
         //process jmp command 
-        int jmp_type = choose_jmp(&commands, commands_end);
+        int jmp_type = choose_jmp(&(env->commands), env->commands_end);
         if (jmp_type) {
-            write_to_file(fd, jmp_type);
-            skip_nonimportant_symbols(&commands, commands_end);
+            write_to_file(env->fd, jmp_type);
+            skip_nonimportant_symbols(&(env->commands), env->commands_end);
             
-            if (commands >=commands_end) {
+            if (env->commands >= env->commands_end) {
                 fprintf(stderr, "No label after JMP command at the end of the file\n");
                 return false;
             }
-            char *label = commands;
+            char *label = env->commands;
             if (*label == '$') {
                 char *endptr = NULL;
                 errno = 0;
                 int jmp_address = strtol(label + 1, &endptr, 10);
-                if (errno || endptr == commands) {
-                    fprintf(stderr, "Wrong jmp value: %10s\n", commands);
+                if (errno || endptr == env->commands) {
+                    fprintf(stderr, "Wrong jmp value: %10s\n", env->commands);
                     return false;
                 }
-                write(fd, &jmp_address, sizeof(int));
-                commands = endptr;
+                write(env->fd, &jmp_address, sizeof(int));
+                env->commands = endptr;
                 continue;
             }
-            while (label < commands_end && !isspace((int)*label)) label++;
-            if (label - commands < 1) {
-            fprintf(stderr, "JMP command without label: %s\n", commands);
+            while (label < env->commands_end && !isspace((int)*label)) label++;
+            if (label - env->commands < 1) {
+                fprintf(stderr, "JMP command without label: %s\n", env->commands);
                 return false;
             }
-            int ind = find_symbol(&sym_tab, commands, label - commands);
+            int ind = find_symbol(&sym_tab, env->commands, label - env->commands);
             if (ind == -1) {
-                add_symbol(&sym_tab, commands, label - commands);
-                Stack_Push(jmps, address + 1);
-                ind = find_symbol(&sym_tab, commands, label - commands);
-                write(fd, &ind, sizeof(ind)); //here must be jmp address
+                add_symbol(&sym_tab, env->commands, label - env->commands);
+                Stack_Push(jmps, env->address + 1);
+                ind = find_symbol(&sym_tab, env->commands, label - env->commands);
+                write(env->fd, &ind, sizeof(ind)); //here must be jmp address
             } else {
                 if (sym_tab.symbols[ind].address == -1) {
-                    write(fd, &ind, sizeof(ind)); //here must be jmp address
-                    Stack_Push(jmps, address + 1);
+                    write(env->fd, &ind, sizeof(ind)); //here must be jmp address
+                    Stack_Push(jmps, env->address + 1);
                 } else {
-                    write(fd, &(sym_tab.symbols[ind].address), sizeof(ind));
+                    write(env->fd, &(sym_tab.symbols[ind].address), sizeof(ind));
                 }
             }
-            address += 1 + sizeof(ind);
-            commands = label;
+            env->address += 1 + sizeof(ind);
+            env->commands = label;
             continue;
         }
 
         //if here, time to work with label
         //first - count label size
-        char *label = commands;
-        while (label < commands_end && *label != ':') label++;
-        if (label >= commands_end) {
+        char *label = env->commands;
+        while (label < env->commands_end && *label != ':') label++;
+        if (label >= env->commands_end) {
         // Well, it was not label, it is just a wrong command
-            fprintf(stderr, "Unknown assembler command: %.10s", commands);
+            fprintf(stderr, "Unknown assembler command: %.10s", env->commands);
             return false;
         } 
-        int ind = find_symbol(&sym_tab, commands, label - commands);
+        int ind = find_symbol(&sym_tab, env->commands, label - env->commands);
         if (ind == -1) {
-            add_symbol(&sym_tab, commands, label - commands);
+            add_symbol(&sym_tab, env->commands, label - env->commands);
         }
-        add_symbol_address(&sym_tab, commands, label - commands, address);
-        commands = label + 1;
+        add_symbol_address(&sym_tab, env->commands, label - env->commands, env->address);
+        env->commands = label + 1;
     }
     //now all unsolved jmp labels must be solved
     int jmps_num = Stack_Size(jmps);
     for (int i = 0; i < jmps_num; i++) {
         int work_address = Stack_Top(jmps);
         Stack_Pop(jmps);
-        lseek(fd, work_address, SEEK_SET);
+        lseek(env->fd, work_address, SEEK_SET);
         int ind = 0;
-        read(fd, &ind, sizeof(ind));
-        lseek(fd, work_address, SEEK_SET);
-        write(fd, &(sym_tab.symbols[ind].address), sizeof(int));
+        read(env->fd, &ind, sizeof(ind));
+        lseek(env->fd, work_address, SEEK_SET);
+        write(env->fd, &(sym_tab.symbols[ind].address), sizeof(int));
     }
     Stack_Destruct(jmps);
     for (int i = 0; i < sym_tab.size; i++) {

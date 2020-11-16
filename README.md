@@ -5,6 +5,8 @@
     '# this is comment. #'
     Comment can include '\n' symbol, but comment can not be inside of the commands (m#comment#mul is incorrect, for example)
     push #comment# rax is correct, at the same time.
+    command_name [{address, register}] - access to memory
+    $address - absolute address in program being executed
 
 #### Arithmetic operations
     mul - top value from cpu stack is multiplicated on second top
@@ -21,8 +23,12 @@ All these commands put their result on the stack again.
 #### Other stack operations
     push REGISTER_NAME - take value from register and push it into stack
     push VALUE - take value VALUE and push it into stack
+    push [ADDRESS] - push into stack value from memory on address ADDRESS
+    push [REGISTER_NAME] - push into stack value from memory address in register REGISTER_NAME
     pop REGISTER_NAME - pop value from stack and put it into register
     pop - pop value from stack
+    pop [ADDRESS] - pop value from stack and put it into memory on address ADDRESS
+    pop [REGISTER] - pop value from stack and put it into memory on address in register REGISTER_NAME
 #### CPU operations
     hlt - stop working
 #### JMP operations

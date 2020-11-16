@@ -74,4 +74,5 @@ struct Symtab {
     struct Symbol *symbols;
     int size;
 };
+
 #endif
