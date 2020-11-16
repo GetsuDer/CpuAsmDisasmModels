@@ -9,19 +9,18 @@ struct Memory
 struct Memory_Controller
 {
     int memory_pieces_num;
-    struct Memory *memory;
+    struct Memory **memory;
 };
 
 int init_memory(struct Memory*, int size);
-int init_memory_contoller(struct Memory_Controller*);
+int init_memory_controller(struct Memory_Controller*);
 int add_memory(struct Memory_Controller*, struct Memory*);
 int write_into_memory(struct Memory_Controller*, int address, double value);
 int get_from_memory(struct Memory_Controller*, int address, double*); 
 int get_memory_size(struct Memory_Controller*);
 
 enum Memory_Errors {
-    OK = 0,
-    NULL_MEM,
+    NULL_MEM = 1,
     NEGATIVE_MEM,
     TOO_BIG_ADDRESS,
     READ_UNINITIALIZED_MEM,

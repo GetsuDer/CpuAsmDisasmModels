@@ -48,6 +48,5 @@ enum CPU_COMMANDS {
 };
 
 bool turn_cpu_on(Cpu *cpu);
-bool work(char *commands, int commands_size, Cpu *cpu);
 void init(Cpu *cpu);
 #endif

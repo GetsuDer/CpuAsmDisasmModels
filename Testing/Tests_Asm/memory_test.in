@@ -1,0 +1,8 @@
+in rax
+write rax [0]
+in rax
+write rax [2]
+read [0] rbx
+out rbx
+read [2] rbx
+out rbx

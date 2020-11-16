@@ -9,6 +9,7 @@
 #include "Stack.h"
 
 #include "cpu.h"
+#include "memory.h"
 
 //! \brief Init cpu into void state (OFF)
 //! \param [in] cpu CPU to be inited
@@ -106,12 +107,13 @@ take_from_cpu_stack(struct Cpu *cpu, double *tmp1, double *tmp2)
 //! \param[in] cpu Pointer to cpu which will process commands
 //! \return Return true, if no errors during execution
 bool
-work(char *commands, int commands_size, struct Cpu *cpu)
+work(char *commands, int commands_size, struct Cpu *cpu, struct Memory_Controller *mc)
 {
     assert(commands);
     assert(commands_size > 0);
     assert(cpu);
-    
+    assert(mc);
+
     if (cpu->state != ON) {
         turn_cpu_on(cpu);
     }
@@ -119,6 +121,7 @@ work(char *commands, int commands_size, struct Cpu *cpu)
     char *commands_end = commands + commands_size;
     double tmp_double1 = 0, tmp_double2 = 0;
     double *tmp_register = NULL;
+    double *tmp_register2 = NULL;
     int address = 0;
     while (commands < commands_end) {
         switch(*commands) {
@@ -358,6 +361,72 @@ work(char *commands, int commands_size, struct Cpu *cpu)
                 address = *(int *)commands;
                 Stack_Push(cpu->ret_addr, commands - commands_begin + sizeof(address)); // remember ret address
                 commands = commands_begin + address;
+                break;
+            case WRITE_REG:
+                commands++;
+                tmp_register = find_register(cpu, commands);
+                if (!tmp_register) {
+                    fprintf(stderr, "Wrong first register in write_reg command\n");
+                    cpu->state = WAIT;
+                    return false;
+                }
+                commands++;
+                tmp_register2 = find_register(cpu, commands);
+                if (!tmp_register2) {
+                    fprintf(stderr, "Wrong second register in write_reg command\n");
+                    cpu->state = WAIT;
+                    return false;
+                }
+                commands++;
+                if (write_into_memory(mc, (int)*tmp_register2, *tmp_register)) {
+                    fprintf(stderr, "Memory request error: can not write into address %lf\n", *tmp_register2);
+                    cpu->state = WAIT;
+                    return false;
+                }
+                break;
+            case WRITE_ADDR:
+                commands++;
+                tmp_register = find_register(cpu, commands);
+                if (!tmp_register) {
+                    fprintf(stderr, "Wrong register in write_val command\n");
+                    cpu->state = WAIT;
+                    return false;
+                }
+                commands++;
+                memcpy(&address, commands, sizeof(int));
+                commands += sizeof(int);
+                write_into_memory(mc, address, *tmp_register);       
+                break;
+            case READ_ADDR:
+                commands++;
+                memcpy(&address, commands, sizeof(int));
+                commands += sizeof(int);
+                tmp_register = find_register(cpu, commands);
+                if (!tmp_register) {
+                    fprintf(stderr, "Wrong register in read_addr command\n");
+                    cpu->state = WAIT;
+                    return false;
+                }
+                commands++;
+                get_from_memory(mc, address, tmp_register);
+                break;
+            case READ_REG:
+                commands++;
+                tmp_register = find_register(cpu, commands);
+                if (!tmp_register) {
+                    fprintf(stderr, "Wrong first register in read_reg command\n");
+                    cpu->state = WAIT;
+                    return false;
+                }
+                commands++;
+                tmp_register2 = find_register(cpu, commands);
+                if (!tmp_register2) {
+                    fprintf(stderr, "Wrong second register in read_reg command\n");
+                    cpu->state = WAIT;
+                    return false;
+                }
+                commands++;
+                get_from_memory(mc, (int)*tmp_register, tmp_register2);
                 break;
             default:
                 fprintf(stderr, "CPU error: wrong commands\n");

@@ -1,6 +1,7 @@
 #include <time.h>
 #include <cstdio>
 #include <cstdlib>
+#include <cassert>
 
 #include "memory.h"
 
@@ -31,7 +32,7 @@ init_memory(struct Memory *mem, int size)
     }
     mem->memory = tmp;
     mem->size = size;
-    return OK;
+    return 0;
 }
 
 //! \brief Initializing memory controller
@@ -46,7 +47,7 @@ init_memory_controller(struct Memory_Controller *mc)
     }
     mc->memory_pieces_num = 0;
     mc->memory = NULL;
-    return OK;
+    return 0;
 }
 //! \brief Add memory into memory controller
 //! \param [in] mc Memory controller
@@ -69,15 +70,19 @@ add_memory(struct Memory_Controller *mc, struct Memory *mem)
     }
 
     if (mc->memory_pieces_num == 0) {
-        mc->memory = calloc(2, sizeof(mem));
-        mc->memory = mem;
+        mc->memory = (struct Memory **)calloc(2, sizeof(mem));
+        if (!mc->memory) {
+            fprintf(stderr, "Can not allocate memory\n");
+            return ALLOCATE_ERROR;
+        }
+        mc->memory[0] = mem;
         mc->memory[1] = NULL;
         mc->memory_pieces_num = 1;
-        return OK;
+        return 0;
     }
 
     assert(mc->memory);
-    struct Memory *tmp = realloc(mc->memory, (mc->memory_pieces_num + 2) * sizeof(struct Memory));
+    struct Memory **tmp = (struct Memory **)realloc(mc->memory, (mc->memory_pieces_num + 2) * sizeof(struct Memory *));
     if (!tmp) {
         fprintf(stderr, "Can not allocate memory\n");
         return ALLOCATE_ERROR;
@@ -86,7 +91,7 @@ add_memory(struct Memory_Controller *mc, struct Memory *mem)
     mc->memory[mc->memory_pieces_num] = mem;
     mc->memory[mc->memory_pieces_num + 1] = NULL;
     mc->memory_pieces_num++;
-    return OK;
+    return 0;
 }
 //! \brief Find right memory part for memory controller
 //! \param [in] mc Memory Controller
@@ -96,7 +101,7 @@ static struct Memory *
 find_address(struct Memory_Controller *mc, int *address)
 {
   int max_address = 0;
-  struct Memory *right_mem = mc->memory;
+  struct Memory *right_mem = mc->memory[0];
   while (right_mem && max_address + right_mem->size < *address) {
       max_address += right_mem->size;
       right_mem++;
@@ -118,18 +123,18 @@ write_into_memory(struct Memory_Controller *mc, int address, double value)
     assert(mc);
     assert(address >= 0);
     
-    const struct timespec req;
-    req->tv_sec = 0;
-    req->tv_nsec = WRITE_DELAY; // 0.2 sec
+    struct timespec req;
+    req.tv_sec = 0;
+    req.tv_nsec = WRITE_DELAY; // 0.2 sec
     nanosleep(&req, NULL);
 
-    struct Memory *right_mem = find_memory(mc, &address);
+    struct Memory *right_mem = find_address(mc, &address);
     if (!right_mem) {
-        fprintf("Can not write into memory %d\n", address);
+        fprintf(stderr, "Can not write into memory %d\n", address);
         return TOO_BIG_ADDRESS;
     }
     right_mem->memory[address] = value;
-    return OK;
+    return 0;
 }
 //! \brief Get value from memory
 //! \param [in] mc Memory Controller
@@ -140,24 +145,24 @@ get_from_memory(struct Memory_Controller *mc, int address, double *value)
 {
     assert(mc);
     assert(value);
-    assert(address > 0);
+    assert(address >= 0);
     
     if (address < 0) {
         fprintf(stderr, "Get memory on negative address %d\n", address);
         return NEGATIVE_MEM;
     }
-    const struct timespec req;
-    req->tv_sec = 0;
-    req->tv_nsec = READ_DELAY; // 0.1 sec
+    struct timespec req;
+    req.tv_sec = 0;
+    req.tv_nsec = READ_DELAY; // 0.1 sec
     nanosleep(&req, NULL);
 
-    struct Memory *right_memory = find_memory(mc, address);
+    struct Memory *right_memory = find_address(mc, &address);
     if (!right_memory) {
         fprintf(stderr, "Can not get memory on address %d\n", address);
         return TOO_BIG_ADDRESS;
     }
     *value = right_memory->memory[address];
-    return OK;
+    return 0;
 }
 
 //! \brief Get whole available memory

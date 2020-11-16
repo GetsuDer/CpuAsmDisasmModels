@@ -1,8 +1,9 @@
 #include <stdio.h>
 
 #include "cpu.h"
-#include "cpu_main.h"
 #include "in_and_out.h"
+#include "memory.h"
+#include "cpu_main.h"
 
 int
 main(int argc, char **argv)
@@ -21,7 +22,19 @@ main(int argc, char **argv)
 
     struct Cpu work_cpu;
     init(&work_cpu);
-    work(commands, commands_size, &work_cpu);
+
+    Memory mem1;
+    Memory mem2;
+    init_memory(&mem1, 10);
+    init_memory(&mem2, 5);
+
+    Memory_Controller mc;
+    init_memory_controller(&mc);
+
+    add_memory(&mc, &mem1);
+    add_memory(&mc, &mem1);
+
+    work(commands, commands_size, &work_cpu, &mc);
 
     return 0;
 }

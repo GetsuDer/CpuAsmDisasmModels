@@ -28,8 +28,8 @@ test_disasm: disasm $(TESTDIR)test_disasm
 test_asm: asm $(TESTDIR)test_asm
 	cd $(TESTDIR); ./test_asm > ../$(TEST_LOG_ASM); cd ..
 
-cpu: $(OBJDIR)cpu.o $(OBJDIR)cpu_main.o $(OBJDIR)in_and_out.o
-	$(CC) $(OBJDIR)cpu_main.o $(OBJDIR)cpu.o $(OBJDIR)in_and_out.o -o cpu $(CFLAGS)
+cpu: $(OBJDIR)cpu.o $(OBJDIR)cpu_main.o $(OBJDIR)in_and_out.o $(OBJDIR)memory.o
+	$(CC) $(OBJDIR)cpu_main.o $(OBJDIR)cpu.o $(OBJDIR)in_and_out.o $(OBJDIR)memory.o -o cpu $(CFLAGS)
 
 asm: $(OBJDIR)asm.o $(OBJDIR)asm_main.o $(OBJDIR)in_and_out.o
 	$(CC) $(OBJDIR)asm_main.o $(OBJDIR)asm.o $(OBJDIR)in_and_out.o -o asm $(CFLAGS)
@@ -57,6 +57,9 @@ $(OBJDIR)disasm.o: $(SRCDIR)disasm.cpp $(INCDIR)in_and_out.h $(INCDIR)disasm.h $
 
 $(OBJDIR)disasm_main.o: $(SRCDIR)disasm_main.cpp $(INCDIR)disasm.h $(OBJDIR)
 	$(CC) -o $(OBJDIR)disasm_main.o -c $(SRCDIR)disasm_main.cpp $(CFLAGS)
+
+$(OBJDIR)memory.o: $(SRCDIR)memory.cpp $(INCDIR)memory.h $(OBJDIR)
+	$(CC) -o $(OBJDIR)memory.o -c $(SRCDIR)memory.cpp $(CFLAGS)
 
 $(OBJDIR):
 	mkdir $(OBJDIR)
