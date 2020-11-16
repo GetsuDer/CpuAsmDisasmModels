@@ -33,7 +33,7 @@ write_register(char command, int fd) {
         default:
             return false;
     }
-    write(fd, "\n", 1);
+   // write(fd, "\n", 1);
     return true;
 }
 
@@ -62,6 +62,7 @@ translate_to_asm(char *commands, int commands_size, int fd)
 #endif
     char *commands_end = commands + commands_size;
     double tmp_double = 0;
+    int address = 0;
     while (commands < commands_end) {
 #ifdef DEBUG_NUMERATION
         dprintf(fd, "%ld : ", commands - commands_begin);
@@ -114,6 +115,7 @@ translate_to_asm(char *commands, int commands_size, int fd)
                     fprintf(stderr, "Error: push commands without valid register in %10s\n", commands);
                     return false;
                 }
+                dprintf(fd, "\n");
                 commands++;
                 break; 
             case PUSH_VAL:
@@ -145,6 +147,7 @@ translate_to_asm(char *commands, int commands_size, int fd)
                     fprintf(stderr, "Error: no valid register in pop command %10s\n", commands);
                     return false;          
                 }
+                dprintf(fd, "\n");
                 commands++;
                 break;
             case IN:
@@ -164,6 +167,7 @@ translate_to_asm(char *commands, int commands_size, int fd)
                     fprintf(stderr, "Error: no valid register in in command %10s\n", commands);
                     return false;
                 }
+                dprintf(fd, "\n");
                 commands++;
                 break;
             case OUT:
@@ -183,6 +187,7 @@ translate_to_asm(char *commands, int commands_size, int fd)
                     fprintf(stderr, "Error: no valid register name in out command %10s\n", commands);
                     return false;
                 }
+                dprintf(fd, "\n");
                 commands++;
                 break;
             case JMP:
@@ -204,6 +209,66 @@ translate_to_asm(char *commands, int commands_size, int fd)
                 write(fd, CALL_STR, sizeof(CALL_STR) - 1);
                 commands++;
                 write_address(fd, &commands);
+                break;
+            case WRITE_REG:
+                write(fd, WRITE_STR, sizeof(WRITE_STR) - 1);
+                commands++;
+                write(fd, " ", 1);
+                if (!write_register(*commands, fd)) {
+                    fprintf(stderr, "Error: wrong write commands\n");
+                    return false;
+                }
+                commands++;
+                dprintf(fd, " [");
+                if (!write_register(*commands, fd)) {
+                    fprintf(stderr, "Error: wrong write command\n");
+                    return false;
+                }
+                dprintf(fd, "]\n");
+                commands++;
+                break;
+            case WRITE_ADDR:
+                write(fd, WRITE_STR, sizeof(WRITE_STR) - 1);
+                commands++;
+                write(fd, " ", 1);
+                if (!write_register(*commands, fd)) {
+                    fprintf(stderr, "Error: wrong write command\n");
+                    return false;
+                }
+                commands++;
+                memcpy(&address, commands, sizeof(int));
+                dprintf(fd, " [%d]\n", address);
+                commands += sizeof(int);
+                break;
+            case READ_ADDR:
+                write(fd, READ_STR, sizeof(READ_STR) - 1);
+                commands++;
+                memcpy(&address, commands, sizeof(int));
+                dprintf(fd, " [%d] ", address);
+                commands += sizeof(int);
+                if (!write_register(*commands, fd)) {
+                    fprintf(stderr, "Error: wrong read command\n");
+                    return false;
+                }
+                commands++;
+                write(fd, "\n", 1);
+                break;
+            case READ_REG:
+                write(fd, READ_STR, sizeof(READ_STR) - 1);
+                commands++;
+                dprintf(fd, " [");
+                if (!write_register(*commands, fd)) {
+                    fprintf(stderr, "Error: wrong read command\n");
+                    return false;
+                }
+                dprintf(fd, "] ");
+                commands++;
+                if (!write_register(*commands, fd)) {
+                    fprintf(stderr, "Error: wrong read command\n");
+                    return false;
+                }
+                commands++;
+                write(fd, "\n", 1);
                 break;
             default:
                 fprintf(stderr, "Error: can not recognise command %10s\n", commands);
