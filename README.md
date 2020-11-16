@@ -23,12 +23,8 @@ All these commands put their result on the stack again.
 #### Other stack operations
     push REGISTER_NAME - take value from register and push it into stack
     push VALUE - take value VALUE and push it into stack
-    push [ADDRESS] - push into stack value from memory on address ADDRESS
-    push [REGISTER_NAME] - push into stack value from memory address in register REGISTER_NAME
     pop REGISTER_NAME - pop value from stack and put it into register
     pop - pop value from stack
-    pop [ADDRESS] - pop value from stack and put it into memory on address ADDRESS
-    pop [REGISTER] - pop value from stack and put it into memory on address in register REGISTER_NAME
 #### CPU operations
     hlt - stop working
 #### JMP operations
@@ -44,6 +40,11 @@ All these commands put their result on the stack again.
     func_name must be correct label. So, if you want, you can jump to func_name as on label.
     Parameters for functions are passed through stack and are NOT removed by function. And stack after returning
     from function must be at the same state, as before. Return value is in rax register.
+#### Memory
+    write REGISTER_NAME [ADDRESS] - write content of register into memory
+    write REGISTER_NAME [REGISTER_NAME] write content of register into memory pointed by another register
+    read [ADDRESS] REGISTER_NAME - read from memory into register
+    read [REGISTER_NAME] REGISTER_NAME read from memory pointed by register into register
 
 LABEL is an arbirtrary consecuence of non-space symbols, but it should not begins from '$' symbol
 

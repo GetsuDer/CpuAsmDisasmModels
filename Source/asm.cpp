@@ -26,6 +26,20 @@ struct Env
     int address;
 };
 
+//! \brief Symbol. At the moment only for labels. Name is saved with \0 symbol.
+struct Symbol {
+    char *name;
+    int name_size;
+    int address;
+    //in future may be more fields;
+};
+
+//! \brief Symtab. Contains many symbols.
+struct Symtab {
+    struct Symbol *symbols;
+    int size;
+};
+
 //! \brief Just a small func to make code more readable when need to write byte into file
 //! \param [in] fd File to write in
 //! \param [in] value Value to write into file
@@ -38,6 +52,8 @@ write_to_file(int fd, int value) {
 
 static int
 write_register_to_file(char *command) {
+    assert(command);
+    
     if (!strncmp(command, RAX_STR, sizeof(RAX_STR) - 1)) {
         return RAX;
     }
@@ -63,7 +79,7 @@ init_sym_tab(struct Symtab *sym_tab)
 //! \param [in] name Symbol name
 //! \param [in] name_size Symbol name size without \0
 //! \return Return index in symbolic table, or -1, if symbol wasn`t found
-int
+static int
 find_symbol(struct Symtab *sym_tab, char *name, int name_size)
 {
     assert(sym_tab);
@@ -84,7 +100,7 @@ find_symbol(struct Symtab *sym_tab, char *name, int name_size)
 //! \param[in] sym_tab Symbol table
 //! \param[in] name Symbol name without \0
 //! \param[in] name_size Symbol name size (without \0)
-bool
+static bool
 add_symbol(struct Symtab *sym_tab, char *name, int name_size)
 {
     assert(sym_tab);
@@ -116,7 +132,7 @@ add_symbol(struct Symtab *sym_tab, char *name, int name_size)
 //! \param [in] name Symbol name
 //! \param [in] name_size Symbol name size
 //! \param [in] address Address for symbol
-bool
+static bool
 add_symbol_address(struct Symtab *sym_tab, char *name, int name_size, int address)
 {
     assert(sym_tab);
@@ -140,8 +156,11 @@ add_symbol_address(struct Symtab *sym_tab, char *name, int name_size, int addres
 //! \param [in] com_size Size of the command str (with \0 symbol)
 //! \param [in] com Command to be written
 //! \return Returns true if the command was recognised 
-bool
+static bool
 process_alone_command(struct Env *env, const char *com_str, int com_size, int com) {
+    assert(env);
+    assert(com_str);
+    
     if (env->commands + com_size > env->commands_end || 
             strncmp(env->commands, com_str, com_size)) {
         return false;
@@ -166,8 +185,11 @@ process_alone_command(struct Env *env, const char *com_str, int com_size, int co
 //! \param [in] com_size Size of the command str (with \0 symbol)
 //! \param [in] com Command to be written
 //! \return Returns true if the command was recognised 
-bool
+static bool
 process_register_command(struct Env *env, const char *com_str, int com_size, int com) {
+    assert(env);
+    assert(com_str);
+    
     if (env->commands + com_size >= env->commands_end || 
             strncmp(env->commands, com_str, com_size) || !isspace(*(env->commands + com_size))) {
         return false;
@@ -203,8 +225,11 @@ process_register_command(struct Env *env, const char *com_str, int com_size, int
 //! \param [in] com_size Size of the command str (with \0 symbol)
 //! \param [in] com Command to be written
 //! \return Returns true if the command was recognised 
-bool
+static bool
 process_value_command(struct Env *env, const char *com_str, int com_size, int com) {
+    assert(env);
+    assert(com_str);
+    
     if (env->commands + com_size >= env->commands_end || 
             strncmp(env->commands, com_str, com_size) || !isspace(*(env->commands + com_size))) {
         return false;
@@ -227,6 +252,143 @@ process_value_command(struct Env *env, const char *com_str, int com_size, int co
     return true;
 }
 
+static bool
+process_write_command(struct Env *env) {
+    assert(env);
+
+    int com_size = sizeof(WRITE_STR) - 1;
+    if (env->commands + com_size >= env->commands_end ||
+        strncmp(env->commands, WRITE_STR, com_size) || !isspace(*(env->commands + com_size))) {
+        return false;
+    }
+
+    char *old_coms = env->commands;
+    env->commands += com_size;
+    skip_nonimportant_symbols(&(env->commands), env->commands_end);
+    
+    if (env->commands >= env->commands_end) {
+        env->commands = old_coms;
+        return false;
+    }
+    int tmp_reg1 = write_register_to_file(env->commands);
+    if (!tmp_reg1) {
+        env->commands = old_coms;
+        return false;
+    }
+    env->commands += sizeof(RAX_STR) - 1;
+    skip_nonimportant_symbols(&(env->commands), env->commands_end);
+    if (env->commands >= env->commands_end || *(env->commands) != '[') {
+        env->commands = old_coms;
+        return false;
+    }
+    env->commands++;
+
+    int tmp_reg2 = write_register_to_file(env->commands);
+    if (tmp_reg2) {
+     //register
+        env->commands += sizeof(RAX_STR) - 1;
+        skip_nonimportant_symbols(&(env->commands), env->commands_end);
+        if (env->commands >= env->commands_end || *(env->commands) != ']') {
+            env->commands_end = old_coms;
+            return false;
+        }
+        env->commands++;
+        env->address += 3;
+        write_to_file(env->fd, WRITE_REG);
+        write_to_file(env->fd, tmp_reg1);
+        write_to_file(env->fd, tmp_reg2);
+        return true;
+    }
+    // address
+    char *endptr = NULL;
+    errno = 0;
+    int tmp = strtol(env->commands, &endptr, 10);
+    if (errno || endptr == env->commands) {
+        env->commands = old_coms;
+        return false;
+    }
+    env->commands = endptr;
+    if (env->commands >= env->commands_end || *(env->commands) != ']') {
+        env->commands = old_coms;
+        return false;
+    }
+    env->commands++;
+    write_to_file(env->fd, WRITE_ADDR);
+    write_to_file(env->fd, tmp_reg1);
+    write(env->fd, &tmp, sizeof(int));
+    env->address += 2 + sizeof(int);
+    return true;    
+}
+
+static bool
+process_read_command(struct Env *env) {
+    assert(env);
+
+    int com_size = sizeof(READ_STR) - 1;
+    if (env->commands + com_size >= env->commands_end ||
+        strncmp(env->commands, READ_STR, com_size) || !isspace(*(env->commands + com_size))) {
+        return false;
+    }
+    char *old_coms = env->commands;
+    env->commands += sizeof(READ_STR);
+    skip_nonimportant_symbols(&(env->commands), env->commands_end);
+    if (env->commands >= env->commands_end || *(env->commands) != '[') {
+        env->commands = old_coms;
+        return false;
+    }
+    
+    env->commands++;
+    skip_nonimportant_symbols(&(env->commands), env->commands_end);
+    int tmp_reg2 = write_register_to_file(env->commands);
+    if (tmp_reg2) {
+     //register
+        env->commands += sizeof(RAX_STR) - 1;
+        skip_nonimportant_symbols(&(env->commands), env->commands_end);
+        if (env->commands >= env->commands_end || *(env->commands) != ']') {
+            env->commands_end = old_coms;
+            return false;
+        }
+        env->commands++;
+        skip_nonimportant_symbols(&(env->commands), env->commands_end);
+        int tmp_reg1 = write_register_to_file(env->commands);
+        if (!tmp_reg1) {
+            env->commands_end = old_coms;
+            return false;
+        }
+        env->address += 3;
+        env->commands += sizeof(RAX_STR) - 1;
+        write_to_file(env->fd, READ_REG);
+        write_to_file(env->fd, tmp_reg2);
+        write_to_file(env->fd, tmp_reg1);
+        return true;
+    }
+    // address
+    char *endptr = NULL;
+    errno = 0;
+    int tmp = strtol(env->commands, &endptr, 10);
+    if (errno || endptr == env->commands) {
+        env->commands = old_coms;
+        return false;
+    }
+    env->commands = endptr;
+    if (env->commands >= env->commands_end || *(env->commands) != ']') {
+        env->commands = old_coms;
+        return false;
+    }
+    env->commands++;
+    skip_nonimportant_symbols(&(env->commands), env->commands_end);
+    int tmp_reg1 = write_register_to_file(env->commands);
+    if (!tmp_reg1) {
+        env->commands = old_coms;
+        return false;
+    }
+    write_to_file(env->fd, READ_ADDR);
+    write(env->fd, &tmp, sizeof(tmp));
+    write_to_file(env->fd, tmp_reg1);
+    env->address += 2 + sizeof(int);
+    env->commands += sizeof(RAX_STR);
+    return true;
+}
 
 //! \brief Skip comment and space symbols
 //! \param [in,out] Assembler commands
@@ -294,6 +456,8 @@ choose_jmp(char **commands, char *commands_end)
     return command;
 }
 
+
+
 //! \brief Main assembler function. Translates assembler commands to 'binary' code
 //! \param [in] commands Assembler commands to translate
 //! \param [in] commands_size Size of commands in bytes
@@ -350,6 +514,8 @@ translate_to_machine_code(char *commands, ssize_t commands_size, int fd) {
         
         if (process_value_command(env, PUSH_STR, sizeof(PUSH_STR) - 1, PUSH_VAL)) continue;
         
+        if (process_write_command(env)) continue;
+        if (process_read_command(env)) continue; 
         //process jmp command 
         int jmp_type = choose_jmp(&(env->commands), env->commands_end);
         if (jmp_type) {

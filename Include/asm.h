@@ -58,21 +58,14 @@ const char CALL_STR[] = "call";
 //! Command string for ret
 const char RET_STR[] = "ret";
 
+//! Command string for read
+const char READ_STR[] = "read";
+
+//! Commands string for write
+const char WRITE_STR[] = "write";
+
 constexpr mode_t out_mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH;
 bool in_and_out_from_asm(char *file_in, char *file_out);
 void skip_nonimportant_symbols(char **commands, char *command);
-//! \brief Symbol. At the moment only for labels. Name is saved with \0 symbol.
-struct Symbol {
-    char *name;
-    int name_size;
-    int address;
-    //in future may be more fields;
-};
-
-//! \brief Symtab. Contains many symbols.
-struct Symtab {
-    struct Symbol *symbols;
-    int size;
-};
 
 #endif
