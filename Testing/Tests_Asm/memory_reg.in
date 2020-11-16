@@ -1,0 +1,6 @@
+in rax
+push 0
+pop rbx
+write rax [rbx]
+read [rbx] rcx
+out rcx
