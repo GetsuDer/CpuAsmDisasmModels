@@ -124,7 +124,9 @@ work(char *commands, int commands_size, struct Cpu *cpu)
         switch(*commands) {
             case HLT:
                 commands++;
-                cpu->state = WAIT;
+                cpu->state = OFF;
+                Stack_Destruct(cpu->cpu_stack);
+                Stack_Destruct(cpu->ret_addr);
                 //CPU was stopped. Just stop working on commands
                 return true;
             case ADD:
