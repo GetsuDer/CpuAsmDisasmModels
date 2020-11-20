@@ -1,0 +1,3 @@
+in rax
+write rax [14]
+write rax [15]

@@ -32,7 +32,7 @@ main(int argc, char **argv)
     init_memory_controller(&mc);
 
     add_memory(&mc, &mem1);
-    add_memory(&mc, &mem1);
+    add_memory(&mc, &mem2);
 
     work(commands, commands_size, &work_cpu, &mc);
 

@@ -11,10 +11,11 @@ do
 
     test_num=$(($test_num + 1))
     echo Test $test_num
-    cat ${test%%.in}.stdin | ./../cpu $test > ${test%%.in}.res 
+    cat ${test%%.in}.stdin | ./../cpu $test > ${test%%.in}.res 2> ${test%%.in}.reserr
 
     diff -a ${test%%.in}.res ${test%%.in}.stdout > diffile
-    
+    diff -a ${test%%.in}.reserr ${test%%.in}.stderr &> diffile
+
     if [ -s diffile ]
     then
         echo ${test%%.in} "Test failed"
@@ -23,7 +24,7 @@ do
     else
         rm diffile
         echo ${test%%.in} "Test success"
-        rm ${test%%.in}.res
+        rm ${test%%.in}.res ${test%%.in}.reserr
     fi
     echo
 done

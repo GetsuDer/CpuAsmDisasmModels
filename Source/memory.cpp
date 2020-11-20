@@ -70,26 +70,24 @@ add_memory(struct Memory_Controller *mc, struct Memory *mem)
     }
 
     if (mc->memory_pieces_num == 0) {
-        mc->memory = (struct Memory **)calloc(2, sizeof(mem));
+        mc->memory = (struct Memory **)calloc(1, sizeof(mem));
         if (!mc->memory) {
             fprintf(stderr, "Can not allocate memory\n");
             return ALLOCATE_ERROR;
         }
         mc->memory[0] = mem;
-        mc->memory[1] = NULL;
         mc->memory_pieces_num = 1;
         return 0;
     }
 
     assert(mc->memory);
-    struct Memory **tmp = (struct Memory **)realloc(mc->memory, (mc->memory_pieces_num + 2) * sizeof(struct Memory *));
+    struct Memory **tmp = (struct Memory **)realloc(mc->memory, (mc->memory_pieces_num + 1) * sizeof(struct Memory *));
     if (!tmp) {
         fprintf(stderr, "Can not allocate memory\n");
         return ALLOCATE_ERROR;
     }
     mc->memory = tmp;
     mc->memory[mc->memory_pieces_num] = mem;
-    mc->memory[mc->memory_pieces_num + 1] = NULL;
     mc->memory_pieces_num++;
     return 0;
 }
@@ -101,15 +99,26 @@ static struct Memory *
 find_address(struct Memory_Controller *mc, int *address)
 {
   int max_address = 0;
-  struct Memory *right_mem = mc->memory[0];
-  while (right_mem && max_address + right_mem->size < *address) {
-      max_address += right_mem->size;
-      right_mem++;
+  for (int i = 0; i < mc->memory_pieces_num; i++) {
+      if (max_address + mc->memory[i]->size <= *address) {
+          max_address += mc->memory[i]->size;
+      } else {
+          *address -= max_address;
+          return mc->memory[i];
+      }
   }
-  if (right_mem) {
-      *address -= max_address;
-  }
-  return right_mem;
+  return NULL;
+}
+
+//! \brief Imitate delay during memory operations
+//! \param [in] delay Delay in nanoseconds
+static void
+wait(int delay) {
+    struct timespec req;
+    req.tv_sec = 0;
+    req.tv_nsec = delay;
+    nanosleep(&req, NULL);
+    return;
 }
 
 //! \brief Find right memory bar by memory controller and write into it
@@ -123,10 +132,7 @@ write_into_memory(struct Memory_Controller *mc, int address, double value)
     assert(mc);
     assert(address >= 0);
     
-    struct timespec req;
-    req.tv_sec = 0;
-    req.tv_nsec = WRITE_DELAY; // 0.2 sec
-    nanosleep(&req, NULL);
+    wait(WRITE_DELAY);
 
     struct Memory *right_mem = find_address(mc, &address);
     if (!right_mem) {
@@ -151,10 +157,8 @@ get_from_memory(struct Memory_Controller *mc, int address, double *value)
         fprintf(stderr, "Get memory on negative address %d\n", address);
         return NEGATIVE_MEM;
     }
-    struct timespec req;
-    req.tv_sec = 0;
-    req.tv_nsec = READ_DELAY; // 0.1 sec
-    nanosleep(&req, NULL);
+
+    wait(READ_DELAY);
 
     struct Memory *right_memory = find_address(mc, &address);
     if (!right_memory) {
