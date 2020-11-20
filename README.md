@@ -62,8 +62,9 @@ Where REGISTER_NAME is in {rax, rbx, rcx}, and VALUE can be presented as double
 ## Testing
     Directory 'Testing' consists of subdirectories with test in next format
 ####
-    test_name.in (may be also test_name.stdin for cpu)  - input for program
-    test_name.out (or test_name.stdout for cpu) - expected output
+    test_name.in - input for program
+    test_name.out - expected output
+    For CPU test format is a bit different: you need files test_name.stdin, .stdout, .stderr with correspomding values inside.
 ##
     To run tests run 'make test_all' to test all three subprograms (cpu, asm, disasm),
     or 'make test_asm', 'make test_disasm', 'make test_cpu' to cpecify test target.
